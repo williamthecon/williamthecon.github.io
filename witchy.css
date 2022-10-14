@@ -34,7 +34,7 @@ body {
     font-size: 36px;
 }
 
-@media not (hover) {
+@media not (hover: hover) {
     .subnav {
         display: none;
     }
@@ -44,7 +44,7 @@ body {
     }
 }
 
-@media (hover) {
+@media (hover: hover) {
     .subnav {
         position: relative;
         margin: 5px;

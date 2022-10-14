@@ -1,0 +1,114 @@
+html {
+    font-family: montserrat, sans-serif;
+}
+
+body {
+    margin: 0px;
+}
+
+#nav {
+    margin: 0px;
+    height: 135px;
+    background-color: rgb(70, 70, 70);
+    width: 100%
+}
+
+#logo-container {
+    float: left;
+    margin: 5px;
+}
+
+#logo-alt {
+    margin: 0px;
+    font-size: 36px;
+}
+
+#main-header-container {
+    position: relative;
+    margin: 5px;
+    float: left;
+}
+
+#main-header {
+    margin: 0px;
+    font-size: 36px;
+}
+
+@media not hover {
+    .subnav {
+        display: none;
+    }
+    #menu-icon-container {
+        float: right;
+        margin: 0px;
+    }
+}
+
+@media hover {
+    .subnav {
+        position: relative;
+        margin: 5px;
+        float: left;
+    }
+    @media (max-width: 967px) and (min-width: 547px) {
+        #nav {
+            height: 145px;
+        }
+    }
+    @media (max-width: 546px) {
+        #nav {
+            height: 135px;
+        }
+    }
+    @media (max-width: 411px) {
+        #nav {
+            height: 200px;
+        }
+    }
+    .subnav-button {
+        border: none;
+        padding: 12px;
+        background-color: rgb(40, 40, 40);
+        font-size: 16px;
+        z-index: 1;
+    }
+    .subnav-button .subnav-link {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+    }
+    .subnav-content {
+        display: none;
+        position: absolute;
+        width: 100%;
+        overflow: auto;
+        box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+    }
+    .subnav-content-link {
+        display: block;
+        color: rgb(255, 255, 255);
+        background-color: rgb(50, 50, 50);
+        padding: 10px 10px;
+        text-decoration: none;
+    }
+    #current-page {
+        color: rgb(84, 213, 218);
+    }
+    #menu-icon-container {
+        display: none;
+        float: right;
+        margin: 5px;
+    }
+    .subnav-button {
+        width: 125px;
+    }
+    .subnav-button:hover {
+        background-color: rgb(80, 80, 80);
+    }
+    .subnav:hover .subnav-content {
+        display: block;
+        z-index: 2;
+    }
+    .subnav-content-link:hover {
+        background-color: rgb(0, 164, 189);
+    }
+}

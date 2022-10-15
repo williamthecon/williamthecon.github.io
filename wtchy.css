@@ -10,12 +10,10 @@ body {
     position: absolute;
     top: 0px;
     left: 135px;
-    display: flex;
-    justify-content: space-between;
     margin: 0px;
     height: 135px;
     background-color: rgb(70, 70, 70);
-    width: 100%
+    width: 100%;
 }
 
 #logo-container {
@@ -46,7 +44,10 @@ body {
 }
 
 .subnav {
+    display: inline-block;
     width: 125px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .subnav-button .subnav-link {
@@ -93,16 +94,14 @@ body {
     height: 41px;
 }
 
-/*
-@media (min-width: 810px) {
-  #main-header-container {
-    top: 70px;
-  }
-} */
+@media (max-width: 804px) {
+    .subnav {
+        display: block;
+        margin: 0px;
+    }
 
-@media (max-width: 674px) {
     #main-header-container {
-        top: 81px;
+        top: 89px;
         left: 135px;
     }
 
@@ -116,30 +115,119 @@ body {
     }
 
     .subnav-button {
-        height: 36px;
+        height: 37px;
     }
 
     #subnav-2 {
         position: relative;
-        top: -41px;
+        top: -42px;
         left: 135px;
     }
 
     #subnav-3 {
         position: relative;
-        top: -41px;
+        top: -42px;
         left: 0px;
     }
 
     #subnav-4 {
         position: relative;
-        top: -82px;
+        top: -83px;
         left: 135px;
     }
 
     #subnav-5 {
         position: relative;
-        top: -81px;
+        top: -82px;
+        left: 0px;
+    }
+}
+
+@media (max-width: 406px) {
+    #nav {
+        height: 220px;
+    }
+
+    #logo-alt {
+        height: 220px;
+    }
+
+    #main-header-container {
+        top: 170px;
+        left: -135px;
+    }
+
+    #main-header {
+        font-size: 36px;
+    }
+
+    .subnav-button {
+        height: 37px;
+    }
+
+    #subnav-2 {
+        top: 88px;
+        left: -135px;
+    }
+
+    #subnav-4 {
+        top: 4px;
+        left: 0px;
+    }
+}
+
+@media (max-width: 276px) {
+    #logo-container {
+        width: 100%;
+    }
+
+    #logo-alt {
+        height: 135px;
+        width: 100%;
+    }
+
+    .subnav {
+        display: block;
+        margin: 0px;
+    }
+
+    #main-header-container {
+        top: 203px;
+        left: 0px;
+    }
+
+    #main-header {
+        font-size: 34px;
+    }
+
+    #nav {
+        top: 135px;
+        left: 0px;
+        display: block;
+        height: 245px;
+    }
+
+    .subnav-button {
+        height: 37px;
+    }
+
+    #subnav-2 {
+        top: 0px;
+        left: 0px;
+    }
+
+    #subnav-3 {
+        top: 0px;
+        left: 0px;
+    }
+
+    #subnav-4 {
+        top: 0px;
+        left: 0px;
+    }
+
+    #subnav-5 {
+        top: 0px;
         left: 0px;
     }
 }

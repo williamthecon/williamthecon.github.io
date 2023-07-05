@@ -1,0 +1,5 @@
+/* Make the background color dark gray with a smooth transition */
+body {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.5s;
+}

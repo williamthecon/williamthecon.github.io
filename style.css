@@ -3,9 +3,40 @@ body {
     background-color: rgb(21, 21, 21);
     color: rgb(143, 173, 192);
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 310px;
 }
 
 a {
     text-decoration: none;
     color: rgb(24, 132, 219);
+}
+
+#header {
+    text-align: center;
+    margin: 1em;
+}
+
+#header h1 {
+    margin: 8px;
+    font-size: 3em;
+    text-decoration: underline rgb(24, 132, 219) 2px solid;
+    text-underline-offset: 4px;
+    text-shadow: rgb(24, 132, 219) 1px 1px;
+}
+
+#header h4 {
+    margin: 8px;
+    font-size: 1.15em;
+    text-decoration: underline rgb(24, 132, 219) 1px solid;
+    text-underline-offset: 4px;
+    text-shadow: rgb(24, 132, 219) 1px 1px;
+}
+
+#content {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#footer {
+    font-size: 1.3em;
 }

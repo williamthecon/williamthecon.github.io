@@ -3,7 +3,7 @@ body {
     background-color: rgb(21, 21, 21);
     color: rgb(143, 173, 192);
     font-family: "Source Code Pro", monospace;
-    min-width: 350px;
+    /* min-width: 463px; */
 }
 
 a {
@@ -34,7 +34,9 @@ hr.break {
 }
 
 .topic-header {
+    position: relative;
     white-space: nowrap;
+    width: 100%;
 }
 
 .topic-header * {
@@ -56,16 +58,21 @@ hr.break {
 }
 
 .button-link {
+    position: absolute;
     padding: 5px 10px;
     border-radius: 15px;
     border: 1px solid rgb(24, 132, 219);
     background-color: rgb(21, 21, 21);
     color: white;
-    float: right;
+    right: 0;
 }
 
 .button-link:hover {
     background-color: rgb(24, 132, 219, 0.9);
+}
+
+.button-link-text-2 {
+    display: none;
 }
 
 .horizontal-list {
@@ -106,4 +113,31 @@ hr.break {
 
 #footer {
     font-size: 1.3em;
+}
+
+@media screen and (max-width: 464px) {
+    .topic-header {
+        white-space: initial;
+        margin-bottom: 45px;
+    }
+
+    .topic-header * {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .button-link-text-1 {
+        display: none;
+        /* right: auto;
+        left: 0;
+        top: 100%; */
+    }
+
+    .button-link-text-2 {
+        display: inline;
+    }
+
+    #header {
+        text-align: left;
+    }
 }

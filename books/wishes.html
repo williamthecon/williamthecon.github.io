@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="-">
+        <meta name="keywords" content="my-books.wtc248.repl.co my-books wtc248 repl co replit books wishlist">
+
+        <title>Meine Bücher - Wunschliste</title>
+
+        <link rel="stylesheet" type="text/css" href="/books/style.css">
+        <link rel="icon" href="/books/icon.png"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/table.js"></script>
+        <script>
+            function wish(id) {
+                window.location.href = "/wish?id=" + id;
+            }
+        </script>
+        <div id="header" class="container">
+            <h1>Meine Bücher - Bücher</h1>
+            <h4>{{ username }}</h4>
+        </div>
+        <div id="content" class="container">
+            <div id="block-helpful-links" class="content-block">
+                <div class="folding-header" onclick="toggleFold()"">
+                    <h3>Hilfreiche Links</h3>
+                    <p id="chevron-down">v</p>
+                    <p id="chevron-up">^</p>
+                </div>
+                <div id="helpful-links">
+                    <ul class="horizontal-list">{% for text, link in links.items() %}
+                        <li><a href="{{ link }}{% if text == 'Bücher' %}?query={{ query }}{% endif %}">{{ text }}</a></li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="content-block">
+                <form id="search-form">
+                    <div>
+                        <input type="text" id="input-query" name="query" value="{{ query }}" placeholder="Suchen...">
+                    </div>
+                    <div>
+                        <button type="submit">Suchen</button>
+                    </div>
+                </form>
+            </div>
+            <div class="content-block table-container">
+                <ul class="table">
+                    <li class="table-row table-header">
+                        <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                        <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                        <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                        <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                        <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
+                    </li>{% for wish in wishlist %}
+                    <li class="table-row" onclick="wish('{{ wish.id }}')">{% for info in list(wish)[:5] %}
+                        <span class="table-cell">{{ info }}</span>{% endfor %}
+                    </li>{% endfor %}
+                </ul>
+            </div>
+            <div class="content-block">
+                <button onclick="viewMore()">Mehr</button>
+            </div>
+        </div>
+        <div id="footer" class="container">
+            <p>&copy; 2023 <a href="https://replit.com/@wtc248">wtc248</a></p>
+        </div>
+        <script>
+            sortTable();
+            viewMore();
+        </script>
+    </body>
+</html>

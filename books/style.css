@@ -1,0 +1,270 @@
+body {
+    background-color: rgb(21, 21, 21);
+    color: rgb(143, 173, 192);
+    font-family: "Source Code Pro", monospace;
+    min-width: 244px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(24, 132, 219);
+}
+
+textarea {
+    height: auto;
+    background-color: rgb(21, 21, 21);
+    color: rgb(143, 173, 192);
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.25em;
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin: 15px 0;
+    display: block;
+    width: calc(100% - 40px);
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+}
+
+input {
+    background-color: rgb(21, 21, 21);
+    color: rgb(143, 173, 192);
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.25em;
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin: 15px 0;
+    display: block;
+    width: calc(100% - 40px);
+}
+
+input:focus {
+    background-color: rgb(27, 27, 27);
+    border: 1px solid rgb(24, 132, 219);
+}
+
+button {
+    background-color: rgb(21, 21, 21);
+    color: rgb(143, 173, 192);
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.3em;
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin: 15px 0;
+}
+
+button:hover {
+    background-color: rgb(24, 132, 219);
+    cursor: pointer;
+}
+
+ul a {
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 20px;
+    padding: 8px 18px;
+}
+
+ul a:hover {
+    background-color: rgb(24, 132, 219);
+    color: rgb(21, 21, 21)
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 15px;
+}
+
+.table {
+    display: table;
+    width: calc(100% - 10px);
+    border-collapse: collapse;
+    margin: 5px;
+}
+
+.table-row {
+    display: none;
+}
+
+.table-cell {
+    display: table-cell;
+    /* border: 1px solid black; */
+    padding: 5px;
+}
+
+.table-header {
+    font-weight: bold;
+    border-bottom: 1px solid rgb(24, 132, 219);
+    cursor: pointer;
+}
+
+.table-header .table-cell:hover {
+    background: rgb(35, 35, 35);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.table-row:not(.table-header):hover {
+    background: rgb(35, 35, 35);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.content-block {
+    margin: 15px 0;
+}
+
+.horizontal-list {
+    list-style: none;
+    padding: 0;
+}
+
+.horizontal-list * {
+    display: inline-block;
+}
+
+.horizontal-list li {
+    margin: 3px 10px;
+}
+
+/* .folding-header {
+    background-color: rgb(27, 27, 27);
+    border-radius: 35px;
+    padding: 2px 5px;
+} */
+
+.folding-header:hover {
+    cursor: pointer;
+}
+
+.folding-header * {
+    display: inline-block;
+}
+
+#chevron-down {
+    font-size: 23px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 18px;
+    display: none;
+}
+
+#chevron-up {
+    font-size: 31px;
+    float: right;
+    margin-top: 11px;
+    margin-right: 16px;
+}
+
+#header {
+    text-align: center;
+    margin: 1em;
+}
+
+#header h1 {
+    margin: 8px;
+    font-size: 3em;
+    text-decoration: underline rgb(24, 132, 219) 2px solid;
+    text-underline-offset: 4px;
+    text-shadow: rgb(24, 132, 219) 1px 1px;
+}
+
+#header h4 {
+    margin: 8px;
+    font-size: 1.15em;
+    text-decoration: underline rgb(24, 132, 219) 1px solid;
+    text-underline-offset: 4px;
+    text-shadow: rgb(24, 132, 219) 1px 1px;
+}
+
+#content {
+    margin: 25px 15px;
+    font-size: 1.25em;
+}
+
+#block-helpful-links {
+    background-color: rgb(27, 27, 27);
+    border-radius: 15px;
+    padding: 2px 5px;
+}
+
+#content h3 {
+    margin: 8px;
+    font-size: 1.35em;
+    text-decoration: underline rgb(24, 132, 219) 1px solid;
+    text-underline-offset: 4px;
+}
+
+#footer {
+    font-size: 1.3em;
+}
+
+@media screen and (max-width: 340px) {
+    form div {
+        width: 95%;
+    }
+
+    input {
+        font-size: 0.85em;
+        margin: 8px;
+        padding: 4px 11px;
+    }
+
+    button {
+        font-size: 0.9em;
+        margin: 8px;
+        padding: 4px 11px;
+    }
+
+    ul a {
+        padding: 4px 11px;
+    }
+
+    #header h1 {
+        font-size: 2em;
+    }
+
+    #header h4 {
+        font-size: 0.75em;
+    }
+
+    #content {
+        font-size: 0.85em;
+    }
+
+    #content h3 {
+        font-size: 0.95em;
+    }
+
+    #chevron-down {
+        font-size: 16px;
+        float: right;
+        margin-top: 6px;
+        margin-right: 8px;
+        display: none;
+    }
+
+    #chevron-up {
+        font-size: 20px;
+        float: right;
+        margin-top: 7px;
+        margin-right: 7px;
+    }
+
+    #footer {
+        font-size: 0.55em;
+    }
+}

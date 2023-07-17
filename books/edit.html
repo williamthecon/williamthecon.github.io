@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="-">
+        <meta name="keywords" content="my-books.wtc248.repl.co my-books wtc248 repl co replit edit book">
+
+        <title>Meine Bücher - Bearbeiten</title>
+
+        <link rel="stylesheet" type="text/css" href="/books/style.css">
+        <link rel="icon" href="/books/icon.png"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="/books/main.js"></script>
+        <div id="header" class="container">
+            <h1>Meine Bücher - Bearbeiten</h1>
+            <h4>{{ username }}</h4>
+        </div>
+        <div id="content" class="container">
+            <div id="block-helpful-links" class="content-block">
+                <div class="folding-header" onclick="toggleFold()"">
+                    <h3>Hilfreiche Links</h3>
+                    <p id="chevron-down">v</p>
+                    <p id="chevron-up">^</p>
+                </div>
+                <div id="helpful-links">
+                    <ul class="horizontal-list">{% for text, link in links.items() %}
+                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="content-block">
+                <form action="/edit?id={{ book.id }}" method="post" id="edit-form">
+                    <div>
+                        <input type="text" id="input-title" name="title" value="{{ book.title }}" placeholder="Titel">
+                    </div>
+                    <div>
+                        <input type="text" id="input-series" name="series" value="{{ book.series }}" placeholder="Reihe (Opt.)">
+                    </div>
+                    <div>
+                        <input type="text" id="input-volume" name="volume" value="{{ book.volume }}" placeholder="Band (Opt.)">
+                    </div>
+                    <div>
+                        <input type="text" id="input-author" name="author" value="{{ book.author }}" placeholder="Autor">
+                    </div>
+                    <div>
+                        <input type="text" id="input-cover" name="cover" value="{{ book.cover }}" placeholder="Umschlag">
+                    </div>
+                    <div>
+                        <input type="text" id="input-isbn" name="isbn" value="{{ book.isbn }}" placeholder="ISBN">
+                    </div>
+                    <div>
+                        <textarea rows=5 id="input-description" name="description" value="{{ book.description }}" placeholder="Beschreibung"></textarea>
+                    </div>
+                    <div>
+                        <input type="text" id="input-image" name="image" value="{{ book.image }}" placeholder="Bild-Link">
+                    </div>
+                    <button type="submit">Speichern</button>
+                </form>
+            </div>
+            <div class="content-block">
+                <button type="button"><a href="?id={{ book.id }}&del=True">Löschen</a></button>
+            </div>
+        </div>
+        <div id="footer" class="container">
+            <p>&copy; 2023 <a href="https://replit.com/@wtc248">wtc248</a></p>
+        </div>
+    </body>
+</html>

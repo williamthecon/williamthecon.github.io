@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="-">
+        <meta name="keywords" content="my-books.wtc248.repl.co my-books wtc248 repl co replit view book">
+
+        <title>Meine Bücher - Buch</title>
+
+        <link rel="stylesheet" type="text/css" href="/books/style.css">
+        <link rel="icon" href="/books/icon.png"/>
+        <style type="text/css">
+            .book-info {
+                margin: 15px 0;
+            }
+
+            .book-info p {
+                margin: 0;
+            }
+
+            .book-block-block {
+                margin: 5px;
+                display: inline-block;
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: calc(15px + 8px) 18px;
+            }
+
+            #book-block {
+                width: 100%;
+            }
+
+            #book-profile {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: 8px 18px;
+            }
+
+            #book-cover {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: calc(15px + 8px) 18px;
+                justify-content: center;
+            }
+
+            #book-cover img {
+                width: 335px;
+                height: 500px;
+            }
+
+            /* .book-info {
+                display: flex;
+                flex-direction: column;
+                width: 85%;
+            }
+
+            #book-block {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: 8px 18px;
+            } */
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="/books/main.js"></script>
+        <div id="header" class="container">
+            <h1>Meine Bücher - Buch</h1>
+            <h4>{{ username }}</h4>
+        </div>
+        <div id="content" class="container">
+            <div id="block-helpful-links" class="content-block">
+                <div class="folding-header" onclick="toggleFold()"">
+                    <h3>Hilfreiche Links</h3>
+                    <p id="chevron-down">v</p>
+                    <p id="chevron-up">^</p>
+                </div>
+                <div id="helpful-links">
+                    <ul class="horizontal-list">{% for text, link in links.items() %}
+                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="book-block" class="content-block">
+                <div id="book-profile" class="book-block-block">
+                    <div class="book-info"><p><b>Titel</b>: <a href='/books?query=Titel%3A"{{ book.title }}"'>{{ book.title }}</a></p></div>
+                    <div class="book-info"><p><b>Reihe</b>: {% if book.series %}<a href='/books?query=Reihe%3A"{{ book.series }}"'>{{ book.series }}</a>{% else %}-{% endif %}</p></div>
+                    <div class="book-info"><p><b>Band</b>: {% if book.volume %}<a href='/books?query=Band%3A"{{ book.volume }}"'>{{ book.volume }}</a>{% else %}-{% endif %}</p></div>
+                    <div class="book-info"><p><b>Author</b>: <a href='/books?query=Autor%3A"{{ book.author }}"'>{{ book.author }}</a></p></div>
+                    <div class="book-info"><p><b>Benutzer</b>: <a href='/books?query=Benutzer%3A"{{ book.username }}"'>{{ book.username }}</a></p></div>
+                    <div class="book-info"><p><b>Umschlag</b>: {% if book.cover %}<a href='/books?query=Umschlag%3A"{{ book.cover }}"'>{{ book.cover }}</a>{% else %}?{% endif %}</p></div>
+                    <div class="book-info"><p><b>ISBN</b>: {% if book.isbn %}<a href='/books?query=Umschlag%3A"{{ book.isbn }}"'>{{ book.isbn }}</a>{% else %}?{% endif %}</p></div>
+                </div>
+                {% if book.image %}<div id="book-cover" class="book-block-block">
+                    <img src="{{ book.image }}" alt="Cover">
+                </div>{% endif %}
+                {% if book.description %}<div id="book-description" class="book-block-block">
+                    <div><p><b>Beschreibung</b>: {{ book.description }}</a></p></div>
+                </div>{% endif %}
+            </div>
+            {% if owner %}<div class="content-block">
+                <button type="button"><a href="/edit?id={{ book.id }}">Bearbeiten</a></button>
+            </div>{% endif %}
+        </div>
+        <div id="footer" class="container">
+            <p>&copy; 2023 <a href="https://replit.com/@wtc248">wtc248</a></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="-">
+        <meta name="keywords" content="my-books.wtc248.repl.co my-books wtc248 repl co replit wish book">
+
+        <title>Meine Bücher - Wunsch</title>
+
+        <link rel="stylesheet" type="text/css" href="/books/style.css">
+        <link rel="icon" href="/books/icon.png"/>
+        <style type="text/css">
+            .wish-info {
+                margin: 15px 0;
+            }
+
+            .wish-info p {
+                margin: 0;
+            }
+
+            .wish-block-block {
+                margin: 5px;
+                display: inline-block;
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: calc(15px + 8px) 18px;
+            }
+
+            #wish-block {
+                width: 100%;
+            }
+
+            #wish-profile {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: 8px 18px;
+            }
+
+            #wish-cover {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: calc(15px + 8px) 18px;
+                justify-content: center;
+            }
+
+            #wish-cover img {
+                width: 335px;
+                height: 500px;
+            }
+
+            /* .wish-info {
+                display: flex;
+                flex-direction: column;
+                width: 85%;
+            }
+
+            #wish-block {
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: 8px 18px;
+            } */
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="/books/main.js"></script>
+        <div id="header" class="container">
+            <h1>Meine Bücher - Wunsch</h1>
+            <h4>{{ username }}</h4>
+        </div>
+        <div id="content" class="container">
+            <div id="block-helpful-links" class="content-block">
+                <div class="folding-header" onclick="toggleFold()"">
+                    <h3>Hilfreiche Links</h3>
+                    <p id="chevron-down">v</p>
+                    <p id="chevron-up">^</p>
+                </div>
+                <div id="helpful-links">
+                    <ul class="horizontal-list">{% for text, link in links.items() %}
+                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="wish-block" class="content-block">
+                <div id="wish-profile" class="wish-block-block">
+                    <div class="wish-info"><p><b>Titel</b>: <a href='/wishlist?query=Titel%3A"{{ wish.title }}"'>{{ wish.title }}</a></p></div>
+                    <div class="wish-info"><p><b>Reihe</b>: {% if wish.series %}<a href='/wishlist?query=Reihe%3A"{{ wish.series }}"'>{{ wish.series }}</a>{% else %}-{% endif %}</p></div>
+                    <div class="wish-info"><p><b>Band</b>: {% if wish.volume %}<a href='/wishlist?query=Band%3A"{{ wish.volume }}"'>{{ wish.volume }}</a>{% else %}-{% endif %}</p></div>
+                    <div class="wish-info"><p><b>Author</b>: <a href='/wishlist?query=Autor%3A"{{ wish.author }}"'>{{ wish.author }}</a></p></div>
+                    <div class="wish-info"><p><b>Benutzer</b>: <a href='/wishlist?query=Benutzer%3A"{{ wish.user }}"'>{{ wish.username }}</a></p></div>
+                    <div class="wish-info"><p><b>Umschlag</b>: {% if wish.cover %}<a href='/wishlist?query=Umschlag%3A"{{ wish.cover }}"'>{{ wish.cover }}</a>{% else %}?{% endif %}</p></div>
+                    <div class="wish-info"><p><b>ISBN</b>: {% if wish.isbn %}<a href='/wishlist?query=Umschlag%3A"{{ wish.isbn }}"'>{{ wish.isbn }}</a>{% else %}?{% endif %}</p></div>
+                </div>
+                {% if wish.image %}<div id="wish-cover" class="wish-block-block">
+                    <img src="{{ wish.image }}" alt="Cover">
+                </div>{% endif %}
+                {% if wish.description %}<div id="wish-description" class="wish-block-block">
+                    <div><p><b>Beschreibung</b>: {{ wish.description }}</a></p></div>
+                </div>{% endif %}
+            </div>
+            {% if owner %}<div class="content-block">
+                <button type="button"><a href="/rewish?id={{ wish.id }}">Bearbeiten</a></button>
+            </div>{% endif %}
+        </div>
+        <div id="footer" class="container">
+            <p>&copy; 2023 <a href="https://replit.com/@wtc248">wtc248</a></p>
+        </div>
+    </body>
+</html>

@@ -1,3 +1,6 @@
+import CryptoJS from 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+import Random from 'https://cdnjs.cloudflare.com/ajax/libs/random-js/2.0.0/random.min.js';
+
 // Check if already logged in or page is already the login page
 const username = localStorage.getItem('username');
 if (username === null && window.location.href !== "https://williamthecon.github.io/books/login") {
@@ -24,31 +27,60 @@ function deleteLocalStorage(key) {
     localStorage.removeItem(key);
 }
 
-function loadJSON(url) {
-    return fetch(url).then(response => response.json());
+async function loadData(type) {
+    return fetch("https://my-book-api.wtc248.repl.co/load/" + type)
+        .then(response => response.json())
+        .catch(error => console.log(error));
 }
 
-function saveJSON(data, url) {
-    return fetch(url, {
+async function saveData(data, type) {
+    return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json; charset=utf-8'
         },
-        body: JSON.stringify(data)
-    }).then(response => response.json());
+        body: JSON.stringify({"data": data}),
+    }).then(response => response.json()).catch(error => console.log(error));
+}
+
+async function addItem(item, type) {
+    return await fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({"item": item}),
+    }).then(response => response.json()).catch(error => console.log(error));
+}
+
+async function editItem(item, newItem, type) {
+    return await fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({"item": item, "new-item": newItem}),
+    }).then(response => response.json()).catch(error => console.log(error));
+}
+
+async function delItem(item, type) {
+    return await fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({"item": item}),
+    }).then(response => response.json()).catch(error => console.log(error));
 }
 
 // User related methods
-const crypto = require('crypto');
-
 function hash_password(password) {
-    const hash = crypto.createHash('sha3-256');
-    hash.update(password);
-    return hash.digest('hex');
+    const hash = CryptoJS.SHA3(password, { outputLength: 256 });
+    return hash.toString(CryptoJS.enc.Hex);
 }
 
 function login(username, password) {
-    const users = loadJSON("https://williamthecon.github.io/books/data/users.json");
+    const users = loadData("users");
     const user = users.find(user => user.name === username);
     if (user) {
         if (hash_password(password) === user.password) {
@@ -64,7 +96,7 @@ function logout() {
 }
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
-    const users = loadJSON("https://williamthecon.github.io/books/data/users.json");
+    const users = loadData("users");
     const user = users.find(user => user.name === username);
     if (user) {
         if (hash_password(currentPassword) === user.password) {
@@ -78,7 +110,7 @@ function changePassword(currentPassword, newPassword1, newPassword2) {
 }
 
 function changeUsername(currentUsername, newUsername) {
-    const users = loadJSON("https://williamthecon.github.io/books/data/users.json");
+    const users = loadData("users");
     const user = users.find(user => user.name === currentUsername);
     if (user) {
         user.name = newUsername;
@@ -87,9 +119,7 @@ function changeUsername(currentUsername, newUsername) {
     return false;
 }
 
-const random = require('random');
-const string = require('string');
-
+const random = Random()
 function generate_token(length = 13) {
     let tokens = Array.from(getLocalStorage('tokens'));
     let token = '';
@@ -99,10 +129,67 @@ function generate_token(length = 13) {
     do {
         token = '';
         for (let i = 0; i < length; i++) {
-            token += characters.charAt(random.int(0, characters.length - 1));
+            // token += characters.charAt(random.integer(0, characters.length - 1));
+            token += random.pick(random.nativeMath, characters.split(""));
         }
     } while (tokens.includes(token));
 
     tokens.push(token);
+    setLocalStorage('tokens', tokens.toString());
     return token;
+}
+
+// Books related methods
+class Listionary {
+    static parse_query(query) {
+        const info = { args: [], kwargs: {} };
+        let currentStr = "";
+        let inStr = false;
+
+        for (const char of query) {
+            if (char === '"') {
+                inStr = !inStr;
+            } else if (char === " " && !inStr) {
+                if (currentStr.includes(":")) {
+                    const [key, value] = currentStr.split(":");
+                    info.kwargs[key.toLowerCase()] = value.toLowerCase();
+                } else {
+                    info.args.push(currentStr.toLowerCase());
+                }
+                currentStr = "";
+            } else {
+                currentStr += char;
+            }
+        }
+        if (currentStr) {
+            if (currentStr.includes(":")) {
+                const [key, value] = currentStr.split(":");
+                info.kwargs[key.toLowerCase()] = value.toLowerCase();
+            } else {
+                info.args.push(currentStr.toLowerCase());
+            }
+        }
+
+        return info;
+    }
+
+    static search(data, query, max_results = -1, equals = false, ignore_keys = []) {
+        return;
+    }
+
+    static searchQuery(data, query, max_results = -1, equals = false, ignore_keys = []) {
+        return;
+    }
+
+    static find(data, equals = false, ignore_keys = [], ...args) {
+        return;
+    }
+}
+
+function addBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {
+    addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
+}
+
+function editBook(oldBook, newBook) {
+    editItem(book, newBook, "books");
 }

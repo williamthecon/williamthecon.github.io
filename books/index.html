@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-
-        function get(name) {
-            // Return the parameter value or the default value ("") if it does not exist.
-            return urlParams.get(name) || "";
-        }
-    </script>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +15,7 @@
         <script type="text/javascript" src="/books/main.js"></script>
         <div id="header" class="container">
             <h1>Meine Bücher - Startseite</h1>
-            <h4><script>document.write(get("username"));</script></h4>
+            <h4><script>document.write(getLocalStorage("username"));</script></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">

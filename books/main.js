@@ -1,3 +1,28 @@
+var username = localStorage.getItem('username');
+if (username === null) {
+    window.location.href = "/books/login";
+}
+console.log(username);
+
+const urlParams = new URLSearchParams(window.location.search);
+
+function get(name) {
+    // Return the parameter value or the default value "" if it does not exist.
+    return urlParams.get(name) || "";
+}
+
+function getLocalStorage(key) {
+    return localStorage.getItem(key) || "";
+}
+
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, value);
+}
+
+function deleteLocalStorage(key) {
+    localStorage.removeItem(key);
+}
+
 function toggleFold() {
     var div = document.getElementById("helpful-links");
     var chevron_down = document.getElementById("chevron-down")

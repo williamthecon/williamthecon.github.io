@@ -17,19 +17,23 @@
         </div>
         <div id="content" class="container">
             <form id="login-form">
-                <div>
-                    <!-- <label for="input-username">Benutzername:</label> -->
-                    <input type="text" id="input-username" name="username" value="{{ username }}" autocomplete="username" placeholder="Benutzername">
-                </div>
-                <div>
-                    <!-- <label for="input-password">Passwort:</label> -->
-                    <input type="password" id="input-password" name="password" value="{{ password }}" autocomplete="current-password" placeholder="Passwort">
-                </div>
+                <div id="input-username"></div>
+                <div id="input-password"></div>
                 <button type="submit">Anmelden</button>
             </form>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            const inputUsername = document.getElementById("input-username");
+            const inputPassword = document.getElementById("input-password");
+            inputUsername.innerHTML = `
+                <input type="text" name="username" value="${ getLocalStorage("username") }" autocomplete="username" placeholder="Benutzername">
+            `;
+            inputPassword.innerHTML = `
+                <input type="password" name="password" value="${ getLocalStorage("password") }" autocomplete="current-password" placeholder="Passwort">
+            `;
+        </script>
     </body>
 </html>

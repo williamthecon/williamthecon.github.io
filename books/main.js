@@ -33,6 +33,19 @@ async function loadData(type) {
         .catch(error => console.log(error));
 }
 
+async function searchData(type, ...args) {
+    for (const arg of args) {
+        args.push(arg.toLowerCase());
+    }
+    return await fetch("https://my-book-api.wtc248.repl.co/search/" + type, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({"args": args, "kwargs": kwargs}),
+    }).then(response => response.json()).catch(error => console.log(error));
+}
+
 async function saveData(data, type) {
     return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',

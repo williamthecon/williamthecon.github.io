@@ -1,10 +1,8 @@
 // Check if already logged in or page is already the login page
 var username = localStorage.getItem('username');
-console.log(window.location.href);
-// if (username === null && window.location.href !== "/books/login") {
-//     window.location.href = "/books/login";
-// }
-console.log(username);
+if (username === null && window.location.href !== "https://williamthecon.github.io/books/login") {
+    window.location.href = "https://williamthecon.github.io/books/login";
+}
 
 const urlParams = new URLSearchParams(window.location.search);
 

@@ -1,8 +1,9 @@
 // Check if already logged in or page is already the login page
 var username = localStorage.getItem('username');
-if (username === null && window.location.href !== "/books/login") {
-    window.location.href = "/books/login";
-}
+console.log(window.location.href);
+// if (username === null && window.location.href !== "/books/login") {
+//     window.location.href = "/books/login";
+// }
 console.log(username);
 
 const urlParams = new URLSearchParams(window.location.search);

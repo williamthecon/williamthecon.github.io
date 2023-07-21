@@ -10,12 +10,12 @@ if (username === null && window.location.href !== "https://williamthecon.github.
 const urlParams = new URLSearchParams(window.location.search);
 
 // Some default methods for retrieving data
-export function get(name) {
+function get(name) {
     // Return the parameter value or the default value "" if it does not exist.
     return urlParams.get(name) || "";
 }
 
-export function getLocalStorage(key) {
+function getLocalStorage(key) {
     return localStorage.getItem(key) || "";
 }
 

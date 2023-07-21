@@ -28,13 +28,23 @@ function loadJSON(url) {
     return fetch(url).then(response => response.json());
 }
 
+function saveJSON(data, url) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => response.json());
+}
+
 // User related methods
 const crypto = require('crypto');
 
 function hash_password(password) {
-  const hash = crypto.createHash('sha3-256');
-  hash.update(password);
-  return hash.digest('hex');
+    const hash = crypto.createHash('sha3-256');
+    hash.update(password);
+    return hash.digest('hex');
 }
 
 function login(username, password) {
@@ -87,12 +97,12 @@ function generate_token(length = 13) {
     const characters = string.ascii_letters + string.digits;
 
     do {
-      token = '';
-      for (let i = 0; i < length; i++) {
-        token += characters.charAt(random.int(0, characters.length - 1));
-      }
+        token = '';
+        for (let i = 0; i < length; i++) {
+            token += characters.charAt(random.int(0, characters.length - 1));
+        }
     } while (tokens.includes(token));
 
     tokens.push(token);
     return token;
-  }
+}

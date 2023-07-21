@@ -13,11 +13,18 @@
     </head>
     <body>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script>
+            function doLogin() {
+                var username = document.getElementById("input-username").value;
+                var password = document.getElementById("input-password").value;
+                return login(username, password);
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Anmeldung</h1>
         </div>
         <div id="content" class="container">
-            <form id="login-form">
+            <form id="login-form" onsubmit="doLogin();" action="/books/">
                 <div id="input-username"></div>
                 <div id="input-password"></div>
                 <button type="submit">Anmelden</button>
@@ -27,6 +34,7 @@
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
         <script>
+            // Inputs
             const inputUsername = document.getElementById("input-username");
             const inputPassword = document.getElementById("input-password");
             inputUsername.innerHTML = `
@@ -35,6 +43,12 @@
             inputPassword.innerHTML = `
                 <input type="password" name="password" value="${ getLocalStorage("password") }" autocomplete="current-password" placeholder="Passwort">
             `;
+
+            // Check if redirecting url is defined and set the form action
+            const loginForm = document.getElementById("login-form");
+            if (getLocalStorage("redirect-to")) {
+                loginForm.action = getLocalStorage("redirect-to");
+            }
         </script>
     </body>
 </html>

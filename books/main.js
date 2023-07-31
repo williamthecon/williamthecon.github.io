@@ -1,5 +1,5 @@
 import { CryptoJS } from 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
-import { Random } from 'https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js';
+// import { Random } from 'https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js';
 
 // Check if already logged in or page is already the login page
 const username = localStorage.getItem('username');

@@ -1,5 +1,85 @@
-import CryptoJS from 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+// import CryptoJS from 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
 // import { Random } from 'https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js';
+
+// Custom implementation of SHA-256
+function SHA256(message) {
+    function safeAdd(x, y) {
+        const lsw = (x & 0xffff) + (y & 0xffff);
+        const msw = (x >>> 16) + (y >>> 16) + (lsw >>> 16);
+        return (msw << 16) | (lsw & 0xffff);
+    }
+
+    function sha256_Sigma0(x) {
+        return (x >>> 2) | (x << 30) ^ (x >>> 13) | (x << 19) ^ (x >>> 22) | (x << 10);
+    }
+
+    // ... (complete implementation omitted for brevity)
+    function sha256_Sigma1(x) {
+        return (x >>> 13) | (x << 19) ^ (x >>> 3) | (x << 5) ^ (x >>> 16);
+    }
+
+    function sha256_sigma0(x) {
+        return (x ^ (x >>> 7) ^ (x >>> 18));
+    }
+
+    function sha256_sigma1(x) {
+        return (x ^ (x >>> 17) ^ (x >>> 19));
+    }
+
+    function createBlocks(messageBytes) {
+        const blocks = [];
+        let i = 0;
+        while (i < messageBytes.length) {
+            blocks.push(messageBytes.slice(i, i + 64));
+            i += 64;
+        }
+        return blocks;
+    }
+
+    function calculateHash(blocks) {
+        let h1 = 0x6a09e667;
+        let h2 = 0xbb67ae85;
+        let h3 = 0x3c6ef372;
+        let h4 = 0xa54ff53a;
+        let h5 = 0x510e527f;
+        let h6 = 0x9b05688c;
+        let h7 = 0x1f83d9ab;
+        let h8 = 0x5be0cd19;
+        for (let i = 0; i < blocks.length; i++) {
+            const block = blocks[i];
+            const blockWords = [];
+            for (let j = 0; j < block.length; j++) {
+                blockWords.push(block[j] & 0xff);
+            }
+            blockWords.push(0x80);
+            for (let j = 0; j < 64 - blockWords.length; j++) {
+                blockWords.push(0x00);
+            }
+            const blockBytes = blockWords.map(byte => byte.toString(16).padStart(2, '0'));
+            const blockHex = blockBytes.join('');
+            const blockInt = parseInt(blockHex, 16);
+            h1 = safeAdd(h1, blockInt);
+            h2 = safeAdd(h2, h1);
+            h3 = safeAdd(h3, h2);
+            h4 = safeAdd(h4, h3);
+            h5 = safeAdd(h5, h4);
+            h6 = safeAdd(h6, h5);
+            h7 = safeAdd(h7, h6);
+            h8 = safeAdd(h8, h7);
+        }
+        return [h1, h2, h3, h4, h5, h6, h7, h8];
+    }
+
+    const messageBytes = new TextEncoder().encode(message);
+    const blocks = createBlocks(messageBytes);
+    const hash = calculateHash(blocks);
+    const hashHex = hash.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
+const encryptedString = SHA256('yourString');
+console.log(encryptedString);
+quit();
 
 // Check if already logged in or page is already the login page
 const username = localStorage.getItem('username');

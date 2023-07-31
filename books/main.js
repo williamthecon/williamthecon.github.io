@@ -15,7 +15,7 @@ function get(name) {
     return urlParams.get(name) || "";
 }
 
-export function getLocalStorage(key) {
+function getLocalStorage(key) {
     return localStorage.getItem(key) || "";
 }
 

@@ -110,10 +110,13 @@ function deleteLocalStorage(key) {
     localStorage.removeItem(key);
 }
 
-async function loadData(type) {
-    return await fetch("https://my-book-api.wtc248.repl.co/load/" + type)
-        .then(response => response.json())
-        .catch(error => console.log(error));
+async function loadData(type, variable) {
+    return await fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+        }
+    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
@@ -136,49 +139,49 @@ async function loadData(type) {
 //     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
 // }
 
-async function saveData(data, type) {
+async function saveData(data, type, variable) {
     return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"data": data}),
-    }).then(response => response.json()).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
-async function addItem(item, type) {
+async function addItem(item, type, variable) {
     return await fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
-async function editItem(item, newItem, type) {
+async function editItem(item, newItem, type, variable) {
     return await fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item, "new-item": newItem}),
-    }).then(response => response.json()).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
-async function delItem(item, type) {
+async function delItem(item, type, variable) {
     return await fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
 const loaded = {};
 requiredLoaders.forEach(loader => {
-    loaded[loader] = loadData(loader);
+    loadData(loader, loaded[loader]);
 })
 
 // User related methods

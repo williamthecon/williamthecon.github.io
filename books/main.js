@@ -191,8 +191,8 @@ function hash_password(password) {
 
 function login(username, password) {
     console.log(username);
-    console.log(Object.keys(loaded.users));
-    const user = Object.keys(loaded.users).find(user => user.name === username);
+    console.log(loaded.users);
+    const user = loaded.users.find(user => user.name === username);
     console.log(user);
     if (user) {
         console.log(hash_password(password));

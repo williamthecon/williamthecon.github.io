@@ -215,8 +215,9 @@ function changeUsername(currentUsername, newUsername) {
     return false;
 }
 
-const random = Random()
 function generate_token(length = 13) {
+    const random = Random()
+
     let tokens = Array.from(getLocalStorage('tokens'));
     let token = '';
 

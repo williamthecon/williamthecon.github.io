@@ -1,6 +1,3 @@
-// import CryptoJS from 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
-// import { Random } from 'https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js';
-
 // // Custom implementation of SHA-256
 // function SHA256(message) {
 //     function safeAdd(x, y) {
@@ -84,8 +81,13 @@
 const username = localStorage.getItem('username');
 // console.log(username);
 // console.log(window.location.href);
-if (username === null && window.location.href !== "https://williamthecon.github.io/books/login") {
-    window.location.href = "https://williamthecon.github.io/books/login";
+if (username === null) {
+    if (window.location.href !== "https://williamthecon.github.io/books/login") {
+        localStorage.setItem('redirect-to', window.location.href);
+        window.location.href = "https://williamthecon.github.io/books/login";
+    } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
+        localStorage.setItem('redirect-to', "https://williamthecon.github.io/books/");
+    }
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -168,6 +170,8 @@ async function delItem(item, type) {
 }
 
 // User related methods
+// `hash_password` requires to import CryptoJS inside of the HTML:
+//   -> '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>'
 function hash_password(password) {
     const hash = CryptoJS.SHA3(password, { outputLength: 256 });
     return hash.toString(CryptoJS.enc.Hex);
@@ -215,6 +219,8 @@ function changeUsername(currentUsername, newUsername) {
     return false;
 }
 
+// `generate_token` requires to import Random inside of the HTML:
+//   -> '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js"></script>'
 function generate_token(length = 13) {
     const random = Random()
 

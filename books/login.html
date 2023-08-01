@@ -43,8 +43,8 @@
             inputPassword.innerHTML = `
                 <input type="password" name="password" value="${ getLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
             `;
-            delLocalStorage("-login--input-username");
-            delLocalStorage("-login--input-password");
+            deleteLocalStorage("-login--input-username");
+            deleteLocalStorage("-login--input-password");
 
             // Check if redirecting url is defined and set the form action
             const loginForm = document.getElementById("login-form");

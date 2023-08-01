@@ -28,8 +28,8 @@
         </div>
         <div id="content" class="container">
             <form id="login-form" onsubmit="doLogin();" action="/books/">
-                <div id="input-username"></div>
-                <div id="input-password"></div>
+                <div id="input-username-container"></div>
+                <div id="input-password-container"></div>
                 <button type="submit">Anmelden</button>
             </form>
         </div>
@@ -38,13 +38,13 @@
         </div>
         <script>
             // Inputs
-            const inputUsername = document.getElementById("input-username");
-            const inputPassword = document.getElementById("input-password");
+            const inputUsername = document.getElementById("input-username-container");
+            const inputPassword = document.getElementById("input-password-container");
             inputUsername.innerHTML = `
-                <input type="text" name="username" value="${ getLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
+                <input id="input-username" type="text" name="username" value="${ getLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
             `;
             inputPassword.innerHTML = `
-                <input type="password" name="password" value="${ getLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
+                <input id="input-password" type="password" name="password" value="${ getLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
             `;
             deleteLocalStorage("-login--input-username");
             deleteLocalStorage("-login--input-password");

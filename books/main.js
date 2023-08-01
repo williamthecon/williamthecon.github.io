@@ -235,6 +235,14 @@ function generate_token(length = 13) {
 
 // Books related methods
 class Listionary {
+    /**
+     * Parses a query string and returns an object containing the parsed information.
+     *
+     * @param {string} query - The query string to be parsed.
+     * @return {object} info - An object containing the parsed information.
+     *         {array} info.args - An array of lowercase arguments extracted from the query string.
+     *         {object} info.kwargs - An object mapping lowercase keys to lowercase values extracted from the query string.
+     */
     static parse_query(query) {
         const info = { args: [], kwargs: {} };
         let currentStr = "";
@@ -267,8 +275,65 @@ class Listionary {
         return info;
     }
 
-    static search(data, query, max_results = -1, equals = false, ignore_keys = []) {
-        return;
+    static search(data, info, max_results = -1, equals = false, ignore_keys = []) {
+        if (max_results === -1) {
+            max_results = data.length;
+        }
+
+        const keys = Object.keys(data[0]);
+        const args = info.args;
+        const kwargs = info.kwargs;
+
+        const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
+        const ignore_columns = keys.reduce((acc, keys, n) => {
+            if (
+                ignore_keys.some(
+                    (ignore_key) => keys.some((key) => key.toLowerCase().includes(ignore_key))
+                )
+            ) {
+                acc.push(n);
+            }
+            return acc;
+        }, []);
+
+        const search_columns = (row) =>
+            Object.values(row).filter((_, n) => !ignore_columns.includes(n));
+
+        const results = [];
+        for (const value of data) {
+            let approved = true;
+            for (const [k, v] of Object.entries(kwargs)) {
+                const key_index = keys.findIndex((keys) =>
+                    keys.some((key) => key.toLowerCase().includes(k))
+                );
+                if (key_index === -1 || !test(v.toLowerCase(), Object.values(value.__keys)[key_index].toLowerCase())) {
+                    approved = false;
+                    break;
+                }
+            }
+            if (approved) {
+                for (const arg of args) {
+                    if (
+                        !search_columns(value.__keys)
+                            .map((i) => i.toLowerCase())
+                            .some((i) => test(arg.toLowerCase(), i))
+                    ) {
+                        approved = false;
+                        break;
+                    }
+                }
+
+                if (approved) {
+                    results.push(value.__dump__());
+
+                    if (results.length === max_results) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return results
     }
 
     static searchQuery(data, query, max_results = -1, equals = false, ignore_keys = []) {
@@ -284,6 +349,6 @@ function addBook(title, author, username, cover, series = "", volume = "", descr
     addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
 }
 
-function editBook(oldBook, newBook) {
+function editBook(book, newBook) {
     editItem(book, newBook, "books");
 }

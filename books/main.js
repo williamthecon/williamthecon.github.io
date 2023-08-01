@@ -169,20 +169,18 @@ async function editItem(item, newItem, type, variable) {
     }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
 }
 
-async function delItem(item, type, variable) {
+async function delItem(item, type, define) {
     return await fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
 }
 
 const loaded = {};
-requiredLoaders.forEach(loader => {
-    loadData(loader, loaded[loader]);
-})
+requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value}));
 
 // User related methods
 // `hash_password` requires to import CryptoJS inside of the HTML:

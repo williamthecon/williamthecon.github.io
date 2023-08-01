@@ -50,6 +50,7 @@
             const loginForm = document.getElementById("login-form");
             if (getLocalStorage("redirect-to")) {
                 loginForm.action = getLocalStorage("redirect-to");
+                console.log("Redirecting to " + getLocalStorage("redirect-to"));
             }
         </script>
     </body>

@@ -209,7 +209,7 @@ function logout() {
 }
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
-    const user = loaded.users.find(user => user.name === username);
+    const user = Object.keys(loaded.users).find(user => user.name === username);
     if (user) {
         if (hash_password(currentPassword) === user.password) {
             if (newPassword1 === newPassword2) {

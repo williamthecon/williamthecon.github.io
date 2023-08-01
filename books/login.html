@@ -49,7 +49,11 @@
             // Check if redirecting url is defined and set the form action
             const loginForm = document.getElementById("login-form");
             if (getLocalStorage("redirect-to")) {
-                loginForm.action = getLocalStorage("redirect-to");
+                // loginForm.action = getLocalStorage("redirect-to");
+                loginForm.addEventListener("submit", e => {
+                    window.location.href = getLocalStorage("redirect-to");
+                    e.preventDefault();
+                })
                 console.log("Redirecting to " + getLocalStorage("redirect-to"));
             }
         </script>

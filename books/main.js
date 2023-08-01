@@ -190,7 +190,7 @@ function hash_password(password) {
 }
 
 function login(username, password) {
-    const user = loaded.users.find(user => user.name === username);
+    const user = Object.keys(loaded.users).find(user => user.name === username);
     if (user) {
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);
@@ -223,7 +223,7 @@ function changePassword(currentPassword, newPassword1, newPassword2) {
 }
 
 function changeUsername(currentUsername, newUsername) {
-    const user = findData("users", true, kwargs = { "name": currentUsername });
+    const user = Object.keys(loaded.users).find(user => user.name === username);
     // const users = loadData("users");
     // const user = users.find(user => user.name === currentUsername);
     if (user) {

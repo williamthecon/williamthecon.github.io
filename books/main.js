@@ -116,7 +116,7 @@ async function loadData(type, define) {
         headers: {
             'Content-Type': 'application/json; charset=utf-8'
         }
-    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
+    }).then(response => response.json()).catch(error => console.log(error)).then(data => define(data));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {

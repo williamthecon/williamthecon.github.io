@@ -191,6 +191,7 @@ function hash_password(password) {
 
 function login(username, password) {
     const user = Object.keys(loaded.users).find(user => user.name === username);
+    console.log(user);
     if (user) {
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);

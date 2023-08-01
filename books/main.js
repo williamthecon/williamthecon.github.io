@@ -110,13 +110,13 @@ function deleteLocalStorage(key) {
     localStorage.removeItem(key);
 }
 
-async function loadData(type, variable) {
-    return fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
+async function loadData(type, define) {
+    return await fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json; charset=utf-8'
         }
-    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
@@ -139,34 +139,34 @@ async function loadData(type, variable) {
 //     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
 // }
 
-async function saveData(data, type, variable) {
+async function saveData(data, type, define) {
     return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"data": data}),
-    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
 }
 
-async function addItem(item, type, variable) {
+async function addItem(item, type, define) {
     return await fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
 }
 
-async function editItem(item, newItem, type, variable) {
+async function editItem(item, newItem, type, define) {
     return await fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item, "new-item": newItem}),
-    }).then(response => response.json()).then(data => {variable = data}).catch(error => console.log(error));
+    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
 }
 
 async function delItem(item, type, define) {

@@ -183,9 +183,11 @@ function login(username, password) {
     if (user) {
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);
+            console.log("Login successful");
             return true;
         }
     }
+    console.log("Login failed");
     setLocalStorage('-login--input-username', username)
     setLocalStorage('-login--input-password', password)
     return false;

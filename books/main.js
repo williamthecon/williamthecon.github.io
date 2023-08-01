@@ -116,18 +116,25 @@ async function loadData(type) {
         .catch(error => console.log(error));
 }
 
-async function searchData(type, ...args) {
-    for (const arg of args) {
-        args.push(arg.toLowerCase());
-    }
-    return await fetch("https://my-book-api.wtc248.repl.co/search/" + type, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify({"args": args, "kwargs": kwargs}),
-    }).then(response => response.json()).catch(error => console.log(error));
-}
+// async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
+//     return await fetch("https://my-book-api.wtc248.repl.co/search/" + type, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json; charset=utf-8'
+//         },
+//         body: JSON.stringify({"max_results": max_results, "equals": equals, "ignore_indices": ignore_indices, "args": args, "kwargs": kwargs}),
+//     }).then(response => {d = response.json(); if (d.success) {return d.data}; return []}).catch(error => console.log(error));
+// }
+
+// async function findData(type, equals = false, ignore_indices = [], args = [], kwargs = {}) {
+//     return await fetch("https://my-book-api.wtc248.repl.co/find/" + type, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json; charset=utf-8'
+//         },
+//         body: JSON.stringify({"equals": equals, "ignore_indices": ignore_indices, "args": args, "kwargs": kwargs}),
+//     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
+// }
 
 async function saveData(data, type) {
     return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
@@ -169,6 +176,11 @@ async function delItem(item, type) {
     }).then(response => response.json()).catch(error => console.log(error));
 }
 
+const loaded = {};
+requiredLoaders.forEach(loader => {
+    loaded[loader] = loadData(loader);
+})
+
 // User related methods
 // `hash_password` requires to import CryptoJS inside of the HTML:
 //   -> '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>'
@@ -178,8 +190,7 @@ function hash_password(password) {
 }
 
 function login(username, password) {
-    const users = loadData("users");
-    const user = users.find(user => user.name === username);
+    const user = loaded.users.find(user => user.name === username);
     if (user) {
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);
@@ -198,12 +209,12 @@ function logout() {
 }
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
-    const users = loadData("users");
-    const user = users.find(user => user.name === username);
+    const user = loaded.users.find(user => user.name === username);
     if (user) {
         if (hash_password(currentPassword) === user.password) {
             if (newPassword1 === newPassword2) {
                 user.password = hash_password(newPassword1);
+                saveData(loaded.users, "users");
                 return true;
             }
         }
@@ -212,8 +223,9 @@ function changePassword(currentPassword, newPassword1, newPassword2) {
 }
 
 function changeUsername(currentUsername, newUsername) {
-    const users = loadData("users");
-    const user = users.find(user => user.name === currentUsername);
+    const user = findData("users", true, kwargs = { "name": currentUsername });
+    // const users = loadData("users");
+    // const user = users.find(user => user.name === currentUsername);
     if (user) {
         user.name = newUsername;
         return true;

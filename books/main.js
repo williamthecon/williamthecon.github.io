@@ -116,7 +116,7 @@ async function loadData(type, define) {
         headers: {
             'Content-Type': 'application/json; charset=utf-8'
         }
-    }).then(response => response.json()).catch(error => console.log(error)).then(data => define(data));
+    }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
@@ -146,7 +146,7 @@ async function saveData(data, type, define) {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"data": data}),
-    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
+    }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
 async function addItem(item, type, define) {
@@ -156,7 +156,7 @@ async function addItem(item, type, define) {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
+    }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
 async function editItem(item, newItem, type, define) {
@@ -166,7 +166,7 @@ async function editItem(item, newItem, type, define) {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item, "new-item": newItem}),
-    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
+    }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
 async function delItem(item, type, define) {
@@ -176,7 +176,7 @@ async function delItem(item, type, define) {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => response.json()).then(data => define(data)).catch(error => console.log(error));
+    }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
 const loaded = {};

@@ -182,6 +182,8 @@ function login(username, password) {
             return true;
         }
     }
+    setLocalStorage('-login--input-username', username)
+    setLocalStorage('-login--input-password', password)
     return false;
 }
 

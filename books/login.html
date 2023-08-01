@@ -38,11 +38,13 @@
             const inputUsername = document.getElementById("input-username");
             const inputPassword = document.getElementById("input-password");
             inputUsername.innerHTML = `
-                <input type="text" name="username" value="${ getLocalStorage("username") }" autocomplete="username" placeholder="Benutzername">
+                <input type="text" name="username" value="${ getLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
             `;
             inputPassword.innerHTML = `
-                <input type="password" name="password" value="${ getLocalStorage("password") }" autocomplete="current-password" placeholder="Passwort">
+                <input type="password" name="password" value="${ getLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
             `;
+            delLocalStorage("-login--input-username");
+            delLocalStorage("-login--input-password");
 
             // Check if redirecting url is defined and set the form action
             const loginForm = document.getElementById("login-form");

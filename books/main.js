@@ -111,7 +111,7 @@ function deleteLocalStorage(key) {
 }
 
 async function loadData(type, define) {
-    return await fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
+    return fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json; charset=utf-8',

@@ -114,8 +114,7 @@ async function loadData(type, define) {
     return fetch("https://my-book-api.wtc248.repl.co/load/" + type, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/json; charset=utf-8'
         }
     }).then(response => define(response.json())).catch(error => console.log(error));
 }

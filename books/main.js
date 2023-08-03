@@ -211,6 +211,7 @@ function login(username, password) {
     const user = loaded.users.find(user => user.name === username);
     console.log(user);
     if (user) {
+        console.log(hash_password("3456"));
         console.log(hash_password(password));
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);

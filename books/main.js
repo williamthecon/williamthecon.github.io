@@ -131,7 +131,7 @@ async function loadData(type, define) {
     //         'TE': 'trailers'
     //     }
     // }
-    ).then(response => response.json()).then(data => {if (data.success) {define(data.data)}; define([])}).catch(error => console.log(error));
+    ).then(response => response.json()).then(data => {if (data.success) {define(data.data)} else { define([])};}).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {

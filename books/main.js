@@ -143,8 +143,6 @@ function login(username, password) {
         }
     }
     console.log("Login failed");
-    setLocalStorage('-login--input-username', username)
-    setLocalStorage('-login--input-password', password)
     return false;
 }
 

@@ -195,7 +195,9 @@ async function delItem(item, type, define) {
 }
 
 const loaded = {};
-requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value}));
+if (requireLoaders !== undefined) {
+    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value}));
+}
 
 // User related methods
 // `hash_password` requires to import CryptoJS inside of the HTML:

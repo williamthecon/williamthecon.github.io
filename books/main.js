@@ -28,6 +28,12 @@ function deleteLocalStorage(key) {
     localStorage.removeItem(key);
 }
 
+function popLocalStorage(key) {
+    const value = localStorage.getItem(key);
+    localStorage.removeItem(key);
+    return value;
+}
+
 async function loadData(type, define) {
     return await fetch("https://my-book-api.wtc248.repl.co/load/" + type, // {
     //     method: 'GET',

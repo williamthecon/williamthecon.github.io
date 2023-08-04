@@ -14,6 +14,13 @@
     <body>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
+        <script>
+            function doAdd() {
+                var username = document.getElementById("input-username").value;
+                var password = document.getElementById("input-password").value;
+                return addItem(username, password);
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Hinzufügen</h1>
             <h4>{{ username }}</h4>
@@ -39,28 +46,28 @@
                 </div>
             </div>
             <form action="/add" method="post" id="add-form">
-                <div>
+                <div id="input-title-container">
                     <input type="text" id="input-title" name="title" value="{{ book.title }}" placeholder="Titel" required>
                 </div>
-                <div>
+                <div id="input-series-container">
                     <input type="text" id="input-series" name="series" value="{{ book.series }}" placeholder="Reihe (Opt.)">
                 </div>
-                <div>
+                <div id="input-volume-container">
                     <input type="text" id="input-volume" name="volume" value="{{ book.volume }}" placeholder="Band (Opt.)">
                 </div>
-                <div>
+                <div id="input-author-container">
                     <input type="text" id="input-author" name="author" value="{{ book.author }}" placeholder="Autor" required>
                 </div>
-                <div>
-                    <input type="text" id="input-cover" name="cover" value="{{ book.cover }}" placeholder="Umschlag">
+                <div id="input-cover-container">
+                    <input type="text" id="input-cover" name="cover" value="{{ book.cover }}" placeholder="Umschlagtyp">
                 </div>
-                <div>
+                <div id="input-isbn-container">
                     <input type="text" id="input-isbn" name="isbn" value="{{ book.isbn }}" placeholder="ISBN">
                 </div>
-                <div>
+                <div id="input-description-container">
                     <textarea rows=5 id="input-description" name="description" value="{{ book.description }}" placeholder="Beschreibung"></textarea>
                 </div>
-                <div>
+                <div id="input-image-container">
                     <input type="text" id="input-image" name="image" value="{{ book.image }}" placeholder="Bild-Link">
                 </div>
                 <button type="submit">Hinzufügen</button>
@@ -69,5 +76,49 @@
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Inputs
+            const inputTitle = document.getElementById("input-title-container");
+            const inputSeries = document.getElementById("input-series-container");
+            const inputVolume = document.getElementById("input-volume-container");
+            const inputAuthor = document.getElementById("input-author-container");
+            const inputCover = document.getElementById("input-cover-container");
+            const inputISBN = document.getElementById("input-isbn-container");
+            const inputDescription = document.getElementById("input-description-container");
+            const inputImage = document.getElementById("input-image-container");
+
+            inputTitle.innerHTML = `
+                <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername">
+            `;
+            inputSeries.innerHTML = `
+                <input id="input-series" type="text" name="series" value="${ popLocalStorage("-login--input-series") }" placeholder="Reihe (Opt.)">
+            `;
+            inputVolume.innerHTML = `
+                <input id="input-volume" type="text" name="volume" value="${ popLocalStorage("-login--input-volume") }" placeholder="Band (Opt.)">
+            `;
+            inputAuthor.innerHTML = `
+                <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor">
+            `;
+            inputCover.innerHTML = `
+                <input id="input-cover" type="text" name="cover" value="${ popLocalStorage("-login--input-cover") }" placeholder="Umschlagtyp">
+            `;
+            inputISBN.innerHTML = `
+                <input id="input-isbn" type="text" name="isbn" value="${ popLocalStorage("-login--input-isbn") }" placeholder="ISBN">
+            `;
+            inputDescription.innerHTML = `
+                <textarea id="input-description" type="text" name="description" value="${ popLocalStorage("-login--input-description") }" placeholder="Beschreibung" rows=5></textarea>
+            `;
+            inputImage.innerHTML = `
+                <input id="input-image" type="text" name="image" value="${ popLocalStorage("-login--input-image") }" placeholder="Bild-Link">
+            `;
+
+            // Check if redirecting url is defined and set the form action
+            const addForm = document.getElementById("add-form");
+            if (getLocalStorage("redirect-to")) {
+                addForm.addEventListener("submit", e => {
+                    e.preventDefault();
+                })
+            }
+        </script>
     </body>
 </html>

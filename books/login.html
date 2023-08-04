@@ -42,19 +42,17 @@
             // Inputs
             const inputUsername = document.getElementById("input-username-container");
             const inputPassword = document.getElementById("input-password-container");
+
             inputUsername.innerHTML = `
-                <input id="input-username" type="text" name="username" value="${ getLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
+                <input id="input-username" type="text" name="username" value="${ popLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
             `;
             inputPassword.innerHTML = `
-                <input id="input-password" type="password" name="password" value="${ getLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
+                <input id="input-password" type="password" name="password" value="${ popLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
             `;
-            deleteLocalStorage("-login--input-username");
-            deleteLocalStorage("-login--input-password");
 
             // Check if redirecting url is defined and set the form action
             const loginForm = document.getElementById("login-form");
             if (getLocalStorage("redirect-to")) {
-                // loginForm.action = getLocalStorage("redirect-to");
                 loginForm.addEventListener("submit", e => {
                     window.location.href = getLocalStorage("redirect-to");
                     e.preventDefault();

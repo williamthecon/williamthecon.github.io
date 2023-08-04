@@ -69,7 +69,7 @@
 
             // Check if redirecting url is defined and if not, define it, and block the default form redirection
             const loginForm = document.getElementById("login-form");
-
+            console.log("Redirecting to: " + getLocalStorage("redirect-to"));
             loginForm.addEventListener("submit", e => {
                 doLogin();
                 if (getLocalStorage("redirect-to")) {

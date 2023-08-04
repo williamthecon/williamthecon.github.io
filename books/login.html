@@ -56,7 +56,7 @@
             if (getLocalStorage("redirect-to")) {
                 // loginForm.action = getLocalStorage("redirect-to");
                 loginForm.addEventListener("submit", e => {
-                    // window.location.href = getLocalStorage("redirect-to");
+                    window.location.href = getLocalStorage("redirect-to");
                     e.preventDefault();
                 })
                 console.log("Redirecting to " + getLocalStorage("redirect-to"));

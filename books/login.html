@@ -30,8 +30,12 @@
         </div>
         <div id="content" class="container">
             <form id="login-form">
-                <div id="input-username-container"></div>
-                <div id="input-password-container"></div>
+                <div>
+                    <input id="username-input" type="text" name="username" placeholder="Benutzername" required>
+                </div>
+                <div>
+                    <input id="password-input" type="password" name="password" placeholder="Passwort" required>
+                </div>
                 <button type="submit">Anmelden</button>
             </form>
         </div>
@@ -40,17 +44,30 @@
         </div>
         <script>
             // Inputs
-            const inputUsername = document.getElementById("input-username-container");
-            const inputPassword = document.getElementById("input-password-container");
+            const usernameInput = document.getElementById("username-input");
+            const passwordInput = document.getElementById("password-input");
 
-            inputUsername.innerHTML = `
-                <input id="input-username" type="text" name="username" value="${ popLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
-            `;
-            inputPassword.innerHTML = `
-                <input id="input-password" type="password" name="password" value="${ popLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
-            `;
+            usernameInput.value = localStorage.getItem("-login--input-username");
+            passwordInput.value = localStorage.getItem("-login--input-password");
 
-            // Check if redirecting url is defined and set the form action
+            usernameInput.addEventListener("input", e => {
+                localStorage.setItem("-login--input-username", e.target.value);
+            });
+            passwordInput.addEventListener("input", e => {
+                localStorage.setItem("-login--input-password", e.target.value);
+            });
+
+            // const inputUsername = document.getElementById("input-username-container");
+            // const inputPassword = document.getElementById("input-password-container");
+
+            // inputUsername.innerHTML = `
+            //     <input id="input-username" type="text" name="username" value="${ popLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
+            // `;
+            // inputPassword.innerHTML = `
+            //     <input id="input-password" type="password" name="password" value="${ popLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
+            // `;
+
+            // Check if redirecting url is defined and if not, define it, and block the default form redirection
             const loginForm = document.getElementById("login-form");
 
             loginForm.addEventListener("submit", e => {

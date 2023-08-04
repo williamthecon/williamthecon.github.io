@@ -210,7 +210,7 @@ class Listionary {
      *         {array} info.args - An array of lowercase arguments extracted from the query string.
      *         {object} info.kwargs - An object mapping lowercase keys to lowercase values extracted from the query string.
      */
-    static parse_query(query) {
+    static parse_query(keys, query) {
         const info = { args: [], kwargs: {} };
         let currentStr = "";
         let inStr = false;
@@ -247,6 +247,8 @@ class Listionary {
             max_results = data.length;
         }
 
+        console.log("Info: " + info);
+
         const keys = Object.keys(data[0]);
         const args = info.args;
         const kwargs = info.kwargs;
@@ -263,8 +265,7 @@ class Listionary {
             return acc;
         }, []);
 
-        const search_columns = (row) =>
-            Object.values(row).filter((_, n) => !ignore_columns.includes(n));
+        const search_columns = (row) => Object.values(row).filter((_, n) => !ignore_columns.includes(n));
 
         const results = [];
         for (const value of data) {
@@ -303,13 +304,17 @@ class Listionary {
         return results
     }
 
-    static searchQuery(data, query, max_results = -1, equals = false, ignore_keys = []) {
-        return;
+    static searchQuery(data, keys, query, max_results = -1, equals = false, ignore_keys = []) {
+        return this.search(data, this.parse_query(keys, query), max_results, equals, ignore_keys);
     }
 
     static find(data, equals = false, ignore_keys = [], ...args) {
         return;
     }
+}
+
+function searchBooks(query) {
+    Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 
 function addBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {

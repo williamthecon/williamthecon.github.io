@@ -17,9 +17,15 @@
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <script>
             function doAdd() {
-                var username = document.getElementById("input-username").value;
-                var password = document.getElementById("input-password").value;
-                return addItem(username, password);
+                var title = document.getElementById("title-input").value;
+                var series = document.getElementById("series-input").value;
+                var volume = document.getElementById("volume-input").value;
+                var author = document.getElementById("author-input").value;
+                var cover = document.getElementById("cover-input").value;
+                var isbn = document.getElementById("isbn-input").value;
+                var description = document.getElementById("description-input").value;
+                var image = document.getElementById("image-input").value;
+                return addBook([title, series, volume, author, cover, isbn, description, image], "books");
             }
         </script>
         <div id="header" class="container">
@@ -47,14 +53,30 @@
                 </div>
             </div>
             <form id="add-form">
-                <div id="input-title-container"></div>
-                <div id="input-series-container"></div>
-                <div id="input-volume-container"></div>
-                <div id="input-author-container"></div>
-                <div id="input-cover-container"></div>
-                <div id="input-isbn-container"></div>
-                <div id="input-description-container"></div>
-                <div id="input-image-container"></div>
+                <div>
+                    <input id="title-input" type="text" name="title" placeholder="Benutzername" required>
+                </div>
+                <div>
+                    <input id="series-input" type="text" name="series" placeholder="Reihe (Opt.)">
+                </div>
+                <div>
+                    <input id="volume-input" type="text" name="volume" placeholder="Band (Opt.)">
+                </div>
+                <div>
+                    <input id="author-input" type="text" name="author" placeholder="Autor" required>
+                </div>
+                <div>
+                    <input id="cover-input" type="text" name="cover" placeholder="Umschlag">
+                </div>
+                <div>
+                    <input id="isbn-input" type="text" name="isbn" placeholder="ISBN">
+                </div>
+                <div>
+                    <textarea id="description-input" type="text" name="description" placeholder="Beschreibung" rows=5></textarea>
+                </div>
+                <div>
+                    <input id="image-input" type="text" name="image" placeholder="Bild-Link">
+                </div>
                 <button type="submit">Hinzufügen</button>
             </form>
         </div>
@@ -67,41 +89,84 @@
             usernameContainer.innerHTML = getLocalStorage("username");
 
             // Inputs
-            const inputTitle = document.getElementById("input-title-container");
-            const inputSeries = document.getElementById("input-series-container");
-            const inputVolume = document.getElementById("input-volume-container");
-            const inputAuthor = document.getElementById("input-author-container");
-            const inputCover = document.getElementById("input-cover-container");
-            const inputISBN = document.getElementById("input-isbn-container");
-            const inputDescription = document.getElementById("input-description-container");
-            const inputImage = document.getElementById("input-image-container");
+            const titleInput = document.getElementById("title-input");
+            const seriesInput = document.getElementById("series-input");
+            const volumeInput = document.getElementById("volume-input");
+            const authorInput = document.getElementById("author-input");
+            const coverInput = document.getElementById("cover-input");
+            const isbnInput = document.getElementById("isbn-input");
+            const descriptionInput = document.getElementById("description-input");
+            const imageInput = document.getElementById("image-input");
 
-            inputTitle.innerHTML = `
-                <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername" required>
-            `;
-            inputSeries.innerHTML = `
-                <input id="input-series" type="text" name="series" value="${ popLocalStorage("-login--input-series") }" placeholder="Reihe (Opt.)">
-            `;
-            inputVolume.innerHTML = `
-                <input id="input-volume" type="text" name="volume" value="${ popLocalStorage("-login--input-volume") }" placeholder="Band (Opt.)">
-            `;
-            inputAuthor.innerHTML = `
-                <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor" required>
-            `;
-            inputCover.innerHTML = `
-                <input id="input-cover" type="text" name="cover" value="${ popLocalStorage("-login--input-cover") }" placeholder="Umschlagtyp">
-            `;
-            inputISBN.innerHTML = `
-                <input id="input-isbn" type="text" name="isbn" value="${ popLocalStorage("-login--input-isbn") }" placeholder="ISBN">
-            `;
-            inputDescription.innerHTML = `
-                <textarea id="input-description" type="text" name="description" value="${ popLocalStorage("-login--input-description") }" placeholder="Beschreibung" rows=5></textarea>
-            `;
-            inputImage.innerHTML = `
-                <input id="input-image" type="text" name="image" value="${ popLocalStorage("-login--input-image") }" placeholder="Bild-Link">
-            `;
+            titleInput.value = popLocalStorage("-login--input-title");
+            seriesInput.value = popLocalStorage("-login--input-series");
+            volumeInput.value = popLocalStorage("-login--input-volume");
+            authorInput.value = popLocalStorage("-login--input-author");
+            coverInput.value = popLocalStorage("-login--input-cover");
+            isbnInput.value = popLocalStorage("-login--input-isbn");
+            descriptionInput.value = popLocalStorage("-login--input-description");
+            imageInput.value = popLocalStorage("-login--input-image");
 
-            // Check if redirecting url is defined and set the form action
+            titleInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-title", e.target.value);
+            });
+            seriesInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-series", e.target.value);
+            });
+            volumeInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-volume", e.target.value);
+            });
+            authorInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-author", e.target.value);
+            });
+            coverInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-cover", e.target.value);
+            });
+            isbnInput.addEventListener("input", e =>  {
+                setLocalStorage("-login--input-isbn", e.target.value);
+            });
+            descriptionInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-description", e.target.value);
+            });
+            imageInput.addEventListener("input", e => {
+                setLocalStorage("-login--input-image", e.target.value);
+            });
+
+            // const inputTitle = document.getElementById("input-title-container");
+            // const inputSeries = document.getElementById("input-series-container");
+            // const inputVolume = document.getElementById("input-volume-container");
+            // const inputAuthor = document.getElementById("input-author-container");
+            // const inputCover = document.getElementById("input-cover-container");
+            // const inputISBN = document.getElementById("input-isbn-container");
+            // const inputDescription = document.getElementById("input-description-container");
+            // const inputImage = document.getElementById("input-image-container");
+
+            // inputTitle.innerHTML = `
+            //     <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername" required>
+            // `;
+            // inputSeries.innerHTML = `
+            //     <input id="input-series" type="text" name="series" value="${ popLocalStorage("-login--input-series") }" placeholder="Reihe (Opt.)">
+            // `;
+            // inputVolume.innerHTML = `
+            //     <input id="input-volume" type="text" name="volume" value="${ popLocalStorage("-login--input-volume") }" placeholder="Band (Opt.)">
+            // `;
+            // inputAuthor.innerHTML = `
+            //     <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor" required>
+            // `;
+            // inputCover.innerHTML = `
+            //     <input id="input-cover" type="text" name="cover" value="${ popLocalStorage("-login--input-cover") }" placeholder="Umschlagtyp">
+            // `;
+            // inputISBN.innerHTML = `
+            //     <input id="input-isbn" type="text" name="isbn" value="${ popLocalStorage("-login--input-isbn") }" placeholder="ISBN">
+            // `;
+            // inputDescription.innerHTML = `
+            //     <textarea id="input-description" type="text" name="description" value="${ popLocalStorage("-login--input-description") }" placeholder="Beschreibung" rows=5></textarea>
+            // `;
+            // inputImage.innerHTML = `
+            //     <input id="input-image" type="text" name="image" value="${ popLocalStorage("-login--input-image") }" placeholder="Bild-Link">
+            // `;
+
+            // Block the form redirection
             const addForm = document.getElementById("add-form");
             addForm.addEventListener("submit", e => {
                 e.preventDefault();

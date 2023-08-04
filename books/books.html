@@ -20,6 +20,39 @@
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <script type="text/javascript" src="/books/table.js"></script>
         <script>
+            function doSearch() {
+                const query = document.getElementById("query-input").value;
+                const booksTable = document.getElementById("books-table");
+
+                const booksTableHeader = document.createElement("li");
+                booksTableHeader.classList.add("table-row");
+                booksTableHeader.classList.add("table-header");
+                booksTableHeader.onclick = () => view(book.id);
+                booksTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>"
+                `;
+                booksTable.appendChild(booksTableHeader);
+
+                for (let book of search(loaded.books, query)) {
+                    const bookRow = document.createElement("li");
+                    bookRow.classList.add("table-row");
+                    bookRow.onclick = () => view(book.id);
+                    bookRow.innerHTML = `
+                        <span class="table-cell">${book.title}</span>
+                        <span class="table-cell">${book.series}</span>
+                        <span class="table-cell">${book.volume}</span>
+                        <span class="table-cell">${book.author}</span>
+                        <span class="table-cell">${book.username}</span>
+                    `;
+                    booksTable.appendChild(bookRow);
+                }
+
+            }
+
             function view(id) {
                 window.location.href = "/view?id=" + id;
             }
@@ -51,7 +84,7 @@
             <div class="content-block">
                 <form id="search-form">
                     <div>
-                        <input type="text" id="input-query" name="query" value="{{ query }}" placeholder="Suchen...">
+                        <input id="query-input" type="text" name="query" placeholder="Suchen...">
                     </div>
                     <div>
                         <button type="submit">Suchen</button>
@@ -80,14 +113,24 @@
             // Username Container
             const usernameContainer = document.getElementById("username-container");
             usernameContainer.innerHTML = getLocalStorage("username");
-            //    {% for book in books %}
-            //        <li class="table-row" onclick="view('{{ book.id }}')">{% for info in list(book)[:5] %}
-            //            <span class="table-cell">{{ info }}</span>{% endfor %}
-            //        </li>{% endfor %}
+
+            // Inputs
+            const queryInput = document.getElementById("query-input");
+            queryInput.value = getLocalStorage("query");
+            queryInput.addEventListener("input", () => {
+                doSearch(queryInput.value);
+                setLocalStorage("query", queryInput.value);
+            });
+
+            // Block the form redirection
+            const searchForm = document.getElementById("search-form");
+            addForm.addEventListener("submit", e => {
+                e.preventDefault();
+            })
 
             // Books Table
             const booksTable = document.getElementById("books-table");
-            for (let book of books) {
+            for (let book of loaded.books) {
                 const bookRow = document.createElement("li");
                 bookRow.classList.add("table-row");
                 bookRow.onclick = () => view(book.id);

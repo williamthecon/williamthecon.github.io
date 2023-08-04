@@ -16,7 +16,7 @@
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <div id="header" class="container">
             <h1>Meine Bücher - Startseite</h1>
-            <h4><script>document.write(getLocalStorage("username"));</script></h4>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
@@ -42,5 +42,10 @@
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            const usernameContainer = document.getElementById("username-container");
+            usernameContainer.innerHTML = getLocalStorage("username");
+        </script>
     </body>
 </html>

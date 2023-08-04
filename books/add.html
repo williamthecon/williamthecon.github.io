@@ -23,7 +23,7 @@
         </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Hinzufügen</h1>
-            <h4>{{ username }}</h4>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
@@ -61,6 +61,10 @@
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
         <script>
+            // Username Container
+            const usernameContainer = document.getElementById("username-container");
+            usernameContainer.innerHTML = getLocalStorage("username");
+
             // Inputs
             const inputTitle = document.getElementById("input-title-container");
             const inputSeries = document.getElementById("input-series-container");

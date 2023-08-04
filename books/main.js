@@ -55,7 +55,7 @@ async function loadData(type, define) {
     //         'TE': 'trailers'
     //     }
     // }
-    ).then(response => response.json()).then(data => {if (data.success) {define(data.data)} else { define([])};}).catch(error => console.log(error));
+    ).then(response => response.json()).then(data => {if (data.success) {define(data.data); console.log("Success loading " + type)} else { define([]); console.log("No success loading " + type) };}).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
@@ -120,7 +120,7 @@ async function delItem(item, type, define) {
 
 const loaded = {};
 if (requireLoaders !== undefined) {
-    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value}));
+    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
 }
 
 // User related methods

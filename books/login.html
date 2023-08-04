@@ -29,7 +29,7 @@
             <h1>Meine Bücher - Anmeldung</h1>
         </div>
         <div id="content" class="container">
-            <form id="login-form" onsubmit="doLogin();" action="/books/">
+            <form id="login-form" onsubmit="doLogin();">
                 <div id="input-username-container"></div>
                 <div id="input-password-container"></div>
                 <button type="submit">Anmelden</button>
@@ -52,13 +52,13 @@
 
             // Check if redirecting url is defined and set the form action
             const loginForm = document.getElementById("login-form");
-            if (getLocalStorage("redirect-to")) {
-                loginForm.addEventListener("submit", e => {
+
+            loginForm.addEventListener("submit", e => {
+                if (getLocalStorage("redirect-to")) {
                     window.location.href = getLocalStorage("redirect-to");
-                    e.preventDefault();
-                })
-                console.log("Redirecting to " + getLocalStorage("redirect-to"));
-            }
+                }
+                e.preventDefault();
+            })
         </script>
     </body>
 </html>

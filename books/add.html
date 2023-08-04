@@ -114,11 +114,9 @@
 
             // Check if redirecting url is defined and set the form action
             const addForm = document.getElementById("add-form");
-            if (getLocalStorage("redirect-to")) {
-                addForm.addEventListener("submit", e => {
-                    e.preventDefault();
-                })
-            }
+            addForm.addEventListener("submit", e => {
+                e.preventDefault();
+            })
         </script>
     </body>
 </html>

@@ -45,31 +45,15 @@
                     </ul>
                 </div>
             </div>
-            <form action="/add" method="post" id="add-form">
-                <div id="input-title-container">
-                    <input type="text" id="input-title" name="title" value="{{ book.title }}" placeholder="Titel" required>
-                </div>
-                <div id="input-series-container">
-                    <input type="text" id="input-series" name="series" value="{{ book.series }}" placeholder="Reihe (Opt.)">
-                </div>
-                <div id="input-volume-container">
-                    <input type="text" id="input-volume" name="volume" value="{{ book.volume }}" placeholder="Band (Opt.)">
-                </div>
-                <div id="input-author-container">
-                    <input type="text" id="input-author" name="author" value="{{ book.author }}" placeholder="Autor" required>
-                </div>
-                <div id="input-cover-container">
-                    <input type="text" id="input-cover" name="cover" value="{{ book.cover }}" placeholder="Umschlagtyp">
-                </div>
-                <div id="input-isbn-container">
-                    <input type="text" id="input-isbn" name="isbn" value="{{ book.isbn }}" placeholder="ISBN">
-                </div>
-                <div id="input-description-container">
-                    <textarea rows=5 id="input-description" name="description" value="{{ book.description }}" placeholder="Beschreibung"></textarea>
-                </div>
-                <div id="input-image-container">
-                    <input type="text" id="input-image" name="image" value="{{ book.image }}" placeholder="Bild-Link">
-                </div>
+            <form id="add-form">
+                <div id="input-title-container"></div>
+                <div id="input-series-container"></div>
+                <div id="input-volume-container"></div>
+                <div id="input-author-container"></div>
+                <div id="input-cover-container"></div>
+                <div id="input-isbn-container"></div>
+                <div id="input-description-container"></div>
+                <div id="input-image-container"></div>
                 <button type="submit">Hinzufügen</button>
             </form>
         </div>
@@ -88,7 +72,7 @@
             const inputImage = document.getElementById("input-image-container");
 
             inputTitle.innerHTML = `
-                <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername">
+                <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername" required>
             `;
             inputSeries.innerHTML = `
                 <input id="input-series" type="text" name="series" value="${ popLocalStorage("-login--input-series") }" placeholder="Reihe (Opt.)">
@@ -97,7 +81,7 @@
                 <input id="input-volume" type="text" name="volume" value="${ popLocalStorage("-login--input-volume") }" placeholder="Band (Opt.)">
             `;
             inputAuthor.innerHTML = `
-                <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor">
+                <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor" required>
             `;
             inputCover.innerHTML = `
                 <input id="input-cover" type="text" name="cover" value="${ popLocalStorage("-login--input-cover") }" placeholder="Umschlagtyp">

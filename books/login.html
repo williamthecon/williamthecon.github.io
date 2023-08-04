@@ -29,7 +29,7 @@
             <h1>Meine Bücher - Anmeldung</h1>
         </div>
         <div id="content" class="container">
-            <form id="login-form" onsubmit="doLogin();">
+            <form id="login-form">
                 <div id="input-username-container"></div>
                 <div id="input-password-container"></div>
                 <button type="submit">Anmelden</button>
@@ -54,6 +54,7 @@
             const loginForm = document.getElementById("login-form");
 
             loginForm.addEventListener("submit", e => {
+                doLogin();
                 if (getLocalStorage("redirect-to")) {
                     window.location.href = getLocalStorage("redirect-to");
                 }

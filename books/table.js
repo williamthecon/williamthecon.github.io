@@ -5,7 +5,7 @@ function viewMore() {
     const rows = Array.from(document.querySelectorAll('.table-row'));
 
     // Hide all rows except the first 50
-    var madeVisible = false;
+    // var madeVisible = false;
     rows.forEach((row, index) => {
         if (index <= currentViewCap && row.style.display === "") {
             row.style.display = 'table-row';

@@ -56,7 +56,7 @@ async function loadData(type, define) {
     //         'TE': 'trailers'
     //     }
     // }
-    ).then(response => response.json()).then(data => {if (data.success) {console.log("data: " + data.data); define(data.data); console.log("Success loading " + type)} else { define([]); console.log("No success loading " + type) };}).catch(error => console.log(error));
+    ).then(response => response.json()).then(data => {if (data.success) {define(data.data); console.log("Success loading " + type)} else { define([]); console.log("No success loading " + type) };}).catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {

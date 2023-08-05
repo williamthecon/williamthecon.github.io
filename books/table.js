@@ -2,7 +2,7 @@ var currentViewCap = 0;
 function viewMore() {
     currentViewCap += 50;
     // Get all table rows
-    const rows = Array.from(document.querySelectorAll('.table-row'));
+    const rows = Array.from(document.querySelectorAll('.table-row:not(.table-header)'));
 
     // Hide all rows except the first 50
     // var madeVisible = false;

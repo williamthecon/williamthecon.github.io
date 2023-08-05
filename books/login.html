@@ -71,11 +71,11 @@
             const loginForm = document.getElementById("login-form");
             console.log("Redirecting to: " + getLocalStorage("redirect-to"));
             loginForm.addEventListener("submit", e => {
+                e.preventDefault();
                 doLogin();
                 if (getLocalStorage("redirect-to")) {
                     window.location.href = getLocalStorage("redirect-to");
                 }
-                e.preventDefault();
             })
         </script>
     </body>

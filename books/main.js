@@ -119,8 +119,8 @@ async function delItem(item, type, define) {
 }
 
 const loaded = {};
-if (typeof requireLoaders !== 'undefined') {
-    requireLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
+if (typeof requiredLoaders !== 'undefined') {
+    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
 }
 
 // User related methods

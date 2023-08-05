@@ -118,8 +118,8 @@
             const queryInput = document.getElementById("query-input");
             queryInput.value = getLocalStorage("query");
             queryInput.addEventListener("input", () => {
-                doSearch(queryInput.value);
                 setLocalStorage("query", queryInput.value);
+                doSearch(queryInput.value);
             });
 
             // Block the form redirection

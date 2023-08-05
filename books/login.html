@@ -47,8 +47,8 @@
             const usernameInput = document.getElementById("username-input");
             const passwordInput = document.getElementById("password-input");
 
-            usernameInput.value = localStorage.getItem("-login--input-username");
-            passwordInput.value = localStorage.getItem("-login--input-password");
+            usernameInput.value = popLocalStorage("-login--input-username");
+            passwordInput.value = popLocalStorage("-login--input-password");
 
             usernameInput.addEventListener("input", e => {
                 localStorage.setItem("-login--input-username", e.target.value);

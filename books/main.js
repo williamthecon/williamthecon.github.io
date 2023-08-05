@@ -1,6 +1,6 @@
 // Check if already logged in or page is already the login page
 const username = localStorage.getItem('username');
-console.log(username);
+
 if (username === null) {
     if (!window.location.href.startsWith("https://williamthecon.github.io/books/login")) {
         localStorage.setItem('redirect-to', window.location.href);
@@ -134,9 +134,9 @@ function hash_password(password) {
 
 function login(username, password) {
     const user = loaded.users.find(user => user.name === username);
-    console.log(user);
+    // console.log(user);
     if (user) {
-        console.log(hash_password(password));
+        // console.log(hash_password(password));
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);
             console.log("Login successful");

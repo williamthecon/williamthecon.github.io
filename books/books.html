@@ -23,6 +23,7 @@
             function doSearch() {
                 const query = document.getElementById("query-input").value;
                 const booksTable = document.getElementById("books-table");
+                booksTable.innerHTML = "";
 
                 const booksTableHeader = document.createElement("li");
                 booksTableHeader.classList.add("table-row");

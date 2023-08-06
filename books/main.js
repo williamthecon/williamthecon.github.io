@@ -286,21 +286,21 @@ class Listionary {
 
         const results = [];
         for (let value of data) {
-            value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
+            let lowerValue = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!test(v, value[k])) {
+                if (!test(v, lowerValue[k])) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
-                value = Object.entries(doIgnoreKeys(value));
+                lowerValue = Object.entries(doIgnoreKeys(lowerValue));
 
                 for (const arg of args) {
-                    if (!value.some(([_, v]) => test(arg.toLowerCase(), v))) {
+                    if (!lowerValue.some(([_, v]) => test(arg.toLowerCase(), v))) {
                         approved = false;
                         break;
                     }
@@ -331,21 +331,21 @@ class Listionary {
         const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
         for (let value of data) {
-            value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
+            let lowerValue = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!test(v, value[k])) {
+                if (!test(v, lowerValue[k])) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
-                value = Object.entries(doIgnoreKeys(value));
+                vallowerValueue = Object.entries(doIgnoreKeys(lowerValue));
 
                 for (const arg of args) {
-                    if (!value.some(([_, v]) => test(arg.toLowerCase(), v))) {
+                    if (!lowerValue.some(([_, v]) => test(arg.toLowerCase(), v))) {
                         approved = false;
                         break;
                     }

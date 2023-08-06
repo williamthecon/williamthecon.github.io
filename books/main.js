@@ -290,24 +290,24 @@ class Listionary {
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!test(v, value[k].toLowerCase())) {
+                if (!test(v, value[k])) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
-                value = doIgnoreKeys(value);
+                value = Object.entries(doIgnoreKeys(value));
 
                 for (const arg of args) {
-                    if (!value.some((i) => test(arg.toLowerCase(), i))) {
+                    if (!value.some(([_, v]) => test(arg.toLowerCase(), v))) {
                         approved = false;
                         break;
                     }
                 }
 
                 if (approved) {
-                    results.push(value);
+                    results.push(Object.fromEntries(value));
 
                     if (results.length === maxResults) {
                         break;
@@ -335,24 +335,24 @@ class Listionary {
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!test(v, value[k].toLowerCase())) {
+                if (!test(v, value[k])) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
-                value = doIgnoreKeys(value);
+                value = Object.entries(doIgnoreKeys(value));
 
                 for (const arg of args) {
-                    if (!value.some((i) => test(arg.toLowerCase(), i))) {
+                    if (!value.some(([_, v]) => test(arg.toLowerCase(), v))) {
                         approved = false;
                         break;
                     }
                 }
 
                 if (approved) {
-                    return value;
+                    return Object.fromEntries(value);
                 }
             }
         }

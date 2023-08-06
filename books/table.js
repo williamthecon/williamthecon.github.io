@@ -231,14 +231,11 @@ function sortArray(arr) {
 
 function sortTable() {
     // const tableCells = Array.from(document.querySelectorAll(".table-cell")).filter(cell => window.getComputedStyle(cell).display !== "none");
-    const tableCells = document.querySelectorAll(".table-cell");
+    const tableCells = document.querySelectorAll(".table-cell:not(.table-header)");
     const tableRows = new Set();
     const headerRow = document.querySelector(".table-header");
     tableCells.forEach(cell => {
-        const parent = cell.parentElement;
-        if (!parent.classList.contains("table-header")) {
-            tableRows.add(parent);
-        }
+        tableRows.add(cell.parentElement);
     });
     const tableRows2 = Array.from(tableRows);
     var importantTexts = [];

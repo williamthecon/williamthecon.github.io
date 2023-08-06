@@ -123,9 +123,8 @@ function hash_password(password) {
 
 function login(username, password) {
     const user = loaded.users.find(user => user.name === username);
-    // console.log(user);
+
     if (user) {
-        // console.log(hash_password(password));
         if (hash_password(password) === user.password) {
             setLocalStorage('username', username);
             console.log("Login successful");
@@ -142,6 +141,7 @@ function logout() {
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
     const user = loaded.users.find(user => user.name === username);
+
     if (user) {
         if (hash_password(currentPassword) === user.password) {
             if (newPassword1 === newPassword2) {
@@ -156,6 +156,7 @@ function changePassword(currentPassword, newPassword1, newPassword2) {
 
 function changeUsername(username, newUsername) {
     const user = loaded.users.find(user => user.name === username);
+
     if (user) {
         user.name = newUsername;
         saveData(loaded.users, "users");
@@ -173,8 +174,6 @@ function generate_token(length = 13) {
     do {
         token = '';
         for (let i = 0; i < length; i++) {
-            // token += characters.charAt(random.integer(0, characters.length - 1));
-            // token += random.pick(random.nativeMath, characters.split(""));
             token += characters.charAt(Math.floor(Math.random() * characters.length));
         }
     } while (tokens.includes(token));

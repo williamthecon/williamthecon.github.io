@@ -63,7 +63,13 @@
         </style>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["books"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script>
+            const book = findBookById(get('id'));
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Buch</h1>
             <h4>{{ username }}</h4>
@@ -82,7 +88,7 @@
                 </div>
             </div>
             <div id="book-block" class="content-block">
-                <div id="book-profile" class="book-block-block">
+                <!-- <div id="book-profile" class="book-block-block">
                     <div class="book-info"><p><b>Titel</b>: <a href='/books?query=Titel%3A"{{ book.title }}"'>{{ book.title }}</a></p></div>
                     <div class="book-info"><p><b>Reihe</b>: {% if book.series %}<a href='/books?query=Reihe%3A"{{ book.series }}"'>{{ book.series }}</a>{% else %}-{% endif %}</p></div>
                     <div class="book-info"><p><b>Band</b>: {% if book.volume %}<a href='/books?query=Band%3A"{{ book.volume }}"'>{{ book.volume }}</a>{% else %}-{% endif %}</p></div>
@@ -96,14 +102,27 @@
                 </div>{% endif %}
                 {% if book.description %}<div id="book-description" class="book-block-block">
                     <div><p><b>Beschreibung</b>: {{ book.description }}</a></p></div>
-                </div>{% endif %}
+                </div>{% endif %} -->
             </div>
-            {% if owner %}<div class="content-block">
-                <button type="button"><a href="/edit?id={{ book.id }}">Bearbeiten</a></button>
-            </div>{% endif %}
+            <!-- {% if owner %}<div class="content-block">
+                <button id="edit-button" type="button"><a href="/edit?id={{ book.id }}">Bearbeiten</a></button>
+            </div>{% endif %} -->
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            const usernameContainer = document.getElementById("username-container");
+            usernameContainer.innerHTML = getLocalStorage("username");
+
+            // Book Block
+            const bookBlock = document.getElementById("book-block");
+
+            const bookHeaderContainer = document.createElement("div");
+            bookHeaderContainer.id = "book-header-container";
+            bookHeaderContainer.innerHTML = `
+                <h2 id="book-title">${book.title}</h2>
+        </script>
     </body>
 </html>

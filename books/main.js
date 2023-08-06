@@ -221,6 +221,9 @@ class Listionary {
             } else if (char === " " && !inStr) {
                 if (currentStr.includes(":")) {
                     const [key, value] = currentStr.split(":");
+                    if (Object.keys(keys).includes(key.toLowerCase())) {
+                        key = keys[key]
+                    }
                     info.kwargs[key.toLowerCase()] = value.toLowerCase();
                 } else {
                     info.args.push(currentStr.toLowerCase());
@@ -233,6 +236,9 @@ class Listionary {
         if (currentStr) {
             if (currentStr.includes(":")) {
                 const [key, value] = currentStr.split(":");
+                if (Object.keys(keys).includes(key.toLowerCase())) {
+                    key = keys[key]
+                }
                 info.kwargs[key.toLowerCase()] = value.toLowerCase();
             } else {
                 info.args.push(currentStr.toLowerCase());
@@ -308,13 +314,68 @@ class Listionary {
         return this.search(data, this.parse_query(keys, query), max_results, equals, ignore_keys);
     }
 
-    static find(data, equals = false, ignore_keys = [], ...args) {
-        return;
+    static find(data, keys, info, equals = false, ignore_keys = []) {
+        const args = info.args;
+        const kwargs = info.kwargs;
+
+        const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
+        const ignore_columns = keys.reduce((acc, keys, n) => {
+            if (
+                ignore_keys.some(
+                    (ignore_key) => keys.some((key) => key.toLowerCase().includes(ignore_key))
+                )
+            ) {
+                acc.push(n);
+            }
+            return acc;
+        }, []);
+
+        const search_columns = (row) => Object.values(row).filter((_, n) => !ignore_columns.includes(n));
+
+        const results = [];
+        for (const value of data) {
+            let approved = true;
+            for (const [k, v] of Object.entries(kwargs)) {
+                const key_index = keys.findIndex((keys) =>
+                    keys.some((key) => key.toLowerCase().includes(k))
+                );
+                if (key_index === -1 || !test(v.toLowerCase(), Object.values(value.__keys)[key_index].toLowerCase())) {
+                    approved = false;
+                    break;
+                }
+            }
+            if (approved) {
+                for (const arg of args) {
+                    if (
+                        !search_columns(value.__keys)
+                            .map((i) => i.toLowerCase())
+                            .some((i) => test(arg.toLowerCase(), i))
+                    ) {
+                        approved = false;
+                        break;
+                    }
+                }
+
+                if (approved) {
+                    results.push(value.__dump__());
+
+                    if (results.length === max_results) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }
 
 function searchBooks(query) {
-    Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+}
+
+function findBookById(id) {
+    return Listionary.find(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, {"args": [], "kwargs": {"id": id}}, true, ignore_keys=["token", "description", "image", "cover"]);
 }
 
 function addBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {

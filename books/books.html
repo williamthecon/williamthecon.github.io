@@ -108,6 +108,9 @@
             // Inputs
             const queryInput = document.getElementById("query-input");
             queryInput.value = getLocalStorage("query");
+            if (queryInput.value) {
+                doSearch(queryInput.value);
+            }
             queryInput.addEventListener("input", () => {
                 setLocalStorage("query", queryInput.value);
                 doSearch(queryInput.value);
@@ -133,7 +136,7 @@
                 <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
             `;
             booksTable.appendChild(booksTableHeader);
-            
+
             async function loadBooks() {
                 while (!loaded.hasOwnProperty('books')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds

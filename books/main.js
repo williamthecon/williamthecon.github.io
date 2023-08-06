@@ -166,8 +166,6 @@ function changeUsername(currentUsername, newUsername) {
     return false;
 }
 
-// `generate_token` requires to import Random inside of the HTML:
-//   -> '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/random-js/2.1.0/random.min.js"></script>'
 function generate_token(length = 13) {
     const random = Random()
 
@@ -180,7 +178,8 @@ function generate_token(length = 13) {
         token = '';
         for (let i = 0; i < length; i++) {
             // token += characters.charAt(random.integer(0, characters.length - 1));
-            token += random.pick(random.nativeMath, characters.split(""));
+            // token += random.pick(random.nativeMath, characters.split(""));
+            token += characters[Math.floor(Math.random() * characters.length)];
         }
     } while (tokens.includes(token));
 

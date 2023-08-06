@@ -40,9 +40,11 @@ function loadData(type, define) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                define(data.data); console.log("Success loading " + type)
+                define(data.data);
+                console.log("Success loading " + type);
             } else {
-                define([]); console.log("No success loading " + type)
+                define([]);
+                console.log("No success loading " + type);
             };
         })
         .catch(error => console.log(error));
@@ -68,44 +70,80 @@ function loadData(type, define) {
 //     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
 // }
 
-function saveData(data, type, define = () => {}) {
+function saveData(data, type, define = (_) => {}) {
     fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"data": data}),
-    }).then(response => define(response.json())).catch(error => console.log(error));
+    }).then(response => response.json())
+        .then(data => {
+            define(data);
+            if (data.success) {
+                console.log("Success saving " + type);
+            } else {
+                console.log("No success saving " + type);
+            };
+        })
+        .catch(error => console.log(error));
 }
 
-function addItem(item, type, define = () => {}) {
+function addItem(item, type, define = (_) => {}) {
     fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => define(response.json())).catch(error => console.log(error));
+    }).then(response => response.json())
+        .then(data => {
+            define(data);
+            if (data.success) {
+                console.log("Success adding " + type);
+            } else {
+                console.log("No success adding " + type);
+            };
+        })
+        .catch(error => console.log(error));
 }
 
-function editItem(item, newItem, type, define = () => {}) {
+function editItem(item, newItem, type, define = (_) => {}) {
     fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item, "new-item": newItem}),
-    }).then(response => define(response.json())).catch(error => console.log(error));
+    }).then(response => response.json())
+        .then(data => {
+            define(data);
+            if (data.success) {
+                console.log("Success editing " + type);
+            } else {
+                console.log("No success editing " + type);
+            };
+        })
+        .catch(error => console.log(error));
 }
 
-function delItem(item, type, define = () => {}) {
+function delItem(item, type, define = (_) => {}) {
     fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify({"item": item}),
-    }).then(response => define(response.json())).catch(error => console.log(error));
+    }).then(response => response.json())
+        .then(data => {
+            define(data);
+            if (data.success) {
+                console.log("Success deleting " + type);
+            } else {
+                console.log("No success deleting " + type);
+            };
+        })
+        .catch(error => console.log(error));
 }
 
 const loaded = {};

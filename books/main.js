@@ -243,9 +243,9 @@ class Listionary {
                 if (currentStr.includes(":")) {
                     const [key, value] = currentStr.split(":");
                     if (Object.keys(keys).includes(key)) {
-                        key = keys[key];
+                        info.kwargs[keys[key]] = value;
                     }
-                    info.kwargs[key] = value;
+
                 } else {
                     info.args.push(currentStr);
                 }
@@ -255,64 +255,52 @@ class Listionary {
             }
         }
         if (currentStr) {
+            currentStr = currentStr.toLowerCase();
             if (currentStr.includes(":")) {
                 var [key, value] = currentStr.split(":");
-                if (Object.keys(keys).includes(key.toLowerCase())) {
-                    key = keys[key];
+                if (Object.keys(keys).includes(key)) {
+                    info.kwargs[keys[key]] = value;
                 }
-                info.kwargs[key.toLowerCase()] = value.toLowerCase();
+
             } else {
-                info.args.push(currentStr.toLowerCase());
+                info.args.push(currentStr);
             }
         }
 
         return info;
     }
 
-    static search(data, info, max_results = -1, equals = false, ignore_keys = []) {
-        if (max_results === -1) {
-            max_results = data.length;
+    static search(data, info, maxResults = -1, equals = false, ignoreKeys = []) {
+        // every string in info should be lowercase
+        if (maxResults === -1) {
+            maxResults = data.length;
         }
 
         console.log("Info: " + info);
 
-        const keys = Object.keys(data[0]);
         const args = info.args;
         const kwargs = info.kwargs;
 
         const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
-        const ignore_columns = keys.reduce((acc, ks, n) => {
-            if (
-                ignore_keys.some(
-                    (ignore_key) => ks.some((key) => key.toLowerCase().includes(ignore_key))
-                )
-            ) {
-                acc.push(n);
-            }
-            return acc;
-        }, []);
-        const search_columns = (row) => Object.values(row).filter((key, n) => !ignore_columns.includes(key));
+        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
         const results = [];
         for (const value of data) {
+            value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                const key_index = keys.findIndex((key) => key.toLowerCase() === k);
-
-                if (key_index === -1 || !test(v.toLowerCase(), Object.values(value.__keys)[key_index].toLowerCase())) {
+                if (!test(v, value[k].toLowerCase())) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
+                value = doIgnoreKeys(value);
+
                 for (const arg of args) {
-                    if (
-                        !search_columns(value)
-                            .map((i) => i.toLowerCase())
-                            .some((i) => test(arg.toLowerCase(), i))
-                    ) {
+                    if (!value.some((i) => test(arg.toLowerCase(), i))) {
                         approved = false;
                         break;
                     }
@@ -321,7 +309,7 @@ class Listionary {
                 if (approved) {
                     results.push(value);
 
-                    if (results.length === max_results) {
+                    if (results.length === maxResults) {
                         break;
                     }
                 }
@@ -331,50 +319,33 @@ class Listionary {
         return results
     }
 
-    static searchQuery(data, keys, query, max_results = -1, equals = false, ignore_keys = []) {
-        return this.search(data, this.parse_query(keys, query), max_results, equals, ignore_keys);
+    static searchQuery(data, keys, query, maxResults = -1, equals = false, ignoreKeys = []) {
+        return this.search(data, this.parse_query(keys, query), maxResults, equals, ignoreKeys);
     }
 
-    static find(data, keys, info, equals = false, ignore_keys = []) {
+    static find(data, info, equals = false, ignoreKeys = []) {
         const args = info.args;
         const kwargs = info.kwargs;
 
         const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
-        const ignore_columns = keys.reduce((acc, keys, n) => {
-            if (
-                ignore_keys.some(
-                    (ignore_key) => keys.some((key) => key.toLowerCase().includes(ignore_key))
-                )
-            ) {
-                acc.push(n);
-            }
-            return acc;
-        }, []);
-        const search_columns = (row) => Object.values(row).filter((_, n) => !ignore_columns.includes(n));
+        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
         for (const value of data) {
+            value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                // Check if the key exists
-                const key_index = keys.findIndex((ks) =>
-                    ks.some((key) => key.toLowerCase().includes(k))
-                );
-
-                // If the key doesn't exist or the query-value doesn't match the data value, skip
-                if (key_index === -1 || !test(v.toLowerCase(), Object.values(value.__keys)[key_index].toLowerCase())) {
+                if (!test(v, value[k].toLowerCase())) {
                     approved = false;
                     break;
                 }
             }
 
             if (approved) {
+                value = doIgnoreKeys(value);
+
                 for (const arg of args) {
-                    if (
-                        !search_columns(value.__keys)
-                            .map((i) => i.toLowerCase())
-                            .some((i) => test(arg.toLowerCase(), i))
-                    ) {
+                    if (!value.some((i) => test(arg.toLowerCase(), i))) {
                         approved = false;
                         break;
                     }

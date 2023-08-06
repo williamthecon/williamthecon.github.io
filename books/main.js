@@ -177,7 +177,7 @@ function generate_token(length = 13) {
         for (let i = 0; i < length; i++) {
             // token += characters.charAt(random.integer(0, characters.length - 1));
             // token += random.pick(random.nativeMath, characters.split(""));
-            token += characters[Math.floor(Math.random() * characters.length)];
+            token += characters.charAt(Math.floor(Math.random() * characters.length));
         }
     } while (tokens.includes(token));
 

@@ -25,7 +25,7 @@
                 var isbn = document.getElementById("isbn-input").value;
                 var description = document.getElementById("description-input").value;
                 var image = document.getElementById("image-input").value;
-                return addBook([title, series, volume, author, cover, isbn, description, image], "books");
+                return addBook(title=title, series=series, volume=volume, author=author, cover=cover, isbn=isbn, description=description, image=image);
             }
         </script>
         <div id="header" class="container">
@@ -170,6 +170,7 @@
             const addForm = document.getElementById("add-form");
             addForm.addEventListener("submit", e => {
                 e.preventDefault();
+                doAdd();
             })
         </script>
     </body>

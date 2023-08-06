@@ -342,7 +342,7 @@ class Listionary {
             }
 
             if (approved) {
-                vallowerValueue = Object.entries(doIgnoreKeys(lowerValue));
+                lowerValue = Object.entries(doIgnoreKeys(lowerValue));
 
                 for (const arg of args) {
                     if (!lowerValue.some(([_, v]) => test(arg.toLowerCase(), v))) {

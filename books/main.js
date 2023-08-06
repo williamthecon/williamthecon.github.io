@@ -378,6 +378,15 @@ function addBook(title, author, username, cover, series = "", volume = "", descr
     return addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
 }
 
+async function asyncAddBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {
+    let data = null;
+    addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books", (d) => { data = d; });
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+    return data;
+}
+
 function editBook(book, newBook) {
     editItem(book, newBook, "books");
 }

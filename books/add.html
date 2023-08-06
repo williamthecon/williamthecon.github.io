@@ -19,16 +19,32 @@
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <script>
-            function doAdd() {
-                var title = document.getElementById("title-input").value;
-                var series = document.getElementById("series-input").value;
-                var volume = document.getElementById("volume-input").value;
-                var author = document.getElementById("author-input").value;
-                var cover = document.getElementById("cover-input").value;
-                var isbn = document.getElementById("isbn-input").value;
-                var description = document.getElementById("description-input").value;
-                var image = document.getElementById("image-input").value;
-                return addBook(title=title, series=series, volume=volume, author=author, cover=cover, isbn=isbn, description=description, image=image);
+            async function doAdd() {
+                var titleInput = document.getElementById("title-input");
+                var seriesInput = document.getElementById("series-input");
+                var volumeInput = document.getElementById("volume-input");
+                var authorInput = document.getElementById("author-input");
+                var coverInput = document.getElementById("cover-input");
+                var isbnInput = document.getElementById("isbn-input");
+                var descriptionInput = document.getElementById("description-input");
+                var imageInput = document.getElementById("image-input");
+                await asyncAddBook(title=titleInput.value, series=seriesInput.value, volume=volumeInput.value, author=authorInput.value, cover=coverInput.value, isbn=isbnInput.value, description=descriptionInput.value, image=imageInput.value)
+                    .then(data => {
+                        if (data.success) {
+                            alert("Buch erfolgreich hinzugefügt!");
+
+                            titleInput.value = "";
+                            seriesInput.value = "";
+                            volumeInput.value = "";
+                            authorInput.value = "";
+                            coverInput.value = "";
+                            isbnInput.value = "";
+                            descriptionInput.value = "";
+                            imageInput.value = "";
+                        } else {
+                            alert("Fehlermeldung: " + data.cause);
+                        };
+                    });
             }
         </script>
         <div id="header" class="container">

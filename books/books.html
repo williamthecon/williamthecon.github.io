@@ -28,7 +28,6 @@
                 const booksTableHeader = document.createElement("li");
                 booksTableHeader.classList.add("table-row");
                 booksTableHeader.classList.add("table-header");
-                booksTableHeader.onclick = () => view(book.id);
                 booksTableHeader.innerHTML = `
                     <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
                     <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
@@ -133,7 +132,6 @@
                 const booksTableHeader = document.createElement("li");
                 booksTableHeader.classList.add("table-row");
                 booksTableHeader.classList.add("table-header");
-                booksTableHeader.onclick = () => view(book.id);
                 booksTableHeader.innerHTML = `
                     <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
                     <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>

@@ -167,8 +167,6 @@ function changeUsername(currentUsername, newUsername) {
 }
 
 function generate_token(length = 13) {
-    const random = Random()
-
     let tokens = loadData("tokens");
     let token = '';
 

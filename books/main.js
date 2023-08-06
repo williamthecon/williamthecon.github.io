@@ -239,14 +239,15 @@ class Listionary {
             if (char === '"') {
                 inStr = !inStr;
             } else if (char === " " && !inStr) {
+                currentStr = currentStr.toLowerCase();
                 if (currentStr.includes(":")) {
                     const [key, value] = currentStr.split(":");
-                    if (Object.keys(keys).includes(key.toLowerCase())) {
-                        key = keys[key]
+                    if (Object.keys(keys).includes(key)) {
+                        key = keys[key];
                     }
-                    info.kwargs[key.toLowerCase()] = value.toLowerCase();
+                    info.kwargs[key] = value;
                 } else {
-                    info.args.push(currentStr.toLowerCase());
+                    info.args.push(currentStr);
                 }
                 currentStr = "";
             } else {
@@ -297,9 +298,7 @@ class Listionary {
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                const key_index = keys.findIndex((ks) =>
-                    ks.some((key) => key.toLowerCase().includes(k))
-                );
+                const key_index = keys.findIndex((key) => key.toLowerCase() === k);
 
                 if (key_index === -1 || !test(v.toLowerCase(), Object.values(value.__keys)[key_index].toLowerCase())) {
                     approved = false;

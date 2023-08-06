@@ -206,7 +206,7 @@ function changeUsername(username, newUsername) {
 function generate_token(length = 13) {
     let token = '';
 
-    const characters = string.ascii_letters + string.digits;
+    const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     do {
         token = '';

@@ -392,6 +392,10 @@ class Listionary {
 }
 
 function searchBooks(query) {
+    if (!query) {
+        return loaded.books;
+    }
+    
     return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 

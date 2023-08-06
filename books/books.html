@@ -120,24 +120,24 @@
             })
 
             // Books Table
+            const booksTable = document.getElementById("books-table");
+
+            const booksTableHeader = document.createElement("li");
+            booksTableHeader.classList.add("table-row");
+            booksTableHeader.classList.add("table-header");
+            booksTableHeader.innerHTML = `
+                <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
+            `;
+            booksTable.appendChild(booksTableHeader);
+            
             async function loadBooks() {
                 while (!loaded.hasOwnProperty('books')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
-
-                const booksTable = document.getElementById("books-table");
-
-                const booksTableHeader = document.createElement("li");
-                booksTableHeader.classList.add("table-row");
-                booksTableHeader.classList.add("table-header");
-                booksTableHeader.innerHTML = `
-                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
-                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
-                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
-                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
-                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
-                `;
-                booksTable.appendChild(booksTableHeader);
 
                 for (let book of loaded.books) {
                     const bookRow = document.createElement("li");

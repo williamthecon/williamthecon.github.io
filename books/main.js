@@ -270,6 +270,18 @@ class Listionary {
         return info;
     }
 
+    /**
+     * Searches for specific values in an array of objects based on given criteria.
+     *
+     * @param {Array} data - The array of objects to search.
+     * @param {Object} info - An object containing search criteria.
+     *         {array} info.args - An array of lowercase arguments to search for.
+     *         {object} info.kwargs - An object mapping lowercase keys to lowercase values to search for.
+     * @param {number} [maxResults = -1] - The maximum number of search results to return.
+     * @param {boolean} [equals = false] - Search for values that are equal to the given criteria.
+     * @param {Array} [ignoreKeys = []] - An array of keys to ignore during the search with arguments without keys.
+     * @return {Array} An array of objects that match the search criteria.
+     */
     static search(data, info, maxResults = -1, equals = false, ignoreKeys = []) {
         // every string in info should be lowercase
         if (maxResults === -1) {

@@ -41,6 +41,15 @@
                             isbnInput.value = "";
                             descriptionInput.value = "";
                             imageInput.value = "";
+
+                            setLocalStorage("-add--input-title", "");
+                            setLocalStorage("-add--input-series", "");
+                            setLocalStorage("-add--input-volume", "");
+                            setLocalStorage("-add--input-author", "");
+                            setLocalStorage("-add--input-cover", "");
+                            setLocalStorage("-add--input-isbn", "");
+                            setLocalStorage("-add--input-description", "");
+                            setLocalStorage("-add--input-image", "");
                         } else {
                             alert("Fehlermeldung: " + data.cause);
                         };
@@ -117,38 +126,38 @@
             const descriptionInput = document.getElementById("description-input");
             const imageInput = document.getElementById("image-input");
 
-            titleInput.value = getLocalStorage("-login--input-title");
-            seriesInput.value = getLocalStorage("-login--input-series");
-            volumeInput.value = getLocalStorage("-login--input-volume");
-            authorInput.value = getLocalStorage("-login--input-author");
-            coverInput.value = getLocalStorage("-login--input-cover");
-            isbnInput.value = getLocalStorage("-login--input-isbn");
-            descriptionInput.value = getLocalStorage("-login--input-description");
-            imageInput.value = getLocalStorage("-login--input-image");
+            titleInput.value = getLocalStorage("-add--input-title");
+            seriesInput.value = getLocalStorage("-add--input-series");
+            volumeInput.value = getLocalStorage("-add--input-volume");
+            authorInput.value = getLocalStorage("-add--input-author");
+            coverInput.value = getLocalStorage("-add--input-cover");
+            isbnInput.value = getLocalStorage("-add--input-isbn");
+            descriptionInput.value = getLocalStorage("-add--input-description");
+            imageInput.value = getLocalStorage("-add--input-image");
 
             titleInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-title", e.target.value);
+                setLocalStorage("-add--input-title", e.target.value);
             });
             seriesInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-series", e.target.value);
+                setLocalStorage("-add--input-series", e.target.value);
             });
             volumeInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-volume", e.target.value);
+                setLocalStorage("-add--input-volume", e.target.value);
             });
             authorInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-author", e.target.value);
+                setLocalStorage("-add--input-author", e.target.value);
             });
             coverInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-cover", e.target.value);
+                setLocalStorage("-add--input-cover", e.target.value);
             });
             isbnInput.addEventListener("input", e =>  {
-                setLocalStorage("-login--input-isbn", e.target.value);
+                setLocalStorage("-add--input-isbn", e.target.value);
             });
             descriptionInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-description", e.target.value);
+                setLocalStorage("-add--input-description", e.target.value);
             });
             imageInput.addEventListener("input", e => {
-                setLocalStorage("-login--input-image", e.target.value);
+                setLocalStorage("-add--input-image", e.target.value);
             });
 
             // const inputTitle = document.getElementById("input-title-container");

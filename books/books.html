@@ -130,7 +130,7 @@
 
             // Books Table
             const booksTable = document.getElementById("books-table");
-            while (!Object.keys(loaded).includes("books")) {
+            while (true) { // !Object.keys(loaded).includes("books")
                 if (typeof loaded.books !== "undefined") {
                     break
                 };

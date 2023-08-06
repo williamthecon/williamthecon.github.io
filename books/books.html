@@ -134,7 +134,7 @@
                 if (typeof loaded.books !== "undefined") {
                     break
                 };
-                setTimeout(function() {}, 100);
+                setTimeout(function() {console.log(loaded.books)}, 100);
             }
 
             for (let book of loaded.books) {

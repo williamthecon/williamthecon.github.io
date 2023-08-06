@@ -386,8 +386,8 @@ function findBookById(id) {
     return loaded.books.find(book => book.id === id);
 }
 
-function addBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {
-    return addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
+function addBook(title, author, series = "", volume = "", cover = "", isbn = "", description = "", image = "") {
+    return addItem({ "titel": title, "author": author, "username": getLocalStorage("username"), "cover": cover, "series": series, "volume": volume, "isbn": isbn, "description": description, "image": image, "token": generate_token() }, "books");
 }
 
 async function asyncAddBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {

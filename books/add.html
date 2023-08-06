@@ -28,7 +28,7 @@
                 var isbnInput = document.getElementById("isbn-input");
                 var descriptionInput = document.getElementById("description-input");
                 var imageInput = document.getElementById("image-input");
-                await asyncAddBook(title=titleInput.value, series=seriesInput.value, volume=volumeInput.value, author=authorInput.value, cover=coverInput.value, isbn=isbnInput.value, description=descriptionInput.value, image=imageInput.value)
+                await asyncAddBook(title=titleInput.value, author=authorInput.value, series=seriesInput.value, volume=volumeInput.value, cover=coverInput.value, isbn=isbnInput.value, description=descriptionInput.value, image=imageInput.value)
                     .then(data => {
                         if (data.success) {
                             alert("Buch erfolgreich hinzugefügt!");

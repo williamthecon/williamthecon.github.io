@@ -154,7 +154,7 @@ function changePassword(currentPassword, newPassword1, newPassword2) {
     return false;
 }
 
-function changeUsername(currentUsername, newUsername) {
+function changeUsername(username, newUsername) {
     const user = loaded.users.find(user => user.name === username);
     // const users = loadData("users");
     // const user = users.find(user => user.name === currentUsername);

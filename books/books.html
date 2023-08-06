@@ -37,7 +37,7 @@
                 `;
                 booksTable.appendChild(booksTableHeader);
 
-                for (let book of search(loaded.books, query)) {
+                for (let book of searchBooks(query)) {
                     const bookRow = document.createElement("li");
                     bookRow.classList.add("table-row");
                     bookRow.onclick = () => view(book.id);

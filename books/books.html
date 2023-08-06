@@ -130,21 +130,23 @@
 
             // Books Table
             const booksTable = document.getElementById("books-table");
-            loaded.books.then(books => {
-                for (let book of books) {
-                    const bookRow = document.createElement("li");
-                    bookRow.classList.add("table-row");
-                    bookRow.onclick = () => view(book.id);
-                    bookRow.innerHTML = `
-                        <span class="table-cell">${book.title}</span>
-                        <span class="table-cell">${book.series}</span>
-                        <span class="table-cell">${book.volume}</span>
-                        <span class="table-cell">${book.author}</span>
-                        <span class="table-cell">${book.username}</span>
-                    `;
-                    booksTable.appendChild(bookRow);
-                }
-            })
+            while (!Object.keys(loaded).includes("books")) {
+                <!-- setTimeout(function() {}, 100); -->
+            }
+
+            for (let book of loaded.books) {
+                const bookRow = document.createElement("li");
+                bookRow.classList.add("table-row");
+                bookRow.onclick = () => view(book.id);
+                bookRow.innerHTML = `
+                    <span class="table-cell">${book.title}</span>
+                    <span class="table-cell">${book.series}</span>
+                    <span class="table-cell">${book.volume}</span>
+                    <span class="table-cell">${book.author}</span>
+                    <span class="table-cell">${book.username}</span>
+                `;
+                booksTable.appendChild(bookRow);
+            }
 
             sortTable();
             viewMore();

@@ -98,14 +98,14 @@
             const descriptionInput = document.getElementById("description-input");
             const imageInput = document.getElementById("image-input");
 
-            titleInput.value = popLocalStorage("-login--input-title");
-            seriesInput.value = popLocalStorage("-login--input-series");
-            volumeInput.value = popLocalStorage("-login--input-volume");
-            authorInput.value = popLocalStorage("-login--input-author");
-            coverInput.value = popLocalStorage("-login--input-cover");
-            isbnInput.value = popLocalStorage("-login--input-isbn");
-            descriptionInput.value = popLocalStorage("-login--input-description");
-            imageInput.value = popLocalStorage("-login--input-image");
+            titleInput.value = getLocalStorage("-login--input-title");
+            seriesInput.value = getLocalStorage("-login--input-series");
+            volumeInput.value = getLocalStorage("-login--input-volume");
+            authorInput.value = getLocalStorage("-login--input-author");
+            coverInput.value = getLocalStorage("-login--input-cover");
+            isbnInput.value = getLocalStorage("-login--input-isbn");
+            descriptionInput.value = getLocalStorage("-login--input-description");
+            imageInput.value = getLocalStorage("-login--input-image");
 
             titleInput.addEventListener("input", e => {
                 setLocalStorage("-login--input-title", e.target.value);

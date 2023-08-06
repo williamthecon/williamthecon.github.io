@@ -35,28 +35,17 @@ function popLocalStorage(key) {
     return value;
 }
 
-async function loadData(type, define) {
-    return await fetch("https://my-book-api.wtc248.repl.co/load/" + type, // {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json; charset=utf-8',
-    //         'Host': 'my-book-api.wtc248.repl.co',
-    //         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',
-    //         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    //         'Accept-Language': 'en-GB,en;q=0.5',
-    //         'Accept-Encoding': 'gzip, deflate, br',
-    //         'Prefer': 'safe',
-    //         'DNT': '1',
-    //         'Connection': 'keep-alive',
-    //         'Upgrade-Insecure-Requests': '1',
-    //         'Sec-Fetch-Dest': 'document',
-    //         'Sec-Fetch-Mode': 'navigate',
-    //         'Sec-Fetch-Site': 'none',
-    //         'Sec-Fetch-User': '?1',
-    //         'TE': 'trailers'
-    //     }
-    // }
-    ).then(response => response.json()).then(data => {if (data.success) {define(data.data); console.log("Success loading " + type)} else { define([]); console.log("No success loading " + type) };}).catch(error => console.log(error));
+function loadData(type, define) {
+    fetch("https://my-book-api.wtc248.repl.co/load/" + type)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                define(data.data); console.log("Success loading " + type)
+            } else {
+                define([]); console.log("No success loading " + type)
+            };
+        })
+        .catch(error => console.log(error));
 }
 
 // async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
@@ -79,8 +68,8 @@ async function loadData(type, define) {
 //     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
 // }
 
-async function saveData(data, type, define = () => {}) {
-    return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
+function saveData(data, type, define = () => {}) {
+    fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -89,8 +78,8 @@ async function saveData(data, type, define = () => {}) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function addItem(item, type, define = () => {}) {
-    return await fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
+function addItem(item, type, define = () => {}) {
+    fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -99,8 +88,8 @@ async function addItem(item, type, define = () => {}) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function editItem(item, newItem, type, define = () => {}) {
-    return await fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
+function editItem(item, newItem, type, define = () => {}) {
+    fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -109,8 +98,8 @@ async function editItem(item, newItem, type, define = () => {}) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function delItem(item, type, define = () => {}) {
-    return await fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
+function delItem(item, type, define = () => {}) {
+    fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -119,7 +108,6 @@ async function delItem(item, type, define = () => {}) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-const isLoaded = {"users": false, "books": false, "wishes": false, "tokens": false};
 const loaded = {};
 if (typeof requiredLoaders !== 'undefined') {
     requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
@@ -382,7 +370,7 @@ function findBookById(id) {
 }
 
 function addBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {
-    addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
+    return addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books");
 }
 
 function editBook(book, newBook) {

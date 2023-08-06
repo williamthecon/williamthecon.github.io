@@ -19,9 +19,9 @@ function viewMore() {
 }
 
 let tableSorting = [1, 2, 0, 3, 4];
-function setSorting(colIndex1, colIndex2, colIndex3, colIndex4, colIndex5) {
+async function setSorting(colIndex1, colIndex2, colIndex3, colIndex4, colIndex5) {
     tableSorting = [colIndex1, colIndex2, colIndex3, colIndex4, colIndex5];
-    sortTable();
+    await sortTable();
 }
 
 function convertToIntIfInteger(str) {
@@ -229,40 +229,43 @@ function sortArray(arr) {
     return nArr;
 }
 
-function sortTable() {
-    // const tableCells = Array.from(document.querySelectorAll(".table-cell")).filter(cell => window.getComputedStyle(cell).display !== "none");
-    const tableCells = document.querySelectorAll(".table-cell");
-    const tableRows = new Set();
-    const headerRow = document.querySelector(".table-header");
-    tableCells.forEach(cell => {
-        const parent = cell.parentElement;
-        if (!parent.classList.contains("table-header")) {
-            tableRows.add(parent);
-        }
-    });
-    const tableRows2 = Array.from(tableRows);
-    var importantTexts = [];
+async function sortTable() {
+    return new Promise(resolve => {
+        // const tableCells = Array.from(document.querySelectorAll(".table-cell")).filter(cell => window.getComputedStyle(cell).display !== "none");
+        const tableCells = document.querySelectorAll(".table-cell");
+        const tableRows = new Set();
+        const headerRow = document.querySelector(".table-header");
+        tableCells.forEach(cell => {
+            const parent = cell.parentElement;
+            if (!parent.classList.contains("table-header")) {
+                tableRows.add(parent);
+            }
+        });
+        const tableRows2 = Array.from(tableRows);
+        var importantTexts = [];
 
-    tableRows2.forEach(row => importantTexts.push([
-        convertToIntIfInteger(row.children[tableSorting[0]].textContent),
-        convertToIntIfInteger(row.children[tableSorting[1]].textContent),
-        convertToIntIfInteger(row.children[tableSorting[2]].textContent),
-        convertToIntIfInteger(row.children[tableSorting[3]].textContent),
-        convertToIntIfInteger(row.children[tableSorting[4]].textContent),
-        row
-    ]));
+        tableRows2.forEach(row => importantTexts.push([
+            convertToIntIfInteger(row.children[tableSorting[0]].textContent),
+            convertToIntIfInteger(row.children[tableSorting[1]].textContent),
+            convertToIntIfInteger(row.children[tableSorting[2]].textContent),
+            convertToIntIfInteger(row.children[tableSorting[3]].textContent),
+            convertToIntIfInteger(row.children[tableSorting[4]].textContent),
+            row
+        ]));
 
-    const sortedRows = [];
-    sortArray(importantTexts).forEach(info => sortedRows.push(info[5]));
+        const sortedRows = [];
+        sortArray(importantTexts).forEach(info => sortedRows.push(info[5]));
 
-    const table = document.querySelector(".table")
-    table.innerHTML = "";
+        const table = document.querySelector(".table")
+        table.innerHTML = "";
 
-    table.appendChild(headerRow);
+        table.appendChild(headerRow);
 
-    sortedRows.forEach(row => {
-        table.appendChild(row);
-    });
+        sortedRows.forEach(row => {
+            table.appendChild(row);
+        });
+        resolve();
+    })
 }
 
 // const tableRows = document.querySelectorAll('.table-row');

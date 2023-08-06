@@ -255,9 +255,9 @@ class Listionary {
         }
         if (currentStr) {
             if (currentStr.includes(":")) {
-                const [key, value] = currentStr.split(":");
+                var [key, value] = currentStr.split(":");
                 if (Object.keys(keys).includes(key.toLowerCase())) {
-                    key = keys[key]
+                    key = keys[key];
                 }
                 info.kwargs[key.toLowerCase()] = value.toLowerCase();
             } else {
@@ -395,7 +395,7 @@ function searchBooks(query) {
     if (!query) {
         return loaded.books;
     }
-    
+
     return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 

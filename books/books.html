@@ -93,13 +93,7 @@
             </div>
             <div class="content-block table-container">
                 <ul id="books-table" class="table">
-                    <li class="table-row table-header">
-                        <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
-                        <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
-                        <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
-                        <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
-                        <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
-                    </li>
+                    <li class="table-row table-header"></li>
                 </ul>
             </div>
             <div class="content-block">
@@ -135,6 +129,19 @@
                 }
 
                 const booksTable = document.getElementById("books-table");
+
+                const booksTableHeader = document.createElement("li");
+                booksTableHeader.classList.add("table-row");
+                booksTableHeader.classList.add("table-header");
+                booksTableHeader.onclick = () => view(book.id);
+                booksTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>"
+                `;
+                booksTable.appendChild(booksTableHeader);
 
                 for (let book of loaded.books) {
                     const bookRow = document.createElement("li");

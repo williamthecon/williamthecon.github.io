@@ -320,7 +320,7 @@ class Listionary {
                 }
 
                 if (approved) {
-                    results.push(value.__dump__());
+                    results.push(value);
 
                     if (results.length === max_results) {
                         break;
@@ -382,7 +382,7 @@ class Listionary {
                 }
 
                 if (approved) {
-                    return value.__dump__();
+                    return value;
                 }
             }
         }

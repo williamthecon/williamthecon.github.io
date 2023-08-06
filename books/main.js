@@ -285,7 +285,7 @@ class Listionary {
         const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
         const results = [];
-        for (const value of data) {
+        for (let value of data) {
             value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 
@@ -330,7 +330,7 @@ class Listionary {
         const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
         const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
-        for (const value of data) {
+        for (let value of data) {
             value = Object.fromEntries(Object.entries(value).map(([k, v]) => [k.toLowerCase(), v.toLowerCase()]));
             let approved = true;
 

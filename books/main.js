@@ -166,7 +166,6 @@ function changeUsername(username, newUsername) {
 }
 
 function generate_token(length = 13) {
-    let tokens = loadData("tokens");
     let token = '';
 
     const characters = string.ascii_letters + string.digits;
@@ -176,10 +175,10 @@ function generate_token(length = 13) {
         for (let i = 0; i < length; i++) {
             token += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-    } while (tokens.includes(token));
+    } while (loaded.tokens.includes(token));
 
-    tokens.push(token);
-    saveData(tokens, "tokens");
+    loaded.tokens.push(token);
+    saveData(loaded.tokens, "tokens");
     return token;
 }
 

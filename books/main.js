@@ -79,7 +79,7 @@ async function loadData(type, define) {
 //     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
 // }
 
-async function saveData(data, type, define) {
+async function saveData(data, type, define = () => {}) {
     return await fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',
         headers: {
@@ -89,7 +89,7 @@ async function saveData(data, type, define) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function addItem(item, type, define) {
+async function addItem(item, type, define = () => {}) {
     return await fetch('https://my-book-api.wtc248.repl.co/add/' + type, {
         method: 'POST',
         headers: {
@@ -99,7 +99,7 @@ async function addItem(item, type, define) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function editItem(item, newItem, type, define) {
+async function editItem(item, newItem, type, define = () => {}) {
     return await fetch('https://my-book-api.wtc248.repl.co/edit/' + type, {
         method: 'POST',
         headers: {
@@ -109,7 +109,7 @@ async function editItem(item, newItem, type, define) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
-async function delItem(item, type, define) {
+async function delItem(item, type, define = () => {}) {
     return await fetch('https://my-book-api.wtc248.repl.co/del/' + type, {
         method: 'POST',
         headers: {
@@ -119,6 +119,7 @@ async function delItem(item, type, define) {
     }).then(response => define(response.json())).catch(error => console.log(error));
 }
 
+const isLoaded = {"users": false, "books": false, "wishes": false, "tokens": false};
 const loaded = {};
 if (typeof requiredLoaders !== 'undefined') {
     requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
@@ -181,7 +182,7 @@ function changeUsername(currentUsername, newUsername) {
 function generate_token(length = 13) {
     const random = Random()
 
-    let tokens = Array.from(getLocalStorage('tokens'));
+    let tokens = loadData("tokens");
     let token = '';
 
     const characters = string.ascii_letters + string.digits;
@@ -195,7 +196,7 @@ function generate_token(length = 13) {
     } while (tokens.includes(token));
 
     tokens.push(token);
-    setLocalStorage('tokens', tokens.toString());
+    saveData(tokens, "tokens");
     return token;
 }
 

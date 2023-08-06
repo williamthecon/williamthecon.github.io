@@ -129,27 +129,29 @@
             })
 
             // Books Table
-            const booksTable = document.getElementById("books-table");
-            while (true) { // !Object.keys(loaded).includes("books")
-                if (typeof loaded.books !== "undefined") {
-                    break
-                };
-                setTimeout(function() {console.log(loaded.books)}, 100);
+            async function loadBooks() {
+                while (!loaded.hasOwnProperty('key')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                const booksTable = document.getElementById("books-table");
+
+                for (let book of loaded.books) {
+                    const bookRow = document.createElement("li");
+                    bookRow.classList.add("table-row");
+                    bookRow.onclick = () => view(book.id);
+                    bookRow.innerHTML = `
+                        <span class="table-cell">${book.title}</span>
+                        <span class="table-cell">${book.series}</span>
+                        <span class="table-cell">${book.volume}</span>
+                        <span class="table-cell">${book.author}</span>
+                        <span class="table-cell">${book.username}</span>
+                    `;
+                    booksTable.appendChild(bookRow);
+                }
             }
 
-            for (let book of loaded.books) {
-                const bookRow = document.createElement("li");
-                bookRow.classList.add("table-row");
-                bookRow.onclick = () => view(book.id);
-                bookRow.innerHTML = `
-                    <span class="table-cell">${book.title}</span>
-                    <span class="table-cell">${book.series}</span>
-                    <span class="table-cell">${book.volume}</span>
-                    <span class="table-cell">${book.author}</span>
-                    <span class="table-cell">${book.username}</span>
-                `;
-                booksTable.appendChild(bookRow);
-            }
+            loadBooks();
 
             sortTable();
             viewMore();

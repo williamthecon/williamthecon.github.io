@@ -307,7 +307,7 @@ class Listionary {
                 }
 
                 if (approved) {
-                    results.push(Object.fromEntries(value));
+                    results.push(value);
 
                     if (results.length === maxResults) {
                         break;
@@ -352,7 +352,7 @@ class Listionary {
                 }
 
                 if (approved) {
-                    return Object.fromEntries(value);
+                    return value;
                 }
             }
         }

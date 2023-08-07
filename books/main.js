@@ -378,11 +378,11 @@ function searchBooks(query) {
         return loaded.books;
     }
 
-    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "id": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 
 function findBookById(id) {
-    // return Listionary.find(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, {"args": [], "kwargs": {"id": id}}, true, ignore_keys=["token", "description", "image", "cover"]);
+    // return Listionary.find(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "id": "token"}, {"args": [], "kwargs": {"id": id}}, true, ignore_keys=["token", "description", "image", "cover"]);
     return loaded.books.find(book => book.id === id);
 }
 

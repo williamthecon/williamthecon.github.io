@@ -35,17 +35,17 @@
             const requiredLoaders = ["users"];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
-        <script type="text/javascript" src="/books/helpfulLinks.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
         <div id="header" class="container">
             <h1>Meine Bücher - Hilfe</h1>
             <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
-                <div class="folding-header" onclick="toggleFold()">
+                <div class="folding-header" onclick="toggleFold('helpful-links')">
                     <h3>Hilfreiche Links</h3>
-                    <p id="chevron-down">v</p>
-                    <p id="chevron-up">^</p>
+                    <p id="helpful-links--chevron-down">v</p>
+                    <p id="helpful-links--chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
                     <ul class="horizontal-list">

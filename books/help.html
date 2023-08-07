@@ -49,13 +49,20 @@
                 <div id="search-help-content">
                     <p>Betrifft die folgenden Seiten: <a href="/books/books">Bücher</a>, <a href="/books/wishes">Wünsche</a></a></p>
                     <p>Die Suchleiste wird fokusiert, wenn darauf geklickt wird, und aus dem Fokus genommen, wenn an irgendeine andere Stelle geklickt wird.</p>
-                    <p>Sobald die Suchleiste sich im Fokus befindet, kann der Suchbegriff eingegeben werden. Dabei gibt es verschiedene Formatierungsmöglichkeiten, die zusätzliche Funkionalitäten zu einer "normalen" Suche hinzufügen:</p>
+                    <p>Sobald die Suchleiste sich im Fokus befindet, kann der Suchbegriff eingegeben werden. Dabei funktioniert die Suche folgendermaßen:</p>
                     <ul>
-                        <li>Die Eingabe wird an Leerstellen getrennt, das heißt: "Ein Buch" -> "Ein", "Buch"</li>
-                        <li>Es wird bei der Suche nicht auf Groß- und Kleinschreibung geachtet. Bsp.: "buch" -> (Titel: "Das Buch", ...)</li>
-                        <li>Bei jedem Eintrag wird jeder Suchbegriff einzeln in alle Spalten gesucht. Bsp.: "Eine John" -> (Titel: "Eine aufregende Reise", Autor: "John Peters", ...)</li>
-                        <li>Es wird nicht nach separaten Wörtern gesucht, sondern nach alleinigem Vorkommen im Eintrag, das bedeutet z. B.: "im haus" -> (Autor: "Kim Hauser", ...), (Titel: "Er wartete im Haus", ...)</li>
-                        <li>Es kann</li>
+                        <li>Die Eingabe wird an Leerstellen getrennt, das heißt: 'Ein Buch' -> 'Ein', 'Buch'</li>
+                        <li>Dies kann verhindert werden, in dem die spezifischen Begriffe mit doppelten Anführungszeichen umgeben werden, z. B.: '"Das Buch" Johannes' -> (Titel: 'Das Buch', Autor: 'Johannes Clares'), !(Titel: 'Das Reich', Reihe: 'Das Buch', Autor: 'Johannes Clares')</li>
+                        <li>Es wird bei der Suche nicht auf Groß- und Kleinschreibung geachtet. Bsp.: 'buch' -> (Titel: 'Das Buch', ...)</li>
+                        <li>Bei jedem Eintrag wird jeder Suchbegriff einzeln in alle Spalten gesucht. Bsp.: 'Eine John' -> (Titel: 'Eine aufregende Reise', Autor: 'John Peters', ...)</li>
+                        <li>Es wird nicht nach separaten Wörtern gesucht, sondern nach alleinigem Vorkommen im Eintrag, das bedeutet z. B.: 'im haus' -> (Autor: 'Kim Hauser', ...), (Titel: 'Er wartete im Haus', ...)</li>
+                        <li>Sobald einer der Suchbegriffe nicht gefunden wird, gilt der jeweilige Eintrag als nicht passend. Bsp.: 'Das interessante' -> (Titel: 'Das interessante Haus', ...), !(Titel: 'Die interessante Reise', ...)</li>
+                    </ul>
+                    <p>Außerdem gibt es noch eine weitere Suchfunktion, die es ermöglicht gezielt Spalten zu durchsuchen:</p>
+                    <ul>
+                        <li>Um eine bestimmte Spalte zu durchsuchen, muss dem Suchbegriff die Spaltenbezeichnung mit einem Doppelpunkt vorangestellt werden. Bsp.: 'Titel:Bücher'</li>
+                        <li>Wie bei der normalen Suche wird auch hier die Groß- und Kleinschreibung beachtet. Bsp.: 'titel:buch' -> (Titel: "Des Buches", ...)</li>
+                        <li>Außerdem können - oder müssen - auch hier mehrere Suchbegriffe mit doppelten Anführungszeichen umgeben werden, damit nach ihnen nur zusammen gesucht wird. Bsp.: 'Author:"Tim Wagner"' -> (Autor: 'Tim Wagner', ...), !(Titel: 'Dieser Tim', Autor: 'Michael Wagner')</li>
                     </ul>
                     <p>Gesucht wird nach dem in die Suchleiste eingegebenen Text, wenn mit Fokus auf der Suchleiste <i>Enter</i> gedrückt oder auf die Schaltfläche mit 'Suchen' geklickt wird.</p>
         </div>

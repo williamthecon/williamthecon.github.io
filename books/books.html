@@ -14,7 +14,7 @@
     </head>
     <body>
         <script>
-            const requiredLoaders = ["books"];
+            const requiredLoaders = ["books", "users"];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
@@ -110,7 +110,7 @@
         <script>
             // Username Container
             const usernameContainer = document.getElementById("username-container");
-            usernameContainer.innerHTML = getLocalStorage("username");
+            usernameContainer.innerHTML = findUserById(getLocalStorage("user")).name;
 
             // Inputs
             const queryInput = document.getElementById("query-input");
@@ -149,7 +149,7 @@
                 for (let book of loaded.books) {
                     const bookRow = document.createElement("li");
                     bookRow.classList.add("table-row");
-                    bookRow.onclick = () => view(book.id);
+                    bookRow.onclick = () => view(book.token);
                     bookRow.innerHTML = `
                         <span class="table-cell">${book.title}</span>
                         <span class="table-cell">${book.series}</span>

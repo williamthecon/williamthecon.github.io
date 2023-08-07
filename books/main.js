@@ -1,5 +1,5 @@
 // Check if already logged in or page is already the login page
-const username = localStorage.getItem('username');
+const username = localStorage.getItem("user");
 
 if (username === null) {
     if (!window.location.href.startsWith("https://williamthecon.github.io/books/login")) {
@@ -164,7 +164,7 @@ function login(username, password) {
 
     if (user) {
         if (hash_password(password) === user.password) {
-            setLocalStorage('username', username);
+            setLocalStorage("user", user.id);
             console.log("Login successful");
             return true;
         }
@@ -174,7 +174,7 @@ function login(username, password) {
 }
 
 function logout() {
-    deleteLocalStorage('username');
+    deleteLocalStorage("user");
 }
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
@@ -378,7 +378,7 @@ function searchBooks(query) {
         return loaded.books;
     }
 
-    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "token": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 
 function findBookById(id) {
@@ -396,7 +396,7 @@ function addBook(title, series, volume, author, cover, isbn, description, image)
         "isbn": isbn,
         "description": description,
         "image": image,
-        "username": getLocalStorage("username"),
+        "user": getLocalStorage("user"),
         "token": generate_token()
     }, "books");
 }
@@ -413,7 +413,7 @@ async function asyncAddBook(title, series, volume, author, cover, isbn, descript
         "isbn": isbn,
         "description": description,
         "image": image,
-        "username": getLocalStorage("username"),
+        "user": getLocalStorage("user"),
         "token": generate_token()
     }, "books", (d) => { data = d; });
     while (data === null) {
@@ -424,4 +424,12 @@ async function asyncAddBook(title, series, volume, author, cover, isbn, descript
 
 function editBook(book, newBook) {
     editItem(book, newBook, "books");
+}
+
+function findUserById(id) {
+    return loaded.users.find(user => user.id === id);
+}
+
+function findUserByName(name) {
+    return loaded.users.find(user => user.name === name);
 }

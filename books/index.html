@@ -13,6 +13,9 @@
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["users"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <div id="header" class="container">
@@ -46,7 +49,7 @@
         <script>
             // Username Container
             const usernameContainer = document.getElementById("username-container");
-            usernameContainer.innerHTML = getLocalStorage("username");
+            usernameContainer.innerHTML = findUserById(getLocalStorage("user")).name;
         </script>
     </body>
 </html>

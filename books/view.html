@@ -111,6 +111,7 @@
                             //// Book profile
                             const bookProfile = document.createElement("div");
                             bookProfile.id = "book-profile";
+                            bookProfile.className = "book-block-block";
                             bookProfile.innerHTML = `
                                 <div class="book-info">
                                     <p><b>Titel</b>: ${book.title}</p>
@@ -140,6 +141,7 @@
                             if (book.description) {
                                 const bookDescription = document.createElement("div");
                                 bookDescription.id = "book-description";
+                                bookDescription.className = "book-block-block";
                                 bookDescription.innerHTML = `
                                     <div id="book-description-header">
                                         <h5><b>Beschreibung</b></h5>

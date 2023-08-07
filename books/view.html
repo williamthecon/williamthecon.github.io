@@ -135,25 +135,25 @@
                     bookProfile.id = "book-profile";
                     bookProfile.innerHTML = `
                         <div class="book-info">
-                            <p><b>Titel</b>: <a href='/books?query=Titel%3A"${book.title}"'>${book.title}</a></p>
+                            <p><b>Titel</b>: <a href='/books/books?query=Titel%3A"${book.title}"'>${book.title}</a></p>
                         </div>
                         <div class="book-info">
-                            <p><b>Reihe</b>: ` + (book.series !== "" ? `<a href='/books?query=Reihe%3A"${book.series}"'>${book.series}</a>` : "-") + `</p>
+                            <p><b>Reihe</b>: ` + (book.series !== "" ? `<a href='/books/books?query=Reihe%3A"${book.series}"'>${book.series}</a>` : "-") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Band</b>: ` + (book.volume !== "" ? `<a href='/books?query=Band%3A"${book.volume}"'>${book.volume}</a>` : "-") + `</p>
+                            <p><b>Band</b>: ` + (book.volume !== "" ? `<a href='/books/books?query=Band%3A"${book.volume}"'>${book.volume}</a>` : "-") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Author</b>: <a href='/books?query=Autor%3A"${book.author}"'>${book.author}</a></p>
+                            <p><b>Author</b>: <a href='/books/books?query=Autor%3A"${book.author}"'>${book.author}</a></p>
                         </div>
                         <div class="book-info">
-                            <p><b>Benutzer</b>: <a href='/books?query=Benutzer%3A"${book.username}"'>${book.username}</a></p>
+                            <p><b>Benutzer</b>: <a href='/books/books?query=Benutzer%3A"${book.username}"'>${book.username}</a></p>
                         </div>
                         <div class="book-info">
-                            <p><b>Umschlag</b>: ` + (book.cover !== "" ? `<a href='/books?query=Umschlag%3A"${book.cover}"'>${book.cover}</a>` : "?") + `</p>
+                            <p><b>Umschlag</b>: ` + (book.cover !== "" ? `<a href='/books/books?query=Umschlag%3A"${book.cover}"'>${book.cover}</a>` : "?") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>ISBN</b>: ` + (book.isbn !== "" ? `<a href='/books?query=ISBN%3A"${book.isbn}"'>${book.isbn}</a>` : "?") + `</p>
+                            <p><b>ISBN</b>: ` + (book.isbn !== "" ? `<a href='/books/books?query=ISBN%3A"${book.isbn}"'>${book.isbn}</a>` : "?") + `</p>
                         </div>
                     `;
                     bookBlock.appendChild(bookProfile);
@@ -176,7 +176,7 @@
                     if (getLocalStorage("user") === book.user) {
                         const editButton = document.createElement("button");
                         editButton.id = "edit-button";
-                        editButton.innerHTML = "<a href='/edit?id=" + book.token + "'>Bearbeiten</a>";
+                        editButton.innerHTML = "<a href='/books/edit?id=" + book.token + "'>Bearbeiten</a>";
                         bookBlock.appendChild(editButton);
                     };
                 });

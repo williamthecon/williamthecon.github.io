@@ -22,6 +22,11 @@
                 text-underline-offset: 4px;
                 text-shadow: rgb(24, 132, 219) 1px 1px;
             }
+
+            #book-cover {
+                margin: 8px;
+                width: 600px;
+            }
         </style>
     </head>
     <body>
@@ -85,9 +90,11 @@
 
                             //// Book cover
                             if (book.image) {
-                                const bookCover = document.createElement("img");
+                                const bookCover = document.createElement("div");
                                 bookCover.id = "book-cover";
-                                bookCover.src = book.image;
+                                bookCover.innerHTML = `
+                                    <img src="${book.image}" alt="'${book.title}' Cover">
+                                `;
                                 bookBlock.appendChild(bookCover);
                             };
 

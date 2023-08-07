@@ -117,13 +117,13 @@
             queryInput.value = getLocalStorage("query");
             queryInput.addEventListener("input", () => {
                 setLocalStorage("query", queryInput.value);
-                doSearch(queryInput.value);
             });
 
             // Block the form redirection
             const searchForm = document.getElementById("search-form");
             searchForm.addEventListener("submit", e => {
                 e.preventDefault();
+                doSearch();
             })
 
             // Books Table

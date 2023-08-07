@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github homepage home">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github help">
         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Meine Bücher - Startseite</title>
+        <title>Meine Bücher - Hilfe</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
@@ -19,7 +19,7 @@
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Startseite</h1>
+            <h1>Meine Bücher - Hilfe</h1>
             <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
@@ -38,11 +38,26 @@
                         <li><a href="/books/users">Benutzer</a></li>
                         <li><a href="/books/password">Passwort</a></li>
                         <li><a href="/books/username">Benutzername</a></li>
-                        <li><a href="/books/help.html">Hilfe</a></li>
                         <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
+            <div id="search-help" class="content-block help-block">
+                <div id="search-help-header">
+                    <h3>Hilfe bei der Suche</h3>
+                </div>
+                <div id="search-help-content">
+                    <p>Betrifft die folgenden Seiten: <a href="/books/books">Bücher</a>, <a href="/books/wishes">Wünsche</a></a></p>
+                    <p>Die Suchleiste wird fokusiert, wenn darauf geklickt wird, und aus dem Fokus genommen, wenn an irgendeine andere Stelle geklickt wird.</p>
+                    <p>Sobald die Suchleiste sich im Fokus befindet, kann der Suchbegriff eingegeben werden. Dabei gibt es verschiedene Formatierungsmöglichkeiten, die zusätzliche Funkionalitäten zu einer "normalen" Suche hinzufügen:</p>
+                    <ul>
+                        <li>Die Eingabe wird an Leerstellen getrennt, das heißt: "Ein Buch" -> "Ein", "Buch"</li>
+                        <li>Es wird bei der Suche nicht auf Groß- und Kleinschreibung geachtet. Bsp.: "buch" -> (Titel: "Das Buch", ...)</li>
+                        <li>Bei jedem Eintrag wird jeder Suchbegriff einzeln in alle Spalten gesucht. Bsp.: "Eine John" -> (Titel: "Eine aufregende Reise", Autor: "John Peters", ...)</li>
+                        <li>Es wird nicht nach separaten Wörtern gesucht, sondern nach alleinigem Vorkommen im Eintrag, das bedeutet z. B.: "im haus" -> (Autor: "Kim Hauser", ...), (Titel: "Er wartete im Haus", ...)</li>
+                        <li>Es kann</li>
+                    </ul>
+                    <p>Gesucht wird nach dem in die Suchleiste eingegebenen Text, wenn mit Fokus auf der Suchleiste <i>Enter</i> gedrückt oder auf die Schaltfläche mit 'Suchen' geklickt wird.</p>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>

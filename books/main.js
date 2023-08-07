@@ -381,16 +381,16 @@ function searchBooks(query) {
     return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "id": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 
-function findBookById(id) {
-    return loaded.books.find(book => book.id === id);
+function findBookById(token) {
+    return loaded.books.find(book => book.token === token);
 }
 
-async function asyncFindBookById(id) {
+async function asyncFindBookById(token) {
     while (!loaded.hasOwnProperty('books')) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }
 
-    return loaded.books.find(book => book.id === id);
+    return loaded.books.find(book => book.token === token);
 }
 
 function addBook(title, series, volume, author, cover, isbn, description, image) {

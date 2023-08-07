@@ -1,16 +1,16 @@
 function toggleFold(id) {
     var div = document.getElementById(id);
-    var chevron_down = document.getElementById(id + "--chevron-down")
-    var chevron_up = document.getElementById(id + "--chevron-up")
+    var chevronDown = document.getElementById(id + "--chevron-down")
+    var chevronUp = document.getElementById(id + "--chevron-up")
     if (div.style.display === "none") {
         div.style.display = "block";
-        chevron_down.style.display = "none";
-        chevron_up.style.display = "inline-block";
+        chevronDown.style.display = "none";
+        chevronUp.style.display = "inline-block";
         localStorage.setItem(id + "--folded", "false");
     } else {
         div.style.display = "none";
-        chevron_down.style.display = "inline-block";
-        chevron_up.style.display = "none";
+        chevronDown.style.display = "inline-block";
+        chevronUp.style.display = "none";
         localStorage.setItem(id + "--folded", "true");
     }
 }

@@ -44,7 +44,7 @@
                 for (let book of searchBooks(query)) {
                     const bookRow = document.createElement("li");
                     bookRow.classList.add("table-row");
-                    bookRow.onclick = () => view(book.id);
+                    bookRow.onclick = () => view(book.token);
                     bookRow.innerHTML = `
                         <span class="table-cell">${book.title}</span>
                         <span class="table-cell">${book.series}</span>

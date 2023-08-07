@@ -45,14 +45,14 @@
                             descriptionInput.value = "";
                             imageInput.value = "";
 
-                            delLocalStorage("-add--input-title");
-                            delLocalStorage("-add--input-series");
-                            delLocalStorage("-add--input-volume");
-                            delLocalStorage("-add--input-author");
-                            delLocalStorage("-add--input-cover");
-                            delLocalStorage("-add--input-isbn");
-                            delLocalStorage("-add--input-description");
-                            delLocalStorage("-add--input-image");
+                            deleteLocalStorage("-add--input-title");
+                            deleteLocalStorage("-add--input-series");
+                            deleteLocalStorage("-add--input-volume");
+                            deleteLocalStorage("-add--input-author");
+                            deleteLocalStorage("-add--input-cover");
+                            deleteLocalStorage("-add--input-isbn");
+                            deleteLocalStorage("-add--input-description");
+                            deleteLocalStorage("-add--input-image");
                         } else {
                             alert("Fehlermeldung: " + data.cause);
                         };

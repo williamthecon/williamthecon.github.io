@@ -29,8 +29,6 @@
                 var descriptionInput = document.getElementById("description-input");
                 var imageInput = document.getElementById("image-input");
 
-                console.log([titleInput.value, seriesInput.value, volumeInput.value, authorInput.value, coverInput.value, isbnInput.value, descriptionInput.value, imageInput.value]);
-
                 await asyncAddBook(titleInput.value, seriesInput.value, volumeInput.value, authorInput.value, coverInput.value, isbnInput.value, descriptionInput.value, imageInput.value)
                     .then(data => {
                         if (data.success) {

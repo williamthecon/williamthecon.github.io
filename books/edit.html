@@ -17,6 +17,39 @@
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/helpfulLinks.js"></script>
+        <script>
+            async function doEdit() {
+                var titleInput = document.getElementById("title-input");
+                var seriesInput = document.getElementById("series-input");
+                var volumeInput = document.getElementById("volume-input");
+                var authorInput = document.getElementById("author-input");
+                var coverInput = document.getElementById("cover-input");
+                var isbnInput = document.getElementById("isbn-input");
+                var descriptionInput = document.getElementById("description-input");
+                var imageInput = document.getElementById("image-input");
+
+                const newBook = {"title": titleInput.value, "series": seriesInput.value, "volume": volumeInput.value, "author": authorInput.value, "cover": coverInput.value, "isbn": isbnInput.value, "description": descriptionInput.value, "image": imageInput.value, "user": origBook.user, "token": origBook.token}
+                await asyncEditBook(origBook, newBook)
+                    .then(data => {
+                        if (data.success) {
+                            alert("Buch erfolgreich hinzugefügt!");
+
+                            deleteLocalStorage("-edit--input-title");
+                            deleteLocalStorage("-edit--input-series");
+                            deleteLocalStorage("-edit--input-volume");
+                            deleteLocalStorage("-edit--input-author");
+                            deleteLocalStorage("-edit--input-cover");
+                            deleteLocalStorage("-edit--input-isbn");
+                            deleteLocalStorage("-edit--input-description");
+                            deleteLocalStorage("-edit--input-image");
+
+                            origBook = data.book;
+                        } else {
+                            alert("Fehlermeldung: " + data.cause);
+                        };
+                    });
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Bearbeiten</h1>
             <div id="username-container"></div>
@@ -45,28 +78,28 @@
             <div class="content-block">
                 <form id="edit-form">
                     <div>
-                        <input type="text" id="input-title" name="title" value="{{ book.title }}" placeholder="Titel">
+                        <input type="text" id="title-input" name="title" placeholder="Titel" required>
                     </div>
                     <div>
-                        <input type="text" id="input-series" name="series" value="{{ book.series }}" placeholder="Reihe (Opt.)">
+                        <input type="text" id="series-input" name="series" placeholder="Reihe (Opt.)">
                     </div>
                     <div>
-                        <input type="text" id="input-volume" name="volume" value="{{ book.volume }}" placeholder="Band (Opt.)">
+                        <input type="text" id="volume-input" name="volume" placeholder="Band (Opt.)">
                     </div>
                     <div>
-                        <input type="text" id="input-author" name="author" value="{{ book.author }}" placeholder="Autor">
+                        <input type="text" id="author-input" name="author" placeholder="Autor" required>
                     </div>
                     <div>
-                        <input type="text" id="input-cover" name="cover" value="{{ book.cover }}" placeholder="Umschlag">
+                        <input type="text" id="cover-input" name="cover" placeholder="Umschlag">
                     </div>
                     <div>
-                        <input type="text" id="input-isbn" name="isbn" value="{{ book.isbn }}" placeholder="ISBN">
+                        <input type="text" id="isbn-input" name="isbn" placeholder="ISBN">
                     </div>
                     <div>
-                        <textarea rows=5 id="input-description" name="description" value="{{ book.description }}" placeholder="Beschreibung"></textarea>
+                        <textarea rows=5 id="description-input" name="description" placeholder="Beschreibung"></textarea>
                     </div>
                     <div>
-                        <input type="text" id="input-image" name="image" value="{{ book.image }}" placeholder="Bild-Link">
+                        <input type="text" id="image-input" name="image" placeholder="Bild-Link">
                     </div>
                     <button type="submit">Speichern</button>
                 </form>
@@ -81,6 +114,75 @@
         <script>
             // Username Container
             loadUsername();
+
+            // Inputs
+            const titleInput = document.getElementById("title-input");
+            const seriesInput = document.getElementById("series-input");
+            const volumeInput = document.getElementById("volume-input");
+            const authorInput = document.getElementById("author-input");
+            const coverInput = document.getElementById("cover-input");
+            const isbnInput = document.getElementById("isbn-input");
+            const descriptionInput = document.getElementById("description-input");
+            const imageInput = document.getElementById("image-input");
+
+            asyncFindBookById(getLocalStorage("book-token"))
+                .then(book => {
+                    if (!book) {
+                        window.location.href = "/books/books";
+                    }
+
+                    titleInput.value = (getLocalStorage("-edit--input-title")) ? getLocalStorage("-edit--input-title") : book.title;
+                    seriesInput.value = (getLocalStorage("-edit--input-series")) ? getLocalStorage("-edit--input-series") : book.series;
+                    volumeInput.value = (getLocalStorage("-edit--input-volume")) ? getLocalStorage("-edit--input-volume") : book.volume;
+                    authorInput.value = (getLocalStorage("-edit--input-author")) ? getLocalStorage("-edit--input-author") : book.author;
+                    coverInput.value = (getLocalStorage("-edit--input-cover")) ? getLocalStorage("-edit--input-cover") : book.cover;
+                    isbnInput.value = (getLocalStorage("-edit--input-isbn")) ? getLocalStorage("-edit--input-isbn") : book.isbn;
+                    descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : book.description;
+                    imageInput.value = (getLocalStorage("-edit--input-image")) ? getLocalStorage("-edit--input-image") : book.image;
+
+                    setLocalStorage("-edit--input-title", titleInput.value);
+                    setLocalStorage("-edit--input-series", seriesInput.value);
+                    setLocalStorage("-edit--input-volume", volumeInput.value);
+                    setLocalStorage("-edit--input-author", authorInput.value);
+                    setLocalStorage("-edit--input-cover", coverInput.value);
+                    setLocalStorage("-edit--input-isbn", isbnInput.value);
+                    setLocalStorage("-edit--input-description", descriptionInput.value);
+                    setLocalStorage("-edit--input-image", imageInput.value);
+
+                    origBook = book;
+                });
+
+            titleInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-title", e.target.value);
+            });
+            seriesInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-series", e.target.value);
+            });
+            volumeInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-volume", e.target.value);
+            });
+            authorInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-author", e.target.value);
+            });
+            coverInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-cover", e.target.value);
+            });
+            isbnInput.addEventListener("input", e =>  {
+                setLocalStorage("-edit--input-isbn", e.target.value);
+            });
+            descriptionInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-description", e.target.value);
+            });
+            imageInput.addEventListener("input", e => {
+                setLocalStorage("-edit--input-image", e.target.value);
+            });
+
+            // Block the form redirection
+            const editForm = document.getElementById("edit-form");
+            editForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doEdit();
+            })
         </script>
     </body>
 </html>

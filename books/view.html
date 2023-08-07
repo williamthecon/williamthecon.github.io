@@ -55,7 +55,7 @@
             // Book Block
             const bookBlock = document.getElementById("book-block");
 
-            asyncFindBookById(getLocalStorage("-view--id"))
+            asyncFindBookById(getLocalStorage("book-token"))
                 .then(book => {
                     if (!book) {
                         window.location.href = "/books/books";
@@ -124,7 +124,7 @@
                         const editButton = document.createElement("button");
                         editButton.id = "edit-button";
                         editButton.type = "button";
-                        editButton.innerHTML = "<a href='/books/edit?id=" + book.token + "'>Bearbeiten</a>";
+                        editButton.innerHTML = "<a href='/books/edit'>Bearbeiten</a>";
                         bookBlock.appendChild(editButton);
                     };
                 });

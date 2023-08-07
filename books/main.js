@@ -405,7 +405,6 @@ function addBook(title, series, volume, author, cover, isbn, description, image)
 }
 
 async function asyncAddBook(title, series, volume, author, cover, isbn, description, image) {
-    console.log([title, series, volume, author, cover, isbn, description, image]);
     let data = null;
     addItem({
         "title": title,
@@ -419,6 +418,7 @@ async function asyncAddBook(title, series, volume, author, cover, isbn, descript
         "user": getLocalStorage("user"),
         "token": generate_token()
     }, "books", (d) => { data = d; });
+
     while (data === null) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }
@@ -427,6 +427,16 @@ async function asyncAddBook(title, series, volume, author, cover, isbn, descript
 
 function editBook(book, newBook) {
     editItem(book, newBook, "books");
+}
+
+async function asyncEditBook(book, newBook) {
+    let data = null;
+    editItem(book, newBook, "books", (d) => { data = d; });
+    
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+    return data;
 }
 
 function findUserById(token) {

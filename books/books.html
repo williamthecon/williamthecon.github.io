@@ -59,8 +59,8 @@
                 viewMore();
             }
 
-            function view(id) {
-                setLocalStorage("-view--id", id);
+            function view(token) {
+                setLocalStorage("book-token", token);
                 window.location.href = "/books/view";
             }
         </script>

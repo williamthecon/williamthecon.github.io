@@ -23,7 +23,7 @@
             #book-block {
                 margin-left: auto;
                 margin-right: auto;
-                width: 60vw;
+                width: 60%;
             }
 
             #book-header h2 {
@@ -36,6 +36,18 @@
 
             #book-cover img {
                 width: 100%;
+            }
+
+            @media screen and (max-width: 800px) {
+                #book-block {
+                    width: 90%;
+                }
+            }
+
+            @media screen and (max-width: 640px) {
+                #book-block {
+                    width: 100%;
+                }
             }
         </style>
     </head>

@@ -155,7 +155,7 @@ ul a:hover {
     display: inline-block;
 }
 
-#chevron-down {
+.chevron-down {
     font-size: 23px;
     float: right;
     margin-top: 10px;
@@ -163,7 +163,7 @@ ul a:hover {
     display: none;
 }
 
-#chevron-up {
+.chevron-up {
     font-size: 31px;
     float: right;
     margin-top: 11px;

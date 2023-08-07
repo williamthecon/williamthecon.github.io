@@ -151,7 +151,7 @@
                             <p><b>Author</b>: ${book.author}</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Benutzer</b>: ${book.username}</p>
+                            <p><b>Benutzer</b>: ${findUserById(book.user).name}</p>
                         </div>
                         <div class="book-info">
                             <p><b>Umschlag</b>: ` + (book.cover !== "" ? book.cover : "?") + `</p>

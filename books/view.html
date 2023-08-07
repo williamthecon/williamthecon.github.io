@@ -176,6 +176,7 @@
                     if (getLocalStorage("user") === book.user) {
                         const editButton = document.createElement("button");
                         editButton.id = "edit-button";
+                        editButton.type = "button";
                         editButton.innerHTML = "<a href='/books/edit?id=" + book.token + "'>Bearbeiten</a>";
                         bookBlock.appendChild(editButton);
                     };

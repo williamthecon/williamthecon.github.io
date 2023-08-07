@@ -114,6 +114,10 @@
 
             asyncFindBookById(get("id"))
                 .then(book => {
+                    if (!book) {
+                        window.location.href = "/books/books";
+                    }
+
                     //// Book header
                     const bookHeader = document.createElement("div");
                     bookHeader.id = "book-header";
@@ -135,25 +139,25 @@
                     bookProfile.id = "book-profile";
                     bookProfile.innerHTML = `
                         <div class="book-info">
-                            <p><b>Titel</b>: <a href='/books/books?query=Titel%3A"${book.title}"'>${book.title}</a></p>
+                            <p><b>Titel</b>: ${book.title}</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Reihe</b>: ` + (book.series !== "" ? `<a href='/books/books?query=Reihe%3A"${book.series}"'>${book.series}</a>` : "-") + `</p>
+                            <p><b>Reihe</b>: ` + (book.series !== "" ? book.series : "-") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Band</b>: ` + (book.volume !== "" ? `<a href='/books/books?query=Band%3A"${book.volume}"'>${book.volume}</a>` : "-") + `</p>
+                            <p><b>Band</b>: ` + (book.volume !== "" ? book.volume : "-") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Author</b>: <a href='/books/books?query=Autor%3A"${book.author}"'>${book.author}</a></p>
+                            <p><b>Author</b>: ${book.author}</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Benutzer</b>: <a href='/books/books?query=Benutzer%3A"${book.username}"'>${book.username}</a></p>
+                            <p><b>Benutzer</b>: ${book.username}</p>
                         </div>
                         <div class="book-info">
-                            <p><b>Umschlag</b>: ` + (book.cover !== "" ? `<a href='/books/books?query=Umschlag%3A"${book.cover}"'>${book.cover}</a>` : "?") + `</p>
+                            <p><b>Umschlag</b>: ` + (book.cover !== "" ? book.cover : "?") + `</p>
                         </div>
                         <div class="book-info">
-                            <p><b>ISBN</b>: ` + (book.isbn !== "" ? `<a href='/books/books?query=ISBN%3A"${book.isbn}"'>${book.isbn}</a>` : "?") + `</p>
+                            <p><b>ISBN</b>: ` + (book.isbn !== "" ? book.isbn : "?") + `</p>
                         </div>
                     `;
                     bookBlock.appendChild(bookProfile);

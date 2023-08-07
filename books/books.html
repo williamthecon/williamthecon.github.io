@@ -109,8 +109,7 @@
         </div>
         <script>
             // Username Container
-            const usernameContainer = document.getElementById("username-container");
-            usernameContainer.innerHTML = findUserById(getLocalStorage("user")).name;
+            loadUsername();
 
             // Inputs
             const queryInput = document.getElementById("query-input");

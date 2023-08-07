@@ -433,3 +433,13 @@ function findUserById(id) {
 function findUserByName(name) {
     return loaded.users.find(user => user.name === name);
 }
+
+// Externally needed
+async function loadUsername() {
+    while (!loaded.hasOwnProperty('users')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    const usernameContainer = document.getElementById("username-container");
+    usernameContainer.innerHTML = findUserById(getLocalStorage("user")).name;
+}

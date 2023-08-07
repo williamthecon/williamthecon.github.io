@@ -34,6 +34,14 @@
                 text-shadow: rgb(24, 132, 219) 1px 1px;
             }
 
+            #book-header h4 {
+                margin: 8px;
+                font-size: 1.2em;
+                text-decoration: underline rgb(24, 132, 219) 2px solid;
+                text-underline-offset: 4px;
+                text-shadow: rgb(24, 132, 219) 1px 1px;
+            }
+
             #book-cover img {
                 width: 100%;
             }
@@ -125,6 +133,9 @@
                             bookProfile.id = "book-profile";
                             bookProfile.className = "book-block-block";
                             bookProfile.innerHTML = `
+                                <div id="book-profile-header">
+                                    <h4>Steckbrief</h4>
+                                </div>
                                 <div class="book-info">
                                     <p><b>Titel</b>: ${book.title}</p>
                                 </div>
@@ -156,7 +167,7 @@
                                 bookDescription.className = "book-block-block";
                                 bookDescription.innerHTML = `
                                     <div id="book-description-header">
-                                        <h5><b>Beschreibung</b></h5>
+                                        <h4>Beschreibung</h4>
                                     </div>
                                     <div id="book-description-content">
                                         <p>${book.description.split("\n").join("</p>\n        <p>")}</p>

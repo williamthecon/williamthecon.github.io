@@ -382,7 +382,14 @@ function searchBooks(query) {
 }
 
 function findBookById(id) {
-    // return Listionary.find(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "username", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "id": "token"}, {"args": [], "kwargs": {"id": id}}, true, ignore_keys=["token", "description", "image", "cover"]);
+    return loaded.books.find(book => book.id === id);
+}
+
+async function asyncFindBookById(id) {
+    while (!loaded.hasOwnProperty('books')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
     return loaded.books.find(book => book.id === id);
 }
 

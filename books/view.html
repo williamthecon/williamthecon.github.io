@@ -55,9 +55,6 @@
             const requiredLoaders = ["books", "users"];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
-        <script>
-            const book = findBookById(get('id'));
-        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Buch</h1>
             <div id="username-container"></div>
@@ -106,71 +103,74 @@
             // Book Block
             const bookBlock = document.getElementById("book-block");
 
-            //// Book header
-            const bookHeader = document.createElement("div");
-            bookHeader.id = "book-header";
-            bookHeader.innerHTML = `
-                <h2 id="book-title">${book.title}</h2>
-            `
-            bookBlock.appendChild(bookHeader);
+            asyncFindBookById(get("id"))
+                .then(book => {
+                    //// Book header
+                    const bookHeader = document.createElement("div");
+                    bookHeader.id = "book-header";
+                    bookHeader.innerHTML = `
+                        <h2 id="book-title">${book.title}</h2>
+                    `;
+                    bookBlock.appendChild(bookHeader);
 
-            //// Book cover
-            if (book.image) {
-                const bookCover = document.createElement("img");
-                bookCover.id = "book-cover";
-                bookCover.src = book.image;
-                bookBlock.appendChild(bookCover);
-            }
+                    //// Book cover
+                    if (book.image) {
+                        const bookCover = document.createElement("img");
+                        bookCover.id = "book-cover";
+                        bookCover.src = book.image;
+                        bookBlock.appendChild(bookCover);
+                    };
 
-            //// Book profile
-            const bookProfile = document.createElement("div");
-            bookProfile.id = "book-profile";
-            bookProfile.innerHTML = `
-                <div class="book-info">
-                    <p><b>Titel</b>: <a href='/books?query=Titel%3A"${book.title}"'>${book.title}</a></p>
-                </div>
-                <div class="book-info">
-                    <p><b>Reihe</b>: ` + (book.series !== "" ? `<a href='/books?query=Reihe%3A"${book.series}"'>${book.series}</a>` : "-") + `</p>
-                </div>
-                <div class="book-info">
-                    <p><b>Band</b>: ` + (book.volume !== "" ? `<a href='/books?query=Band%3A"${book.volume}"'>${book.volume}</a>` : "-") + `</p>
-                </div>
-                <div class="book-info">
-                    <p><b>Author</b>: <a href='/books?query=Autor%3A"${book.author}"'>${book.author}</a></p>
-                </div>
-                <div class="book-info">
-                    <p><b>Benutzer</b>: <a href='/books?query=Benutzer%3A"${book.username}"'>${book.username}</a></p>
-                </div>
-                <div class="book-info">
-                    <p><b>Umschlag</b>: ` + (book.cover !== "" ? `<a href='/books?query=Umschlag%3A"${book.cover}"'>${book.cover}</a>` : "?") + `</p>
-                </div>
-                <div class="book-info">
-                    <p><b>ISBN</b>: ` + (book.isbn !== "" ? `<a href='/books?query=ISBN%3A"${book.isbn}"'>${book.isbn}</a>` : "?") + `</p>
-                </div>
-            `;
-            bookBlock.appendChild(bookProfile);
+                    //// Book profile
+                    const bookProfile = document.createElement("div");
+                    bookProfile.id = "book-profile";
+                    bookProfile.innerHTML = `
+                        <div class="book-info">
+                            <p><b>Titel</b>: <a href='/books?query=Titel%3A"${book.title}"'>${book.title}</a></p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>Reihe</b>: ` + (book.series !== "" ? `<a href='/books?query=Reihe%3A"${book.series}"'>${book.series}</a>` : "-") + `</p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>Band</b>: ` + (book.volume !== "" ? `<a href='/books?query=Band%3A"${book.volume}"'>${book.volume}</a>` : "-") + `</p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>Author</b>: <a href='/books?query=Autor%3A"${book.author}"'>${book.author}</a></p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>Benutzer</b>: <a href='/books?query=Benutzer%3A"${book.username}"'>${book.username}</a></p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>Umschlag</b>: ` + (book.cover !== "" ? `<a href='/books?query=Umschlag%3A"${book.cover}"'>${book.cover}</a>` : "?") + `</p>
+                        </div>
+                        <div class="book-info">
+                            <p><b>ISBN</b>: ` + (book.isbn !== "" ? `<a href='/books?query=ISBN%3A"${book.isbn}"'>${book.isbn}</a>` : "?") + `</p>
+                        </div>
+                    `;
+                    bookBlock.appendChild(bookProfile);
 
-            //// Book description
-            if (book.description) {
-                const bookDescription = document.createElement("div");
-                bookDescription.id = "book-description";
-                bookDescription.innerHTML = `
-                    <div id="book-description-header">
-                        <h5><b>Beschreibung</b></h5>
-                    </div>
-                    <div id="book-description-content">
-                        <p>${book.description.split("\n").join("</p>\n        <p>")}</p>
-                    </div>
-                `;
-            }
+                    //// Book description
+                    if (book.description) {
+                        const bookDescription = document.createElement("div");
+                        bookDescription.id = "book-description";
+                        bookDescription.innerHTML = `
+                            <div id="book-description-header">
+                                <h5><b>Beschreibung</b></h5>
+                            </div>
+                            <div id="book-description-content">
+                                <p>${book.description.split("\n").join("</p>\n        <p>")}</p>
+                            </div>
+                        `;
+                    };
 
-            // Edit Button
-            if (getLocalStorage("user") === book.user) {
-                const editButton = document.createElement("button");
-                editButton.id = "edit-button";
-                editButton.innerHTML = "<a href='/edit?id=" + book.token + "'>Bearbeiten</a>";
-                bookBlock.appendChild(editButton);
-            }
+                    // Edit Button
+                    if (getLocalStorage("user") === book.user) {
+                        const editButton = document.createElement("button");
+                        editButton.id = "edit-button";
+                        editButton.innerHTML = "<a href='/edit?id=" + book.token + "'>Bearbeiten</a>";
+                        bookBlock.appendChild(editButton);
+                    };
+                });
         </script>
     </body>
 </html>

@@ -426,8 +426,8 @@ function editBook(book, newBook) {
     editItem(book, newBook, "books");
 }
 
-function findUserById(id) {
-    return loaded.users.find(user => user.id === id);
+function findUserById(token) {
+    return loaded.users.find(user => user.token === token);
 }
 
 function findUserByName(name) {

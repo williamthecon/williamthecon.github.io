@@ -164,7 +164,7 @@ function login(username, password) {
 
     if (user) {
         if (hash_password(password) === user.password) {
-            setLocalStorage("user", user.id);
+            setLocalStorage("user", user.token);
             console.log("Login successful");
             return true;
         }

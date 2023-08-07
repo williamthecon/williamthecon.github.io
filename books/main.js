@@ -386,7 +386,7 @@ function findBookById(id) {
     return loaded.books.find(book => book.id === id);
 }
 
-function addBook(title, author, series, volume, cover, isbn, description, image) {
+function addBook(title, series, volume, author, cover, isbn, description, image) {
     addItem({
         "titel": title,
         "series": series,
@@ -401,7 +401,8 @@ function addBook(title, author, series, volume, cover, isbn, description, image)
     }, "books");
 }
 
-async function asyncAddBook(title, author, series, cover, volume, description, image, isbn) {
+async function asyncAddBook(title, series, volume, author, cover, isbn, description, image) {
+    console.log([title, author, series, volume, cover, description, image, isbn]);
     let data = null;
     addItem({
         "title": title,

@@ -29,6 +29,8 @@
                 var descriptionInput = document.getElementById("description-input");
                 var imageInput = document.getElementById("image-input");
 
+                console.log([titleInput.value, seriesInput.value, volumeInput.value, authorInput.value, coverInput.value, isbnInput.value, descriptionInput.value, imageInput.value]);
+
                 await asyncAddBook(titleInput.value, seriesInput.value, volumeInput.value, authorInput.value, coverInput.value, isbnInput.value, descriptionInput.value, imageInput.value)
                     .then(data => {
                         if (data.success) {
@@ -43,14 +45,14 @@
                             descriptionInput.value = "";
                             imageInput.value = "";
 
-                            setLocalStorage("-add--input-title", "");
-                            setLocalStorage("-add--input-series", "");
-                            setLocalStorage("-add--input-volume", "");
-                            setLocalStorage("-add--input-author", "");
-                            setLocalStorage("-add--input-cover", "");
-                            setLocalStorage("-add--input-isbn", "");
-                            setLocalStorage("-add--input-description", "");
-                            setLocalStorage("-add--input-image", "");
+                            delLocalStorage("-add--input-title");
+                            delLocalStorage("-add--input-series");
+                            delLocalStorage("-add--input-volume");
+                            delLocalStorage("-add--input-author");
+                            delLocalStorage("-add--input-cover");
+                            delLocalStorage("-add--input-isbn");
+                            delLocalStorage("-add--input-description");
+                            delLocalStorage("-add--input-image");
                         } else {
                             alert("Fehlermeldung: " + data.cause);
                         };

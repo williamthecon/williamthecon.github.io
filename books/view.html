@@ -112,7 +112,7 @@
             // Book Block
             const bookBlock = document.getElementById("book-block");
 
-            asyncFindBookById(getLocalStorage("id"))
+            asyncFindBookById(getLocalStorage("-view--id"))
                 .then(book => {
                     if (!book) {
                         window.location.href = "/books/books";

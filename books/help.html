@@ -67,7 +67,7 @@
                     <p id="search-help--chevron-down" class="chevron-down">v</p>
                     <p id="search-help--chevron-up" class="chevron-up">^</p>
                 </div>
-                <div id="search-help">
+                <div id="search-help" class="folding-content">
                     <p>Betrifft die folgenden Seiten: <a href="/books/books">Bücher</a>, <a href="/books/wishes">Wünsche</a></a></p>
                     <p>Die Suchleiste wird fokusiert, wenn darauf geklickt wird, und aus dem Fokus genommen, wenn an irgendeine andere Stelle geklickt wird.</p>
                     <p>Sobald die Suchleiste sich im Fokus befindet, kann der Suchbegriff eingegeben werden. Dabei funktioniert die Suche folgendermaßen:</p>
@@ -97,9 +97,8 @@
             loadUsername();
 
             // Help blocks to folded
-            const helpBlocks = document.getElementsByClassName("help-block");
+            const helpBlocks = document.getElementsByClassName("folding-content");
             Array.from(helpBlocks).forEach(block => {
-                console.log(block.id);
                 toggleFold(block.id);
             });
         </script>

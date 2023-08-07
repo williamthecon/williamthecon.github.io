@@ -60,7 +60,8 @@
             }
 
             function view(id) {
-                window.location.href = "/books/view?id=" + id;
+                setLocalStorage("-view--id", id);
+                window.location.href = "/books/view";
             }
         </script>
         <div id="header" class="container">

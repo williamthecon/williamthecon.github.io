@@ -173,10 +173,6 @@ function login(username, password) {
     return false;
 }
 
-function logout() {
-    deleteLocalStorage("user");
-}
-
 function changePassword(currentPassword, newPassword1, newPassword2) {
     const user = loaded.users.find(user => user.name === username);
 

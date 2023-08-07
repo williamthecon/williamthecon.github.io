@@ -15,6 +15,12 @@ function toggleFold() {
     }
 }
 
+function logout() {
+    localStorage.removeItem("user");
+    localStorage.setItem("redirect-to", window.location.href);
+    window.location.href = "/books/login";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const helpfulLinksFolded = localStorage.getItem('helpfulLinksFolded');
     if (helpfulLinksFolded !== null) {

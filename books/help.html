@@ -98,7 +98,7 @@
 
             // Help blocks to folded
             const helpBlocks = document.getElementsByClassName("help-block");
-            helpBlocks.forEach(block => {
+            Array.from(helpBlocks).forEach(block => {
                 toggleFold(block.id);
             });
         </script>

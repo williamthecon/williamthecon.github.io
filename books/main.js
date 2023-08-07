@@ -386,13 +386,35 @@ function findBookById(id) {
     return loaded.books.find(book => book.id === id);
 }
 
-function addBook(title, author, series = "", volume = "", cover = "", isbn = "", description = "", image = "") {
-    return addItem({ "titel": title, "author": author, "username": getLocalStorage("username"), "cover": cover, "series": series, "volume": volume, "isbn": isbn, "description": description, "image": image, "token": generate_token() }, "books");
+function addBook(title, author, series, volume, cover, isbn, description, image) {
+    addItem({
+        "titel": title,
+        "series": series,
+        "volume": volume,
+        "author": author,
+        "cover": cover,
+        "isbn": isbn,
+        "description": description,
+        "image": image,
+        "username": getLocalStorage("username"),
+        "token": generate_token()
+    }, "books");
 }
 
-async function asyncAddBook(title, author, username, cover, series = "", volume = "", description = "", image = "", isbn = "", token = generate_token()) {
+async function asyncAddBook(title, author, series, cover, volume, description, image, isbn) {
     let data = null;
-    addItem({ title, author, username, cover, series, volume, description, image, isbn, token }, "books", (d) => { data = d; });
+    addItem({
+        "title": title,
+        "series": series,
+        "volume": volume,
+        "author": author,
+        "cover": cover,
+        "isbn": isbn,
+        "description": description,
+        "image": image,
+        "username": getLocalStorage("username"),
+        "token": generate_token()
+    }, "books", (d) => { data = d; });
     while (data === null) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }

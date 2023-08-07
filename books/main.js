@@ -402,7 +402,7 @@ function addBook(title, series, volume, author, cover, isbn, description, image)
 }
 
 async function asyncAddBook(title, series, volume, author, cover, isbn, description, image) {
-    console.log([title, author, series, volume, cover, description, image, isbn]);
+    console.log([title, series, volume, author, cover, isbn, description, image]);
     let data = null;
     addItem({
         "title": title,

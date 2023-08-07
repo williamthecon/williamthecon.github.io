@@ -432,7 +432,7 @@ function editBook(book, newBook) {
 async function asyncEditBook(book, newBook) {
     let data = null;
     editItem(book, newBook, "books", (d) => { data = d; });
-    
+
     while (data === null) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }
@@ -440,6 +440,14 @@ async function asyncEditBook(book, newBook) {
 }
 
 function findUserById(token) {
+    return loaded.users.find(user => user.token === token);
+}
+
+async function asyncFindUserById(token) {
+    while (!loaded.hasOwnProperty('users')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
     return loaded.users.find(user => user.token === token);
 }
 

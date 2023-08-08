@@ -618,10 +618,10 @@ async function convertUsers() {
 
     loaded["convertedUsers"] = loaded.users.map(user => ({
         "name": user.name,
-        "books": findBooksByUser(user.token),
-        "series": findSeriesByUser(user.token),
-        "authors": findAuthorsByUser(user.token),
-        "wishes": findWishesByUser(user.token),
+        "books": findBooksByUser(user.token).length.toString(),
+        "series": findSeriesByUser(user.token).length.toString(),
+        "authors": findAuthorsByUser(user.token).length.toString(),
+        "wishes": findWishesByUser(user.token).length.toString(),
         "token": user.token
     }));
 }

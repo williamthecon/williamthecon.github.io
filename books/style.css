@@ -156,7 +156,7 @@ ul a:hover {
 }
 
 .folding-header-text {
-    width: calc(100% - 20px);
+    max-width: calc(100% - 45px);
 }
 
 .chevron-down {

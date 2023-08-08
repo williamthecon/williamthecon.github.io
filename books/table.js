@@ -252,7 +252,7 @@ async function sortTable() {
         });
 
         const sortedRows = [];
-        sortArray(importantTexts).forEach(info => sortedRows.push(info[info.length - 1]));
+        sortArray(importantTexts).forEach(info => sortedRows.push(info.pop()));
 
         const table = document.querySelector(".table")
         table.innerHTML = "";

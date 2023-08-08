@@ -5,45 +5,109 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
         <meta name="keywords" content="williamthecon.github.io williamthecon github books all search">
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Meine Bücher - Bücher</title>
+        <title>Meine Bücher - Suche</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["books", "wishes", "users"];
+            let tableSorting = [1, 2, 0, 3, 4];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
         <script type="text/javascript" src="/books/table.js"></script>
         <script>
-            function view(id) {
-                window.location.href = "/view?id=" + id;
+            async function doSearch() {
+                const query = document.getElementById("query-input").value;
+                const booksTable = document.getElementById("books-table");
+                booksTable.innerHTML = "";
+
+                const booksTableHeader = document.createElement("li");
+                booksTableHeader.classList.add("table-row");
+                booksTableHeader.classList.add("table-header");
+                booksTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
+                `;
+                booksTable.appendChild(booksTableHeader);
+
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('users')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                for (let book of searchAll(query)) {
+                    const bookRow = document.createElement("li");
+                    bookRow.classList.add("table-row");
+                    bookRow.onclick = () => view(book.token);
+                    bookRow.innerHTML = `
+                        <span class="table-cell">${book.title}</span>
+                        <span class="table-cell">${book.series}</span>
+                        <span class="table-cell">${book.volume}</span>
+                        <span class="table-cell">${book.author}</span>
+                        <span class="table-cell">${findUserById(book.user).name}</span>
+                    `;
+                    booksTable.appendChild(bookRow);
+                }
+
+                sortTable();
+                viewMore();
             }
 
-            function wish(id) {
-                window.location.href = "/wish?id=" + id;
+            function view(token) {
+                setLocalStorage("book-token", token);
+                window.location.href = "/books/view";
+            }
+
+            function wish(token) {
+                setLocalStorage("wish-token", token);
+                window.location.href = "/books/wish";
             }
         </script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Bücher</h1>
-            <h4>{{ username }}</h4>
+            <h1>Meine Bücher - Suche</h1>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
                 <div class="folding-header" onclick="toggleFold('helpful-links');">
-                    <h3>Hilfreiche Links</h3>
+                    <div class="folding-header-text"><h3>Hilfreiche Links</h3></div>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
-                    <ul class="horizontal-list">{% for text, link in links.items() %}
-                        <li><a href="{{ link }}{% if text in ['Wünsche, 'Bücher'] %}?query={{ query }}{% endif %}">{{ text }}</a></li>{% endfor %}
+                    <ul class="horizontal-list">
+                        <li><a href="/books/">Startseite</a></li>
+                        <li><a href="/books/books">Bücher</a></li>
+                        <li><a href="/books/wishes">Wünsche</a></li>
+                        <li><a href="/books/add">Neues Buch</a></li>
+                        <li><a href="/books/new">Neuer Wunsch</a></li>
+                        <li><a href="/books/users">Benutzer</a></li>
+                        <li><a href="/books/password">Passwort</a></li>
+                        <li><a href="/books/username">Benutzername</a></li>
+                        <li><a href="/books/help">Hilfe</a></li>
+                        <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
             <div class="content-block">
                 <form id="search-form">
                     <div>
-                        <input type="text" id="input-query" name="query" value="{{ query }}" placeholder="Suchen...">
+                        <input type="text" id="input-query" name="query" placeholder="Suchen...">
                     </div>
                     <div>
                         <button type="submit">Suchen</button>
@@ -51,29 +115,84 @@
                 </form>
             </div>
             <div class="content-block table-container">
-                <ul class="table">
-                    <li class="table-row table-header">
-                        <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
-                        <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
-                        <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
-                        <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
-                        <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
-                    </li>{% for book in all %}
-                    <li class="table-row" onclick="{% if book.importance is not _None %}wish{% else %}view{% endif %}('{{ book.id }}')">{% for info in list(book)[:5] %}
-                        <span class="table-cell">{{ info }}</span>{% endfor %}
-                    </li>{% endfor %}
-                </ul>
+                <ul id="books-table" class="table"></ul>
             </div>
             <div class="content-block">
-                <button onclick="viewMore()">Mehr</button>
+                <button onclick="viewMore();">Mehr</button>
             </div>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
         <script>
-            sortTable();
-            viewMore();
+            // Username Container
+            loadUsername();
+
+            // Inputs
+            const queryInput = document.getElementById("query-input");
+            queryInput.value = getLocalStorage("query");
+            queryInput.addEventListener("input", () => {
+                setLocalStorage("query", queryInput.value);
+            });
+
+            // Block the form redirection
+            const searchForm = document.getElementById("search-form");
+            searchForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doSearch();
+            })
+
+            // Books Table
+            async function loadBooks() {
+                const booksTable = document.getElementById("books-table");
+
+                const booksTableHeader = document.createElement("li");
+                booksTableHeader.classList.add("table-row");
+                booksTableHeader.classList.add("table-header");
+                booksTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
+                `;
+                booksTable.appendChild(booksTableHeader);
+
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('users')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                for (let book of loaded.wishes.concat(loaded.books)) {
+                    const bookRow = document.createElement("li");
+                    bookRow.classList.add("table-row");
+                    bookRow.onclick = () => view(book.token);
+                    bookRow.innerHTML = `
+                        <span class="table-cell">${book.title}</span>
+                        <span class="table-cell">${book.series}</span>
+                        <span class="table-cell">${book.volume}</span>
+                        <span class="table-cell">${book.author}</span>
+                        <span class="table-cell">${findUserById(book.user).name}</span>
+                    `;
+                    booksTable.appendChild(bookRow);
+                }
+
+                sortTable();
+                viewMore();
+            }
+
+            if (queryInput.value) {
+                doSearch();
+            } else {
+                loadBooks();
+            }
         </script>
     </body>
 </html>

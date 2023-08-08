@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github wish book">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github view user">
         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Meine Bücher - Wunsch</title>
+        <title>Meine Bücher - Benutzer</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
 
         <style>
-            .book-block-block {
+            .user-block-block {
                 background-color: rgb(21, 21, 21);
                 color: rgb(143, 173, 192);
                 border: 1px solid rgb(24, 132, 219);
@@ -22,13 +22,13 @@
                 margin: 15px 0;
             }
 
-            #book-block {
+            #user-block {
                 margin-left: auto;
                 margin-right: auto;
                 width: 60%;
             }
 
-            #book-header h2 {
+            #user-header h2 {
                 margin: 8px;
                 font-size: 2.3em;
                 text-decoration: underline rgb(24, 132, 219) 2px solid;
@@ -36,7 +36,7 @@
                 text-shadow: rgb(24, 132, 219) 1px 1px;
             }
 
-            #book-profile h4 {
+            #user-profile h4 {
                 margin: 8px;
                 font-size: 1.2em;
                 text-decoration: underline rgb(24, 132, 219) 2px solid;
@@ -44,18 +44,18 @@
                 text-shadow: rgb(24, 132, 219) 1px 1px;
             }
 
-            #book-cover img {
+            #user-cover img {
                 width: 100%;
             }
 
             @media screen and (max-width: 800px) {
-                #book-block {
+                #user-block {
                     width: 90%;
                 }
             }
 
             @media screen and (max-width: 640px) {
-                #book-block {
+                #user-block {
                     width: 100%;
                 }
             }
@@ -63,12 +63,12 @@
     </head>
     <body>
         <script>
-            const requiredLoaders = ["wishes", "users"];
+            const requiredLoaders = ["books", "wishes", "users"];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Wunsch</h1>
+            <h1>Meine Bücher - Benutzer</h1>
             <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
@@ -93,7 +93,7 @@
                     </ul>
                 </div>
             </div>
-            <div id="book-block" class="content-block"></div>
+            <div id="user-block" class="content-block"></div>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
@@ -102,102 +102,68 @@
             // Username Container
             loadUsername();
 
-            async function loadView() {
+            async function loadUser() {
                 // Book Block
-                const bookBlock = document.getElementById("book-block");
+                const userBlock = document.getElementById("user-block");
+
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
 
                 while (!loaded.hasOwnProperty('wishes')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
-                while (!loaded.hasOwnProperty('users')) {
+                while (!loaded.hasOwnProperty('convertedUsers')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
-                const wish = findWishById(getLocalStorage("wish-token"));
+                const user = findConvertedUserById(getLocalStorage("user-token"));
+                const defaultUser = findUserById(getLocalStorage("user-token"));
 
-                if (!wish) {
-                    window.location.href = "/books/wishes";
+                if (!user) {
+                    window.location.href = "/books/users";
                 }
 
                 //// Book header
-                const bookHeader = document.createElement("div");
-                bookHeader.id = "book-header";
-                bookHeader.innerHTML = `
-                    <h2 id="book-title">${wish.title}</h2>
+                const userHeader = document.createElement("div");
+                userHeader.id = "user-header";
+                userHeader.innerHTML = `
+                    <h2 id="user-name">${user.name}</h2>
                 `;
-                bookBlock.appendChild(bookHeader);
-
-                //// Book cover
-                if (wish.image) {
-                    const bookCover = document.createElement("div");
-                    bookCover.id = "book-cover";
-                    bookCover.innerHTML = `
-                        <img src="${wish.image}" alt="'${wish.title}' Cover">
-                    `;
-                    bookBlock.appendChild(bookCover);
-                };
+                userBlock.appendChild(userHeader);
 
                 //// Book profile
-                const bookProfile = document.createElement("div");
-                bookProfile.id = "book-profile";
-                bookProfile.className = "book-block-block";
-                bookProfile.innerHTML = `
-                    <div id="book-profile-header">
+                const userProfile = document.createElement("div");
+                userProfile.id = "user-profile";
+                userProfile.className = "user-block-block";
+                userProfile.innerHTML = `
+                    <div id="user-profile-header">
                         <h4>Steckbrief</h4>
                     </div>
-                    <div class="book-info">
-                        <p><b>Titel</b>: ${wish.title}</p>
+                    <div class="user-info">
+                        <p><b>Name</b>: ${user.name}</p>
                     </div>
-                    <div class="book-info">
-                        <p><b>Reihe</b>: ` + (wish.series !== "" ? wish.series : "-") + `</p>
+                    <div class="user-info">
+                        <p><b>Bücher</b>: ${user.books}</p>
                     </div>
-                    <div class="book-info">
-                        <p><b>Band</b>: ` + (wish.volume !== "" ? wish.volume : "-") + `</p>
+                    <div class="user-info">
+                        <p><b>Reihen</b>: ${user.series}</p>
                     </div>
-                    <div class="book-info">
-                        <p><b>Author</b>: ${wish.author}</p>
+                    <div class="user-info">
+                        <p><b>Autoren</b>: ${user.authors}</p>
                     </div>
-                    <div class="book-info">
-                        <p><b>Relevanz</b>: ${wish.importance}</p>
-                    <div class="book-info">
-                        <p><b>Benutzer</b>: ${findUserById(wish.user).name}</p>
+                    <div class="user-info">
+                        <p><b>Wünschen</b>: ${user.wishes}</p>
                     </div>
-                    <div class="book-info">
-                        <p><b>Umschlag</b>: ` + (wish.cover !== "" ? wish.cover : "?") + `</p>
-                    </div>
-                    <div class="book-info">
-                        <p><b>ISBN</b>: ` + (wish.isbn !== "" ? wish.isbn : "?") + `</p>
+                    <div class="user-info">
+                        <p><b>Namensverlauf</b>: ` + (defaultUser.history ? "<i>" + defaultUser.history.join("</i>, <i>") + "</i>" : "-") +`</p>
                     </div>
                 `;
-                bookBlock.appendChild(bookProfile);
-
-                //// Book description
-                if (wish.description) {
-                    const bookDescription = document.createElement("div");
-                    bookDescription.id = "book-description";
-                    bookDescription.className = "book-block-block";
-                    bookDescription.innerHTML = `
-                        <div id="book-description-header">
-                            <h4>Beschreibung</h4>
-                        </div>
-                        <div id="book-description-content">
-                            <p>${wish.description.split("\n").join("</p>\n        <p>")}</p>
-                        </div>
-                    `;
-                };
-
-                // Edit Button
-                if (getLocalStorage("user") === wish.user) {
-                    const rewishButton = document.createElement("button");
-                    rewishButton.id = "rewish-button";
-                    rewishButton.type = "button";
-                    rewishButton.innerHTML = "<a href='/books/rewish'>Ändern</a>";
-                    bookBlock.appendChild(rewishButton);
-                };
+                userBlock.appendChild(userProfile);
             }
 
-            loadView();
+            loadUser();
         </script>
     </body>
 </html>

@@ -165,37 +165,47 @@ function login(username, password) {
     if (user) {
         if (hash_password(password) === user.password) {
             setLocalStorage("user", user.token);
-            console.log("Login successful");
             return true;
         }
+        alert("Das Passwort ist falsch!");
     }
-    console.log("Login failed");
+    alert("Authentifizierung fehlgeschlagen!");
     return false;
 }
 
 function changePassword(currentPassword, newPassword1, newPassword2) {
-    const user = loaded.users.find(user => user.name === username);
+    const user = loaded.users.find(user => user.token === getLocalStorage("user"));
 
     if (user) {
         if (hash_password(currentPassword) === user.password) {
             if (newPassword1 === newPassword2) {
                 user.password = hash_password(newPassword1);
                 saveData(loaded.users, "users");
+                alert("Das Passwort wurde erfolgreich geändert!");
                 return true;
             }
+            alert("Das neue Passwort ist nicht identisch!");
         }
+        alert("Das aktuelle Passwort ist falsch!");
     }
+    alert("Authentifizierung fehlgeschlagen!");
     return false;
 }
 
-function changeUsername(username, newUsername) {
-    const user = loaded.users.find(user => user.name === username);
+function changeUsername(newUsername, password) {
+    const user = loaded.users.find(user => user.token === getLocalStorage("user"));
 
     if (user) {
-        user.name = newUsername;
-        saveData(loaded.users, "users");
+        if (hash_password(password) === user.password) {
+            user.name = newUsername;
+            saveData(loaded.users, "users");
+            alert("Das Benutzername wurde erfolgreich geändert!");
+            return true;
+        }
+        alert("Das Passwort ist falsch!");
         return true;
     }
+    alert("Authentifizierung fehlgeschlagen!");
     return false;
 }
 
@@ -440,13 +450,37 @@ async function asyncEditBook(book, newBook) {
     return data;
 }
 
+function findBooksByUser(user) {
+    return loaded.books.filter(book => book.user === user);
+}
+
+function findSeriesByUser(user) {
+    return [...new Set(loaded.books.filter(book => book.user === user).map(book => book.series))];
+}
+
+function findAuthorsByUser(user) {
+    return [...new Set(loaded.books.filter(book => book.user === user).map(book => book.author))];
+}
+
 // Wishes functions
 function searchWishes(query) {
     if (!query) {
         return loaded.wishes;
     }
 
-    return Listionary.searchQuery(loaded.wishes, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "relevanz": "importance", "id": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.wishes, {
+        "titel": "title",
+        "reihe": "series",
+        "band": "volume",
+        "autor": "author",
+        "benutzer": "user",
+        "umschlag": "cover",
+        "isbn": "isbn",
+        "beschreibung": "description",
+        "bild-link": "image",
+        "relevanz": "importance",
+        "id": "token"
+    }, query, ignore_keys=["token", "description", "image", "cover"]);
 }
 
 function findWishById(token) {
@@ -513,6 +547,31 @@ async function asyncRewish(book, newBook) {
     return data;
 }
 
+function findWishesByUser(user) {
+    return loaded.wishes.filter(book => book.user === user);
+}
+
+// Wish + books functions
+function searchAll(query) {
+    if (!query) {
+        return loaded.wishes.concat(loaded.books);
+    }
+
+    return Listionary.searchQuery(loaded.wishes.concat(loaded.books), {
+        "titel": "title",
+        "reihe": "series",
+        "band": "volume",
+        "autor": "author",
+        "benutzer": "user",
+        "umschlag": "cover",
+        "isbn": "isbn",
+        "beschreibung": "description",
+        "bild-link": "image",
+        "relevanz": "importance",
+        "id": "token"
+    }, query, ignore_keys=["token", "description", "image", "cover", "importance"]);
+}
+
 // Users functions
 function findUserById(token) {
     return loaded.users.find(user => user.token === token);
@@ -524,6 +583,10 @@ async function asyncFindUserById(token) {
     }
 
     return loaded.users.find(user => user.token === token);
+}
+
+function findConvertedUserById(token) {
+    return loaded.convertedUsers.find(user => user.token === token);
 }
 
 function findUserByName(name) {
@@ -538,4 +601,38 @@ async function loadUsername() {
 
     const usernameContainer = document.getElementById("username-container");
     usernameContainer.innerHTML = findUserById(getLocalStorage("user")).name;
+}
+
+async function convertUsers() {
+    while (!loaded.hasOwnProperty('users')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    loaded["convertedUsers"] = loaded.users.map(user => ({
+        "name": user.name,
+        "books": findBooksByUser(user.token),
+        "series": findSeriesByUser(user.token),
+        "authors": findAuthorsByUser(user.token),
+        "wishes": findWishesByUser(user.token),
+        "token": user.token
+    }));
+}
+
+if (requiredLoaders.includes("users")) {
+    convertUsers();
+}
+
+function searchUsers(query) {
+    if (!query) {
+        return loaded.users;
+    }
+
+    return Listionary.searchQuery(loaded.convertedUsers, {
+        "name": "name",
+        "bücher": "books",
+        "reihen": "series",
+        "autoren": "authors",
+        "wünsche": "wishes",
+        "id": "token"
+    }, query, ignore_keys=["token"]);
 }

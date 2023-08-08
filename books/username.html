@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github new username change">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github username change">
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
         <title>Meine Bücher - Benutzername</title>
 
@@ -12,16 +13,32 @@
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["users"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script>
+            function doChangeUsername() {
+                var usernameInput = document.getElementById("username-input");
+                var passwordInput = document.getElementById("password-input");
+
+                const success = changeUsername(usernameInput.value, passwordInput.value);
+                if (success) {
+                    usernameInput.value = "";
+                    passwordInput.value = "";
+                }
+                return success;
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Benutzername</h1>
-            <h4>{{ username }}</h4>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
                 <div class="folding-header" onclick="toggleFold('helpful-links');">
-                    <h3>Hilfreiche Links</h3>
+                    <div class="folding-header-text"><h3>Hilfreiche Links</h3></div>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
@@ -34,7 +51,6 @@
                         <li><a href="/books/new">Neuer Wunsch</a></li>
                         <li><a href="/books/users">Benutzer</a></li>
                         <li><a href="/books/password">Passwort</a></li>
-                        <li><a href="/books/username">Benutzername</a></li>
                         <li><a href="/books/help">Hilfe</a></li>
                         <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
@@ -42,13 +58,44 @@
             </div>
             <form id="username-form">
                 <div>
-                    <input type="text" id="input-username" name="username" value="{{ username }}" placeholder="Benutzername">
+                    <input type="text" id="username-input" name="username" placeholder="Benutzername" required>
                 </div>
-                <button type="submit">Speichern</button>
+                <div>
+                    <input type="password" id="password-input" name="password" autocomplete="current-password" placeholder="Passwort" required>
+                </div>
+                <div>
+                    <button type="submit">Speichern</button>
+                </div>
             </form>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Inputs
+            const usernameInput = document.getElementById("username-input");
+            const passwordInput = document.getElementById("password-input");
+
+            usernameInput.value = getLocalStorage("-username--input-username");
+            passwordInput.value = getLocalStorage("-username--input-password");
+
+            usernameInput.addEventListener("input", e => {
+                localStorage.setItem("-username--input-username", e.target.value);
+            });
+            passwordInput.addEventListener("input", e => {
+                localStorage.setItem("-username--input-password", e.target.value);
+            });
+
+            // Check if redirecting url is defined and if not, define it, and block the default form redirection
+            const usernameForm = document.getElementById("username-form");
+            console.log("Redirecting to: " + getLocalStorage("redirect-to"));
+            usernameForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doChangeUsername();
+                if (getLocalStorage("redirect-to")) {
+                    window.location.href = getLocalStorage("redirect-to");
+                }
+            })
+        </script>
     </body>
 </html>

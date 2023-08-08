@@ -20,9 +20,14 @@
         <script type="text/javascript" src="/books/main.js"></script>
         <script>
             function doLogin() {
-                var username = document.getElementById("username-input").value;
-                var password = document.getElementById("password-input").value;
-                return login(username, password);
+                var usernameInput = document.getElementById("username-input");
+                var passwordInput = document.getElementById("password-input");
+                const success = login(usernameInput.value, passwordInput.value);
+                if (success) {
+                    usernameInput.value = "";
+                    passwordInput.value = "";
+                }
+                return success;
             }
         </script>
         <div id="header" class="container">
@@ -47,8 +52,8 @@
             const usernameInput = document.getElementById("username-input");
             const passwordInput = document.getElementById("password-input");
 
-            usernameInput.value = popLocalStorage("-login--input-username");
-            passwordInput.value = popLocalStorage("-login--input-password");
+            usernameInput.value = getLocalStorage("-login--input-username");
+            passwordInput.value = getLocalStorage("-login--input-password");
 
             usernameInput.addEventListener("input", e => {
                 localStorage.setItem("-login--input-username", e.target.value);
@@ -56,16 +61,6 @@
             passwordInput.addEventListener("input", e => {
                 localStorage.setItem("-login--input-password", e.target.value);
             });
-
-            // const inputUsername = document.getElementById("input-username-container");
-            // const inputPassword = document.getElementById("input-password-container");
-
-            // inputUsername.innerHTML = `
-            //     <input id="input-username" type="text" name="username" value="${ popLocalStorage("-login--input-username") }" autocomplete="username" placeholder="Benutzername">
-            // `;
-            // inputPassword.innerHTML = `
-            //     <input id="input-password" type="password" name="password" value="${ popLocalStorage("-login--input-password") }" autocomplete="current-password" placeholder="Passwort">
-            // `;
 
             // Check if redirecting url is defined and if not, define it, and block the default form redirection
             const loginForm = document.getElementById("login-form");

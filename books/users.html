@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
         <meta name="keywords" content="williamthecon.github.io williamthecon github users">
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
         <title>Meine Bücher - Benutzer</title>
 
@@ -12,27 +13,180 @@
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["books", "wishes", "users"];
+            let tableSorting = [0, 1, 2, 3, 4]; // Username, Books, Series', Authors, Wishes
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script type="text/javascript" src="/books/table.js"></script>
+        <script>
+            async function doSearch() {
+                const query = document.getElementById("query-input").value;
+                const usersTable = document.getElementById("users-table");
+                usersTable.innerHTML = "";
+
+                const usersTableHeader = document.createElement("li");
+                usersTableHeader.classList.add("table-row");
+                usersTableHeader.classList.add("table-header");
+                usersTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Namen</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 3, 0, 4)">Bücher</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 3, 0, 4)">Reihen</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autoren</span>
+                    <span class="table-cell" onclick="setSorting(4, 0, 1, 2, 3)">Wünsche</span>
+                `;
+                usersTable.appendChild(usersTableHeader);
+
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('convertedUsers')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                for (let user of searchUsers(query)) {
+                    const userRow = document.createElement("li");
+                    userRow.classList.add("table-row");
+                    userRow.onclick = () => user(user.token);
+                    userRow.innerHTML = `
+                        <span class="table-cell">${user.name}</span>
+                        <span class="table-cell">${user.books}</span>
+                        <span class="table-cell">${user.series}</span>
+                        <span class="table-cell">${user.authors}</span>
+                        <span class="table-cell">${user.wishes}</span>
+                    `;
+                    usersTable.appendChild(userRow);
+                }
+
+                sortTable();
+                viewMore();
+            }
+
+            function user(token) {
+                setLocalStorage("user-token", token);
+                window.location.href = "/books/user";
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Benutzer</h1>
-            <h4>{{ username }}</h4>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
                 <div class="folding-header" onclick="toggleFold('helpful-links');">
-                    <h3>Hilfreiche Links</h3>
+                    <div class="folding-header-text"><h3>Hilfreiche Links</h3></div>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
-                    <ul class="horizontal-list">{% for text, link in links.items() %}
-                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    <ul class="horizontal-list">
+                        <li><a href="/books/">Startseite</a></li>
+                        <li><a href="/books/books">Bücher</a></li>
+                        <li><a href="/books/wishes">Wünsche</a></li>
+                        <li><a href="/books/add">Neues Buch</a></li>
+                        <li><a href="/books/new">Neuer Wunsch</a></li>
+                        <li><a href="/books/password">Passwort</a></li>
+                        <li><a href="/books/username">Benutzername</a></li>
+                        <li><a href="/books/help">Hilfe</a></li>
+                        <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
+            </div>
+            <div class="content-block">
+                <form id="search-form">
+                    <div>
+                        <input type="text" id="input-query" name="query" placeholder="Suchen...">
+                    </div>
+                    <div>
+                        <button type="submit">Suchen</button>
+                    </div>
+                </form>
+            </div>
+            <div class="content-block table-container">
+                <ul id="users-table" class="table"></ul>
+            </div>
+            <div class="content-block">
+                <button onclick="viewMore();">Mehr</button>
             </div>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            loadUsername();
+
+            // Inputs
+            const queryInput = document.getElementById("query-input");
+            queryInput.value = getLocalStorage("query");
+            queryInput.addEventListener("input", () => {
+                setLocalStorage("query", queryInput.value);
+            });
+
+            // Block the form redirection
+            const searchForm = document.getElementById("search-form");
+            searchForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doSearch();
+            })
+
+            // Books Table
+            async function loadUsers() {
+                const usersTable = document.getElementById("users-table");
+
+                const usersTableHeader = document.createElement("li");
+                usersTableHeader.classList.add("table-row");
+                usersTableHeader.classList.add("table-header");
+                usersTableHeader.innerHTML = `
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Namen</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 3, 0, 4)">Bücher</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 3, 0, 4)">Reihen</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autoren</span>
+                    <span class="table-cell" onclick="setSorting(4, 0, 1, 2, 3)">Wünsche</span>
+                `;
+                usersTable.appendChild(usersTableHeader);
+
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('convertedUsers')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                for (let user of loaded.convertedUsers) {
+                    const userRow = document.createElement("li");
+                    userRow.classList.add("table-row");
+                    userRow.onclick = () => user(user.token);
+                    userRow.innerHTML = `
+                        <span class="table-cell">${user.name}</span>
+                        <span class="table-cell">${user.books}</span>
+                        <span class="table-cell">${user.series}</span>
+                        <span class="table-cell">${user.authors}</span>
+                        <span class="table-cell">${user.wishes}</span>
+                    `;
+                    usersTable.appendChild(userRow);
+                }
+
+                sortTable();
+                viewMore();
+            }
+
+            if (queryInput.value) {
+                doSearch();
+            } else {
+                loadUsers();
+            }
+        </script>
     </body>
 </html>

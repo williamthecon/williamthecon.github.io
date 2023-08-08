@@ -4,106 +4,199 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github wish book">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github view book">
 
         <title>Meine Bücher - Wunsch</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
-        <style type="text/css">
-            .wish-info {
+
+        <style>
+            .book-block-block {
+                background-color: rgb(21, 21, 21);
+                color: rgb(143, 173, 192);
+                border: 1px solid rgb(24, 132, 219);
+                border-radius: 20px;
+                padding: 8px 18px;
                 margin: 15px 0;
             }
 
-            .wish-info p {
-                margin: 0;
+            #book-block {
+                margin-left: auto;
+                margin-right: auto;
+                width: 60%;
             }
 
-            .wish-block-block {
-                margin: 5px;
-                display: inline-block;
-                border: 1px solid rgb(24, 132, 219);
-                border-radius: 20px;
-                padding: calc(15px + 8px) 18px;
+            #book-header h2 {
+                margin: 8px;
+                font-size: 2.3em;
+                text-decoration: underline rgb(24, 132, 219) 2px solid;
+                text-underline-offset: 4px;
+                text-shadow: rgb(24, 132, 219) 1px 1px;
             }
 
-            #wish-block {
+            #book-header h4 {
+                margin: 8px;
+                font-size: 1.2em;
+                text-decoration: underline rgb(24, 132, 219) 2px solid;
+                text-underline-offset: 4px;
+                text-shadow: rgb(24, 132, 219) 1px 1px;
+            }
+
+            #book-cover img {
                 width: 100%;
             }
 
-            #wish-profile {
-                border: 1px solid rgb(24, 132, 219);
-                border-radius: 20px;
-                padding: 8px 18px;
+            @media screen and (max-width: 800px) {
+                #book-block {
+                    width: 90%;
+                }
             }
 
-            #wish-cover {
-                border: 1px solid rgb(24, 132, 219);
-                border-radius: 20px;
-                padding: calc(15px + 8px) 18px;
-                justify-content: center;
+            @media screen and (max-width: 640px) {
+                #book-block {
+                    width: 100%;
+                }
             }
-
-            #wish-cover img {
-                width: 335px;
-                height: 500px;
-            }
-
-            /* .wish-info {
-                display: flex;
-                flex-direction: column;
-                width: 85%;
-            }
-
-            #wish-block {
-                border: 1px solid rgb(24, 132, 219);
-                border-radius: 20px;
-                padding: 8px 18px;
-            } */
         </style>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["wishes", "users"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
         <div id="header" class="container">
             <h1>Meine Bücher - Wunsch</h1>
-            <h4>{{ username }}</h4>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
-                <div class="folding-header" onclick="toggleFold()"">
+                <div class="folding-header" onclick="toggleFold('helpful-links')">
                     <h3>Hilfreiche Links</h3>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
-                    <ul class="horizontal-list">{% for text, link in links.items() %}
-                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    <ul class="horizontal-list">
+                        <li><a href="/books/">Startseite</a></li>
+                        <li><a href="/books/books">Bücher</a></li>
+                        <li><a href="/books/wishes">Wünsche</a></li>
+                        <li><a href="/books/add">Neues Buch</a></li>
+                        <li><a href="/books/new">Neuer Wunsch</a></li>
+                        <li><a href="/books/users">Benutzer</a></li>
+                        <li><a href="/books/password">Passwort</a></li>
+                        <li><a href="/books/username">Benutzername</a></li>
+                        <li><a href="/books/help">Hilfe</a></li>
+                        <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
-            <div id="wish-block" class="content-block">
-                <div id="wish-profile" class="wish-block-block">
-                    <div class="wish-info"><p><b>Titel</b>: <a href='/wishlist?query=Titel%3A"{{ wish.title }}"'>{{ wish.title }}</a></p></div>
-                    <div class="wish-info"><p><b>Reihe</b>: {% if wish.series %}<a href='/wishlist?query=Reihe%3A"{{ wish.series }}"'>{{ wish.series }}</a>{% else %}-{% endif %}</p></div>
-                    <div class="wish-info"><p><b>Band</b>: {% if wish.volume %}<a href='/wishlist?query=Band%3A"{{ wish.volume }}"'>{{ wish.volume }}</a>{% else %}-{% endif %}</p></div>
-                    <div class="wish-info"><p><b>Author</b>: <a href='/wishlist?query=Autor%3A"{{ wish.author }}"'>{{ wish.author }}</a></p></div>
-                    <div class="wish-info"><p><b>Benutzer</b>: <a href='/wishlist?query=Benutzer%3A"{{ wish.user }}"'>{{ wish.username }}</a></p></div>
-                    <div class="wish-info"><p><b>Umschlag</b>: {% if wish.cover %}<a href='/wishlist?query=Umschlag%3A"{{ wish.cover }}"'>{{ wish.cover }}</a>{% else %}?{% endif %}</p></div>
-                    <div class="wish-info"><p><b>ISBN</b>: {% if wish.isbn %}<a href='/wishlist?query=Umschlag%3A"{{ wish.isbn }}"'>{{ wish.isbn }}</a>{% else %}?{% endif %}</p></div>
-                </div>
-                {% if wish.image %}<div id="wish-cover" class="wish-block-block">
-                    <img src="{{ wish.image }}" alt="Cover">
-                </div>{% endif %}
-                {% if wish.description %}<div id="wish-description" class="wish-block-block">
-                    <div><p><b>Beschreibung</b>: {{ wish.description }}</a></p></div>
-                </div>{% endif %}
-            </div>
-            {% if owner %}<div class="content-block">
-                <button type="button"><a href="/rewish?id={{ wish.id }}">Bearbeiten</a></button>
-            </div>{% endif %}
+            <div id="book-block" class="content-block"></div>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            loadUsername();
+
+            async function loadView() {
+                // Book Block
+                const bookBlock = document.getElementById("book-block");
+
+                while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('users')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                const wish = findWishById(getLocalStorage("wish-token"));
+
+                if (!wish) {
+                    window.location.href = "/books/wishes";
+                }
+
+                //// Book header
+                const bookHeader = document.createElement("div");
+                bookHeader.id = "book-header";
+                bookHeader.innerHTML = `
+                    <h2 id="book-title">${wish.title}</h2>
+                `;
+                bookBlock.appendChild(bookHeader);
+
+                //// Book cover
+                if (book.image) {
+                    const bookCover = document.createElement("div");
+                    bookCover.id = "book-cover";
+                    bookCover.innerHTML = `
+                        <img src="${wish.image}" alt="'${wish.title}' Cover">
+                    `;
+                    bookBlock.appendChild(bookCover);
+                };
+
+                //// Book profile
+                const bookProfile = document.createElement("div");
+                bookProfile.id = "book-profile";
+                bookProfile.className = "book-block-block";
+                bookProfile.innerHTML = `
+                    <div id="book-profile-header">
+                        <h4>Steckbrief</h4>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Titel</b>: ${wish.title}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Reihe</b>: ` + (wish.series !== "" ? wish.series : "-") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Band</b>: ` + (wish.volume !== "" ? wish.volume : "-") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Author</b>: ${wish.author}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Relevanz</b>: ${wish.importance}</p>
+                    <div class="book-info">
+                        <p><b>Benutzer</b>: ${findUserById(wish.user).name}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Umschlag</b>: ` + (wish.cover !== "" ? wish.cover : "?") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>ISBN</b>: ` + (wish.isbn !== "" ? wish.isbn : "?") + `</p>
+                    </div>
+                `;
+                bookBlock.appendChild(bookProfile);
+
+                //// Book description
+                if (book.description) {
+                    const bookDescription = document.createElement("div");
+                    bookDescription.id = "book-description";
+                    bookDescription.className = "book-block-block";
+                    bookDescription.innerHTML = `
+                        <div id="book-description-header">
+                            <h4>Beschreibung</h4>
+                        </div>
+                        <div id="book-description-content">
+                            <p>${wish.description.split("\n").join("</p>\n        <p>")}</p>
+                        </div>
+                    `;
+                };
+
+                // Edit Button
+                if (getLocalStorage("user") === wish.user) {
+                    const rewishButton = document.createElement("button");
+                    rewishButton.id = "rewish-button";
+                    rewishButton.type = "button";
+                    rewishButton.innerHTML = "<a href='/books/rewish'>Ändern</a>";
+                    bookBlock.appendChild(rewishButton);
+                };
+            }
+
+            loadView();
+        </script>
     </body>
 </html>

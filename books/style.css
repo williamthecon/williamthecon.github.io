@@ -254,7 +254,7 @@ ul a:hover {
         font-size: 0.95em;
     }
 
-    #chevron-down {
+    .chevron-down {
         font-size: 16px;
         float: right;
         margin-top: 6px;
@@ -262,7 +262,7 @@ ul a:hover {
         display: none;
     }
 
-    #chevron-up {
+    .chevron-up {
         font-size: 20px;
         float: right;
         margin-top: 7px;

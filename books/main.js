@@ -290,7 +290,7 @@ class Listionary {
         const kwargs = info.kwargs;
 
         const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
-        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
+        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key))); // TODO: Fix it, doesn't work
 
         const results = [];
         for (let value of data) {

@@ -371,10 +371,6 @@ class Listionary {
 
 // Books functions
 function searchBooks(query) {
-    // if (!query) {
-    //     return loaded.books;
-    // }
-
     const results = Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
@@ -489,10 +485,6 @@ async function convertBooks() {
 
 // Wishes functions
 function searchWishes(query) {
-    if (!query) {
-        return loaded.wishes;
-    }
-
     const results = Listionary.searchQuery(loaded.convertedWishes, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
@@ -603,10 +595,6 @@ async function convertWishes() {
 
 // Wish + books functions
 function searchAll(query) {
-    if (!query) {
-        return loaded.wishes.concat(loaded.books);
-    }
-
     const results = Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
     return results.map(book => {
         if (book.hasOwnProperty("relevanz")) {
@@ -694,10 +682,6 @@ async function convertUsers() {
 }
 
 function searchUsers(query) {
-    if (!query) {
-        return loaded.users;
-    }
-
     const results = Listionary.searchQuery(loaded.convertedUsers, query, ignore_keys=["id"]);
     return results.map(user => ({
         "name": user.name,
@@ -711,17 +695,17 @@ function searchUsers(query) {
 
 // Loading
 if (requiredLoaders.includes("convertedUsers")) {
-    requiredLoaders.removeItem("convertedUsers");
+    requiredLoaders.splice(requiredLoaders.indexOf("convertedUsers"), 1);
     requiredLoaders.push("users");
     convertUsers();
 }
 if (requiredLoaders.includes("convertedBooks")) {
-    requiredLoaders.removeItem("convertedBooks");
+    requiredLoaders.splice(requiredLoaders.indexOf("convertedBooks"), 1);
     requiredLoaders.push("books");
     convertBooks();
 }
 if (requiredLoaders.includes("convertedWishes")) {
-    requiredLoaders.removeItem("convertedWishes");
+    requiredLoaders.splice(requiredLoaders.indexOf("convertedWishes"), 1);
     requiredLoaders.push("wishes");
     convertWishes();
 }

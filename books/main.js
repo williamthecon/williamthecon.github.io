@@ -146,11 +146,6 @@ function delItem(item, type, define = (_) => {}) {
         .catch(error => console.log(error));
 }
 
-const loaded = {};
-if (typeof requiredLoaders !== 'undefined') {
-    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
-}
-
 // User related methods
 // `hash_password` requires to import CryptoJS inside of the HTML:
 //   -> '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>'
@@ -236,7 +231,7 @@ class Listionary {
      *         {array} info.args - An array of lowercase arguments extracted from the query string.
      *         {object} info.kwargs - An object mapping lowercase keys to lowercase values extracted from the query string.
      */
-    static parse_query(keys, query) {
+    static parse_query(query) {
         const info = { args: [], kwargs: {} };
         let currentStr = "";
         let inStr = false;
@@ -248,9 +243,7 @@ class Listionary {
                 currentStr = currentStr.toLowerCase();
                 if (currentStr.includes(":")) {
                     const [key, value] = currentStr.split(":");
-                    if (Object.keys(keys).includes(key)) {
-                        info.kwargs[keys[key]] = value;
-                    }
+                    info.kwargs[key] = value;
 
                 } else {
                     info.args.push(currentStr);
@@ -264,9 +257,7 @@ class Listionary {
             currentStr = currentStr.toLowerCase();
             if (currentStr.includes(":")) {
                 var [key, value] = currentStr.split(":");
-                if (Object.keys(keys).includes(key)) {
-                    info.kwargs[keys[key]] = value;
-                }
+                info.kwargs[key] = value;
 
             } else {
                 info.args.push(currentStr);
@@ -289,13 +280,12 @@ class Listionary {
      * @return {Array} An array of objects that match the search criteria.
      */
     static search(data, info, maxResults = -1, equals = false, ignoreKeys = []) {
-        // every string in info should be lowercase
+        // NOTE: info.args as well as info.kwargs is expected to only contain lowercase strings
         if (maxResults === -1) {
             maxResults = data.length;
         }
 
-        console.log("Info: " + info);
-
+        const keys = Object.keys(data[0]);
         const args = info.args;
         const kwargs = info.kwargs;
 
@@ -308,7 +298,7 @@ class Listionary {
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!test(v, lowerValue[k])) {
+                if (!keys.includes(v) || !test(v, lowerValue[k])) {
                     approved = false;
                     break;
                 }
@@ -337,8 +327,8 @@ class Listionary {
         return results
     }
 
-    static searchQuery(data, keys, query, maxResults = -1, equals = false, ignoreKeys = []) {
-        return this.search(data, this.parse_query(keys, query), maxResults, equals, ignoreKeys);
+    static searchQuery(data, query, maxResults = -1, equals = false, ignoreKeys = []) {
+        return this.search(data, this.parse_query(query), maxResults, equals, ignoreKeys);
     }
 
     static find(data, info, equals = false, ignoreKeys = []) {
@@ -385,7 +375,7 @@ function searchBooks(query) {
         return loaded.books;
     }
 
-    return Listionary.searchQuery(loaded.books, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "id": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
 }
 
 function findBookById(token) {
@@ -462,25 +452,36 @@ function findAuthorsByUser(user) {
     return [...new Set(loaded.books.filter(book => book.user === user).map(book => book.author))];
 }
 
+async function convertBooks() {
+    while (!loaded.hasOwnProperty('books')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    while (!loaded.hasOwnProperty('users')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    loaded.convertedBooks = loaded.books.map(book => ({
+        "titel": book.title,
+        "reihe": book.series,
+        "band": book.volume,
+        "autor": book.author,
+        "umschlag": book.cover,
+        "isbn": book.isbn,
+        "beschreibung": book.description,
+        "bild-link": book.image,
+        "benutzer": findUserById(book.user).name,
+        "id": book.token
+    }));
+}
+
 // Wishes functions
 function searchWishes(query) {
     if (!query) {
         return loaded.wishes;
     }
 
-    return Listionary.searchQuery(loaded.wishes, {
-        "titel": "title",
-        "reihe": "series",
-        "band": "volume",
-        "autor": "author",
-        "benutzer": "user",
-        "umschlag": "cover",
-        "isbn": "isbn",
-        "beschreibung": "description",
-        "bild-link": "image",
-        "relevanz": "importance",
-        "id": "token"
-    }, query, ignore_keys=["token", "description", "image", "cover"]);
+    return Listionary.searchQuery(loaded.convertedWishes, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
 }
 
 function findWishById(token) {
@@ -551,25 +552,37 @@ function findWishesByUser(user) {
     return loaded.wishes.filter(book => book.user === user);
 }
 
+async function convertWishes() {
+    while (!loaded.hasOwnProperty('wishes')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    while (!loaded.hasOwnProperty('users')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    loaded.convertedWishes = loaded.wishes.map(book => ({
+        "titel": book.title,
+        "reihe": book.series,
+        "band": book.volume,
+        "autor": book.author,
+        "umschlag": book.cover,
+        "isbn": book.isbn,
+        "beschreibung": book.description,
+        "bild-link": book.image,
+        "relevanz": book.importance,
+        "benutzer": findUserById(book.user).name,
+        "id": book.token
+    }))
+}
+
 // Wish + books functions
 function searchAll(query) {
     if (!query) {
         return loaded.wishes.concat(loaded.books);
     }
 
-    return Listionary.searchQuery(loaded.wishes.concat(loaded.books), {
-        "titel": "title",
-        "reihe": "series",
-        "band": "volume",
-        "autor": "author",
-        "benutzer": "user",
-        "umschlag": "cover",
-        "isbn": "isbn",
-        "beschreibung": "description",
-        "bild-link": "image",
-        "relevanz": "importance",
-        "id": "token"
-    }, query, ignore_keys=["token", "description", "image", "cover", "importance"]);
+    return Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
 }
 
 // Users functions
@@ -618,16 +631,12 @@ async function convertUsers() {
 
     loaded["convertedUsers"] = loaded.users.map(user => ({
         "name": user.name,
-        "books": findBooksByUser(user.token).length.toString(),
-        "series": findSeriesByUser(user.token).length.toString(),
-        "authors": findAuthorsByUser(user.token).length.toString(),
-        "wishes": findWishesByUser(user.token).length.toString(),
-        "token": user.token
+        "bücher": findBooksByUser(user.token).length.toString(),
+        "reihen": findSeriesByUser(user.token).length.toString(),
+        "autoren": findAuthorsByUser(user.token).length.toString(),
+        "wünsche": findWishesByUser(user.token).length.toString(),
+        "id": user.token
     }));
-}
-
-if (requiredLoaders.includes("users")) {
-    convertUsers();
 }
 
 function searchUsers(query) {
@@ -635,12 +644,35 @@ function searchUsers(query) {
         return loaded.users;
     }
 
-    return Listionary.searchQuery(loaded.convertedUsers, {
-        "name": "name",
-        "bücher": "books",
-        "reihen": "series",
-        "autoren": "authors",
-        "wünsche": "wishes",
-        "id": "token"
-    }, query, ignore_keys=["token"]);
+    return Listionary.searchQuery(loaded.convertedUsers, query, ignore_keys=["id"]);
+}
+
+// Loading
+if (requiredLoaders.includes("convertedUsers")) {
+    requiredLoaders.removeItem("convertedUsers");
+    requiredLoaders.push("users");
+    convertUsers();
+}
+if (requiredLoaders.includes("convertedBooks")) {
+    requiredLoaders.removeItem("convertedBooks");
+    requiredLoaders.push("books");
+    convertBooks();
+}
+if (requiredLoaders.includes("convertedWishes")) {
+    requiredLoaders.removeItem("convertedWishes");
+    requiredLoaders.push("wishes");
+    convertWishes();
+}
+
+const loaded = {};
+if (typeof requiredLoaders !== 'undefined') {
+    requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
+}
+
+// Conversion Loaders
+if (requiredLoaders.includes("users")) {
+    convertUsers();
+}
+if (requiredLoaders.includes("books")) {
+    convertBooks();
 }

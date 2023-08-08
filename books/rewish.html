@@ -4,18 +4,57 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github rewish">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github rewish book">
 
-        <title>Meine Bücher - Umwünschen</title>
+        <title>Meine Bücher - Ändern</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["wishes", "users"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script>
+            async function doRewish() {
+                var titleInput = document.getElementById("title-input");
+                var seriesInput = document.getElementById("series-input");
+                var volumeInput = document.getElementById("volume-input");
+                var authorInput = document.getElementById("author-input");
+                var coverInput = document.getElementById("cover-input");
+                var isbnInput = document.getElementById("isbn-input");
+                var descriptionInput = document.getElementById("description-input");
+                var imageInput = document.getElementById("image-input");
+                var importanceInput = document.getElementById("importance-input");
+
+                const newBook = {"title": titleInput.value, "series": seriesInput.value, "volume": volumeInput.value, "author": authorInput.value, "cover": coverInput.value, "isbn": isbnInput.value, "description": descriptionInput.value, "image": imageInput.value, "importance": importanceInput.value, "user": origBook.user, "token": origBook.token}
+                await asyncEditBook(origBook, newBook)
+                    .then(data => {
+                        if (data.success) {
+                            alert("Veränderungen erfolgreich gespeichert!");
+
+                            deleteLocalStorage("-rewish--input-title");
+                            deleteLocalStorage("-rewish--input-series");
+                            deleteLocalStorage("-rewish--input-volume");
+                            deleteLocalStorage("-rewish--input-author");
+                            deleteLocalStorage("-rewish--input-cover");
+                            deleteLocalStorage("-rewish--input-isbn");
+                            deleteLocalStorage("-rewish--input-description");
+                            deleteLocalStorage("-rewish--input-image");
+                            deleteLocalStorage("-rewish--input-importance");
+
+                            origBook = data.book;
+                        } else {
+                            alert("Fehlermeldung: " + data.cause);
+                        };
+                    });
+            }
+        </script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Umwünschen</h1>
-            <h4>{{ username }}</h4>
+            <h1>Meine Bücher - Ändern</h1>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
@@ -25,46 +64,133 @@
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
-                    <ul class="horizontal-list">{% for text, link in links.items() %}
-                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    <ul class="horizontal-list">
+                        <li><a href="/books/">Startseite</a></li>
+                        <li><a href="/books/books">Bücher</a></li>
+                        <li><a href="/books/wishes">Wünsche</a></li>
+                        <li><a href="/books/add">Neues Buch</a></li>
+                        <li><a href="/books/new">Neuer Wunsch</a></li>
+                        <li><a href="/books/users">Benutzer</a></li>
+                        <li><a href="/books/password">Passwort</a></li>
+                        <li><a href="/books/username">Benutzername</a></li>
+                        <li><a href="/books/help">Hilfe</a></li>
+                        <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
             <div class="content-block">
-                <form action="/rewish?id={{ wish.id }}" method="post" id="rewish-form">
+                <form id="rewish-form">
                     <div>
-                        <input type="text" id="input-title" name="title" value="{{ wish.title }}" placeholder="Titel">
+                        <input type="text" id="title-input" name="title" placeholder="Titel" required>
                     </div>
                     <div>
-                        <input type="text" id="input-series" name="series" value="{{ wish.series }}" placeholder="Reihe (Opt.)">
+                        <input type="text" id="series-input" name="series" placeholder="Reihe (Opt.)">
                     </div>
                     <div>
-                        <input type="text" id="input-volume" name="volume" value="{{ wish.volume }}" placeholder="Band (Opt.)">
+                        <input type="text" id="volume-input" name="volume" placeholder="Band (Opt.)">
                     </div>
                     <div>
-                        <input type="text" id="input-author" name="author" value="{{ wish.author }}" placeholder="Autor">
+                        <input type="text" id="author-input" name="author" placeholder="Autor" required>
                     </div>
                     <div>
-                        <input type="text" id="input-cover" name="cover" value="{{ wish.cover }}" placeholder="Umschlag">
+                        <input type="text" id="cover-input" name="cover" placeholder="Umschlag">
                     </div>
                     <div>
-                        <input type="text" id="input-isbn" name="isbn" value="{{ wish.isbn }}" placeholder="ISBN">
+                        <input type="text" id="isbn-input" name="isbn" placeholder="ISBN">
                     </div>
                     <div>
-                        <textarea rows=5 id="input-description" name="description" value="{{ wish.description }}" placeholder="Beschreibung"></textarea>
+                        <textarea rows=5 id="description-input" name="description" placeholder="Beschreibung"></textarea>
                     </div>
                     <div>
-                        <input type="text" id="input-image" name="image" value="{{ wish.image }}" placeholder="Bild-Link">
+                        <input type="text" id="image-input" name="image" placeholder="Bild-Link">
                     </div>
                     <button type="submit">Speichern</button>
                 </form>
             </div>
             <div class="content-block">
-                <button type="button"><a href="?id={{ wish.id }}&del=True">Löschen</a></button>
+                <button type="button"><a href="?id={{ book.id }}&del=True">Löschen</a></button>
             </div>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            loadUsername();
+
+            // Inputs
+            const titleInput = document.getElementById("title-input");
+            const seriesInput = document.getElementById("series-input");
+            const volumeInput = document.getElementById("volume-input");
+            const authorInput = document.getElementById("author-input");
+            const coverInput = document.getElementById("cover-input");
+            const isbnInput = document.getElementById("isbn-input");
+            const descriptionInput = document.getElementById("description-input");
+            const imageInput = document.getElementById("image-input");
+
+            async function loadEdit() {
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                origBook = findBookById(getLocalStorage("book-token"));
+
+                if (!origBook) {
+                    window.location.href = "/books/books";
+                }
+
+                titleInput.value = (getLocalStorage("-rewish--input-title")) ? getLocalStorage("-rewish--input-title") : origBook.title;
+                seriesInput.value = (getLocalStorage("-rewish--input-series")) ? getLocalStorage("-rewish--input-series") : origBook.series;
+                volumeInput.value = (getLocalStorage("-rewish--input-volume")) ? getLocalStorage("-rewish--input-volume") : origBook.volume;
+                authorInput.value = (getLocalStorage("-rewish--input-author")) ? getLocalStorage("-rewish--input-author") : origBook.author;
+                coverInput.value = (getLocalStorage("-rewish--input-cover")) ? getLocalStorage("-rewish--input-cover") : origBook.cover;
+                isbnInput.value = (getLocalStorage("-rewish--input-isbn")) ? getLocalStorage("-rewish--input-isbn") : origBook.isbn;
+                descriptionInput.value = (getLocalStorage("-rewish--input-description")) ? getLocalStorage("-rewish--input-description") : book.description;
+                imageInput.value = (getLocalStorage("-rewish--input-image")) ? getLocalStorage("-rewish--input-image") : origBook.image;
+
+                setLocalStorage("-rewish--input-title", titleInput.value);
+                setLocalStorage("-rewish--input-series", seriesInput.value);
+                setLocalStorage("-rewish--input-volume", volumeInput.value);
+                setLocalStorage("-rewish--input-author", authorInput.value);
+                setLocalStorage("-rewish--input-cover", coverInput.value);
+                setLocalStorage("-rewish--input-isbn", isbnInput.value);
+                setLocalStorage("-rewish--input-description", descriptionInput.value);
+                setLocalStorage("-rewish--input-image", imageInput.value);
+            }
+
+            loadEdit();
+
+            titleInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-title", e.target.value);
+            });
+            seriesInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-series", e.target.value);
+            });
+            volumeInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-volume", e.target.value);
+            });
+            authorInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-author", e.target.value);
+            });
+            coverInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-cover", e.target.value);
+            });
+            isbnInput.addEventListener("input", e =>  {
+                setLocalStorage("-rewish--input-isbn", e.target.value);
+            });
+            descriptionInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-description", e.target.value);
+            });
+            imageInput.addEventListener("input", e => {
+                setLocalStorage("-rewish--input-image", e.target.value);
+            });
+
+            // Block the form redirection
+            const rewishForm = document.getElementById("rewish-form");
+            rewishForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doRewish();
+            })
+        </script>
     </body>
 </html>

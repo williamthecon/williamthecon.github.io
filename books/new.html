@@ -4,62 +4,179 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="-">
-        <meta name="keywords" content="williamthecon.github.io williamthecon github wish new">
+        <meta name="keywords" content="williamthecon.github.io williamthecon github new wish book">
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Meine Bücher - Neu</title>
+        <title>Meine Bücher - Neuer Wunsch</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
+        <script>
+            const requiredLoaders = ["tokens", "users"];
+        </script>
         <script type="text/javascript" src="/books/main.js"></script>
+        <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script>
+            async function doNew() {
+                var titleInput = document.getElementById("title-input");
+                var seriesInput = document.getElementById("series-input");
+                var volumeInput = document.getElementById("volume-input");
+                var authorInput = document.getElementById("author-input");
+                var coverInput = document.getElementById("cover-input");
+                var isbnInput = document.getElementById("isbn-input");
+                var descriptionInput = document.getElementById("description-input");
+                var imageInput = document.getElementById("image-input");
+                var importanceInput = document.getElementById("importance-input");
+
+                await asyncNewWish(titleInput.value, seriesInput.value, volumeInput.value, authorInput.value, coverInput.value, isbnInput.value, descriptionInput.value, imageInput.value, importanceInput.value)
+                    .then(data => {
+                        if (data.success) {
+                            alert("Wunsch erfolgreich hinzugefügt!");
+
+                            titleInput.value = "";
+                            seriesInput.value = "";
+                            volumeInput.value = "";
+                            authorInput.value = "";
+                            coverInput.value = "";
+                            isbnInput.value = "";
+                            descriptionInput.value = "";
+                            imageInput.value = "";
+                            importanceInput.value = "";
+
+                            deleteLocalStorage("-new--input-title");
+                            deleteLocalStorage("-new--input-series");
+                            deleteLocalStorage("-new--input-volume");
+                            deleteLocalStorage("-new--input-author");
+                            deleteLocalStorage("-new--input-cover");
+                            deleteLocalStorage("-new--input-isbn");
+                            deleteLocalStorage("-new--input-description");
+                            deleteLocalStorage("-new--input-image");
+                            deleteLocalStorage("-new--input-importance");
+                        } else {
+                            alert("Fehlermeldung: " + data.cause);
+                        };
+                    });
+            }
+        </script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Neu</h1>
-            <h4>{{ username }}</h4>
+            <h1>Meine Bücher - Neuer Wunsch</h1>
+            <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
-                <div class="folding-header" onclick="toggleFold('helpful-links')">
+                <div class="folding-header" onclick="toggleFold('helpful-links');">
                     <h3>Hilfreiche Links</h3>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
                 </div>
                 <div id="helpful-links">
-                    <ul class="horizontal-list">{% for text, link in links.items() %}
-                        <li><a href="{{ link }}">{{ text }}</a></li>{% endfor %}
+                    <ul class="horizontal-list">
+                        <li><a href="/books/">Startseite</a></li>
+                        <li><a href="/books/books">Bücher</a></li>
+                        <li><a href="/books/wishes">Wünsche</a></li>
+                        <li><a href="/books/add">Neues Buch</a></li>
+                        <li><a href="/books/users">Benutzer</a></li>
+                        <li><a href="/books/password">Passwort</a></li>
+                        <li><a href="/books/username">Benutzername</a></li>
+                        <li><a onclick="logout();">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
-            <form action="/new" method="post" id="new-form">
+            <form id="new-form">
                 <div>
-                    <input type="text" id="input-title" name="title" value="{{ wish.title }}" placeholder="Titel" required>
+                    <input id="title-input" type="text" name="title" placeholder="Titel" required>
                 </div>
                 <div>
-                    <input type="text" id="input-series" name="series" value="{{ wish.series }}" placeholder="Reihe (Opt.)">
+                    <input id="series-input" type="text" name="series" placeholder="Reihe (Opt.)">
                 </div>
                 <div>
-                    <input type="text" id="input-volume" name="volume" value="{{ wish.volume }}" placeholder="Band (Opt.)">
+                    <input id="volume-input" type="text" name="volume" placeholder="Band (Opt.)">
                 </div>
                 <div>
-                    <input type="text" id="input-author" name="author" value="{{ wish.author }}" placeholder="Autor" required>
+                    <input id="author-input" type="text" name="author" placeholder="Autor" required>
                 </div>
                 <div>
-                    <input type="text" id="input-cover" name="cover" value="{{ wish.cover }}" placeholder="Umschlag">
+                    <input id="cover-input" type="text" name="cover" placeholder="Umschlag">
                 </div>
                 <div>
-                    <input type="text" id="input-isbn" name="isbn" value="{{ wish.isbn }}" placeholder="ISBN">
+                    <input id="isbn-input" type="text" name="isbn" placeholder="ISBN">
                 </div>
                 <div>
-                    <textarea rows=5 id="input-description" name="description" value="{{ wish.description }}" placeholder="Beschreibung"></textarea>
+                    <textarea id="description-input" type="text" name="description" placeholder="Beschreibung" rows=5></textarea>
                 </div>
                 <div>
-                    <input type="text" id="input-image" name="image" value="{{ wish.image }}" placeholder="Bild-Link">
+                    <input id="image-input" type="text" name="image" placeholder="Bild-Link">
                 </div>
-                <button type="submit">Hinzufügen</button>
+                <div>
+                    <input id="importance-input" type="text" name="importance" placeholder="Relevanz" required>
+                </div>
+                <button type="submit">Wünschen</button>
             </form>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            // Username Container
+            loadUsername();
+
+            // Inputs
+            const titleInput = document.getElementById("title-input");
+            const seriesInput = document.getElementById("series-input");
+            const volumeInput = document.getElementById("volume-input");
+            const authorInput = document.getElementById("author-input");
+            const coverInput = document.getElementById("cover-input");
+            const isbnInput = document.getElementById("isbn-input");
+            const descriptionInput = document.getElementById("description-input");
+            const imageInput = document.getElementById("image-input");
+            const importanceInput = document.getElementById("importance-input");
+
+            titleInput.value = getLocalStorage("-new--input-title");
+            seriesInput.value = getLocalStorage("-new--input-series");
+            volumeInput.value = getLocalStorage("-new--input-volume");
+            authorInput.value = getLocalStorage("-new--input-author");
+            coverInput.value = getLocalStorage("-new--input-cover");
+            isbnInput.value = getLocalStorage("-new--input-isbn");
+            descriptionInput.value = getLocalStorage("-new--input-description");
+            imageInput.value = getLocalStorage("-new--input-image");
+            importanceInput.value = getLocalStorage("-new--input-importance");
+
+            titleInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-title", e.target.value);
+            });
+            seriesInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-series", e.target.value);
+            });
+            volumeInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-volume", e.target.value);
+            });
+            authorInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-author", e.target.value);
+            });
+            coverInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-cover", e.target.value);
+            });
+            isbnInput.addEventListener("input", e =>  {
+                setLocalStorage("-new--input-isbn", e.target.value);
+            });
+            descriptionInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-description", e.target.value);
+            });
+            imageInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-image", e.target.value);
+            });
+            importanceInput.addEventListener("input", e => {
+                setLocalStorage("-new--input-importance", e.target.value);
+            });
+
+            // Block the form redirection
+            const newForm = document.getElementById("new-form");
+            newForm.addEventListener("submit", e => {
+                e.preventDefault();
+                doNew();
+            })
+        </script>
     </body>
 </html>

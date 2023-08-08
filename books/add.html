@@ -7,14 +7,14 @@
         <meta name="keywords" content="williamthecon.github.io williamthecon github add book new">
         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Meine Bücher - Hinzufügen</title>
+        <title>Meine Bücher - Neues Buch</title>
 
         <link rel="stylesheet" type="text/css" href="/books/style.css">
         <link rel="icon" href="/books/icon.png"/>
     </head>
     <body>
         <script>
-            const requiredLoaders = ["books", "tokens", "users"];
+            const requiredLoaders = ["tokens", "users"];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
@@ -58,12 +58,12 @@
             }
         </script>
         <div id="header" class="container">
-            <h1>Meine Bücher - Hinzufügen</h1>
+            <h1>Meine Bücher - Neues Buch</h1>
             <h4 id="username-container"></h4>
         </div>
         <div id="content" class="container">
             <div id="block-helpful-links" class="content-block">
-                <div class="folding-header" onclick="toggleFold('helpful-links')">
+                <div class="folding-header" onclick="toggleFold('helpful-links');">
                     <h3>Hilfreiche Links</h3>
                     <p id="helpful-links--chevron-down" class="chevron-down">v</p>
                     <p id="helpful-links--chevron-up" class="chevron-up">^</p>
@@ -159,40 +159,6 @@
             imageInput.addEventListener("input", e => {
                 setLocalStorage("-add--input-image", e.target.value);
             });
-
-            // const inputTitle = document.getElementById("input-title-container");
-            // const inputSeries = document.getElementById("input-series-container");
-            // const inputVolume = document.getElementById("input-volume-container");
-            // const inputAuthor = document.getElementById("input-author-container");
-            // const inputCover = document.getElementById("input-cover-container");
-            // const inputISBN = document.getElementById("input-isbn-container");
-            // const inputDescription = document.getElementById("input-description-container");
-            // const inputImage = document.getElementById("input-image-container");
-
-            // inputTitle.innerHTML = `
-            //     <input id="input-title" type="text" name="title" value="${ popLocalStorage("-login--input-title") }" placeholder="Benutzername" required>
-            // `;
-            // inputSeries.innerHTML = `
-            //     <input id="input-series" type="text" name="series" value="${ popLocalStorage("-login--input-series") }" placeholder="Reihe (Opt.)">
-            // `;
-            // inputVolume.innerHTML = `
-            //     <input id="input-volume" type="text" name="volume" value="${ popLocalStorage("-login--input-volume") }" placeholder="Band (Opt.)">
-            // `;
-            // inputAuthor.innerHTML = `
-            //     <input id="input-author" type="text" name="author" value="${ popLocalStorage("-login--input-author") }" placeholder="Autor" required>
-            // `;
-            // inputCover.innerHTML = `
-            //     <input id="input-cover" type="text" name="cover" value="${ popLocalStorage("-login--input-cover") }" placeholder="Umschlagtyp">
-            // `;
-            // inputISBN.innerHTML = `
-            //     <input id="input-isbn" type="text" name="isbn" value="${ popLocalStorage("-login--input-isbn") }" placeholder="ISBN">
-            // `;
-            // inputDescription.innerHTML = `
-            //     <textarea id="input-description" type="text" name="description" value="${ popLocalStorage("-login--input-description") }" placeholder="Beschreibung" rows=5></textarea>
-            // `;
-            // inputImage.innerHTML = `
-            //     <input id="input-image" type="text" name="image" value="${ popLocalStorage("-login--input-image") }" placeholder="Bild-Link">
-            // `;
 
             // Block the form redirection
             const addForm = document.getElementById("add-form");

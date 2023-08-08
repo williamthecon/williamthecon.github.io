@@ -101,92 +101,100 @@
             // Username Container
             loadUsername();
 
-            // Book Block
-            const bookBlock = document.getElementById("book-block");
+            async function loadView() {
+                // Book Block
+                const bookBlock = document.getElementById("book-block");
 
-            asyncFindBookById(getLocalStorage("book-token"))
-                .then(book => {
-                    if (!book) {
-                        window.location.href = "/books/books";
-                    }
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
 
-                    asyncFindUserById(book.user)
-                        .then(user => {
-                            //// Book header
-                            const bookHeader = document.createElement("div");
-                            bookHeader.id = "book-header";
-                            bookHeader.innerHTML = `
-                                <h2 id="book-title">${book.title}</h2>
-                            `;
-                            bookBlock.appendChild(bookHeader);
+                while (!loaded.hasOwnProperty('users')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
 
-                            //// Book cover
-                            if (book.image) {
-                                const bookCover = document.createElement("div");
-                                bookCover.id = "book-cover";
-                                bookCover.innerHTML = `
-                                    <img src="${book.image}" alt="'${book.title}' Cover">
-                                `;
-                                bookBlock.appendChild(bookCover);
-                            };
+                const book = findBookById(getLocalStorage("book-token"));
 
-                            //// Book profile
-                            const bookProfile = document.createElement("div");
-                            bookProfile.id = "book-profile";
-                            bookProfile.className = "book-block-block";
-                            bookProfile.innerHTML = `
-                                <div id="book-profile-header">
-                                    <h4>Steckbrief</h4>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Titel</b>: ${book.title}</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Reihe</b>: ` + (book.series !== "" ? book.series : "-") + `</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Band</b>: ` + (book.volume !== "" ? book.volume : "-") + `</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Author</b>: ${book.author}</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Benutzer</b>: ${user.name}</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>Umschlag</b>: ` + (book.cover !== "" ? book.cover : "?") + `</p>
-                                </div>
-                                <div class="book-info">
-                                    <p><b>ISBN</b>: ` + (book.isbn !== "" ? book.isbn : "?") + `</p>
-                                </div>
-                            `;
-                            bookBlock.appendChild(bookProfile);
+                if (!book) {
+                    window.location.href = "/books/books";
+                }
 
-                            //// Book description
-                            if (book.description) {
-                                const bookDescription = document.createElement("div");
-                                bookDescription.id = "book-description";
-                                bookDescription.className = "book-block-block";
-                                bookDescription.innerHTML = `
-                                    <div id="book-description-header">
-                                        <h4>Beschreibung</h4>
-                                    </div>
-                                    <div id="book-description-content">
-                                        <p>${book.description.split("\n").join("</p>\n        <p>")}</p>
-                                    </div>
-                                `;
-                            };
+                //// Book header
+                const bookHeader = document.createElement("div");
+                bookHeader.id = "book-header";
+                bookHeader.innerHTML = `
+                    <h2 id="book-title">${book.title}</h2>
+                `;
+                bookBlock.appendChild(bookHeader);
 
-                            // Edit Button
-                            if (getLocalStorage("user") === book.user) {
-                                const editButton = document.createElement("button");
-                                editButton.id = "edit-button";
-                                editButton.type = "button";
-                                editButton.innerHTML = "<a href='/books/edit'>Bearbeiten</a>";
-                                bookBlock.appendChild(editButton);
-                            };
-                        });
-                });
+                //// Book cover
+                if (book.image) {
+                    const bookCover = document.createElement("div");
+                    bookCover.id = "book-cover";
+                    bookCover.innerHTML = `
+                        <img src="${book.image}" alt="'${book.title}' Cover">
+                    `;
+                    bookBlock.appendChild(bookCover);
+                };
+
+                //// Book profile
+                const bookProfile = document.createElement("div");
+                bookProfile.id = "book-profile";
+                bookProfile.className = "book-block-block";
+                bookProfile.innerHTML = `
+                    <div id="book-profile-header">
+                        <h4>Steckbrief</h4>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Titel</b>: ${book.title}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Reihe</b>: ` + (book.series !== "" ? book.series : "-") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Band</b>: ` + (book.volume !== "" ? book.volume : "-") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Author</b>: ${book.author}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Benutzer</b>: ${findUserById(book.user).name}</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>Umschlag</b>: ` + (book.cover !== "" ? book.cover : "?") + `</p>
+                    </div>
+                    <div class="book-info">
+                        <p><b>ISBN</b>: ` + (book.isbn !== "" ? book.isbn : "?") + `</p>
+                    </div>
+                `;
+                bookBlock.appendChild(bookProfile);
+
+                //// Book description
+                if (book.description) {
+                    const bookDescription = document.createElement("div");
+                    bookDescription.id = "book-description";
+                    bookDescription.className = "book-block-block";
+                    bookDescription.innerHTML = `
+                        <div id="book-description-header">
+                            <h4>Beschreibung</h4>
+                        </div>
+                        <div id="book-description-content">
+                            <p>${book.description.split("\n").join("</p>\n        <p>")}</p>
+                        </div>
+                    `;
+                };
+
+                // Edit Button
+                if (getLocalStorage("user") === book.user) {
+                    const editButton = document.createElement("button");
+                    editButton.id = "edit-button";
+                    editButton.type = "button";
+                    editButton.innerHTML = "<a href='/books/edit'>Bearbeiten</a>";
+                    bookBlock.appendChild(editButton);
+                };
+            }
+
+            loadView();
         </script>
     </body>
 </html>

@@ -127,8 +127,8 @@
                 doSearch();
             })
 
-            // Books Table
-            async function loadBooks() {
+            // Wishes Table
+            async function loadWishes() {
                 const wishesTable = document.getElementById("wishes-table");
 
                 const wishesTableHeader = document.createElement("li");
@@ -145,6 +145,10 @@
                 wishesTable.appendChild(wishesTableHeader);
 
                 while (!loaded.hasOwnProperty('wishes')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
+
+                while (!loaded.hasOwnProperty('users')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
@@ -167,12 +171,10 @@
                 viewMore();
             }
 
-
-
             if (queryInput.value) {
                 doSearch();
             } else {
-                loadBooks();
+                loadWishes();
             }
         </script>
     </body>

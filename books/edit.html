@@ -126,32 +126,37 @@
             const descriptionInput = document.getElementById("description-input");
             const imageInput = document.getElementById("image-input");
 
-            asyncFindBookById(getLocalStorage("book-token"))
-                .then(book => {
-                    if (!book) {
-                        window.location.href = "/books/books";
-                    }
+            async function loadEdit() {
+                while (!loaded.hasOwnProperty('books')) {
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+                }
 
-                    titleInput.value = (getLocalStorage("-edit--input-title")) ? getLocalStorage("-edit--input-title") : book.title;
-                    seriesInput.value = (getLocalStorage("-edit--input-series")) ? getLocalStorage("-edit--input-series") : book.series;
-                    volumeInput.value = (getLocalStorage("-edit--input-volume")) ? getLocalStorage("-edit--input-volume") : book.volume;
-                    authorInput.value = (getLocalStorage("-edit--input-author")) ? getLocalStorage("-edit--input-author") : book.author;
-                    coverInput.value = (getLocalStorage("-edit--input-cover")) ? getLocalStorage("-edit--input-cover") : book.cover;
-                    isbnInput.value = (getLocalStorage("-edit--input-isbn")) ? getLocalStorage("-edit--input-isbn") : book.isbn;
-                    descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : book.description;
-                    imageInput.value = (getLocalStorage("-edit--input-image")) ? getLocalStorage("-edit--input-image") : book.image;
+                origBook = findBookById(getLocalStorage("book-token"));
 
-                    setLocalStorage("-edit--input-title", titleInput.value);
-                    setLocalStorage("-edit--input-series", seriesInput.value);
-                    setLocalStorage("-edit--input-volume", volumeInput.value);
-                    setLocalStorage("-edit--input-author", authorInput.value);
-                    setLocalStorage("-edit--input-cover", coverInput.value);
-                    setLocalStorage("-edit--input-isbn", isbnInput.value);
-                    setLocalStorage("-edit--input-description", descriptionInput.value);
-                    setLocalStorage("-edit--input-image", imageInput.value);
+                if (!origBook) {
+                    window.location.href = "/books/books";
+                }
 
-                    origBook = book;
-                });
+                titleInput.value = (getLocalStorage("-edit--input-title")) ? getLocalStorage("-edit--input-title") : origBook.title;
+                seriesInput.value = (getLocalStorage("-edit--input-series")) ? getLocalStorage("-edit--input-series") : origBook.series;
+                volumeInput.value = (getLocalStorage("-edit--input-volume")) ? getLocalStorage("-edit--input-volume") : origBook.volume;
+                authorInput.value = (getLocalStorage("-edit--input-author")) ? getLocalStorage("-edit--input-author") : origBook.author;
+                coverInput.value = (getLocalStorage("-edit--input-cover")) ? getLocalStorage("-edit--input-cover") : origBook.cover;
+                isbnInput.value = (getLocalStorage("-edit--input-isbn")) ? getLocalStorage("-edit--input-isbn") : origBook.isbn;
+                descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : book.description;
+                imageInput.value = (getLocalStorage("-edit--input-image")) ? getLocalStorage("-edit--input-image") : origBook.image;
+
+                setLocalStorage("-edit--input-title", titleInput.value);
+                setLocalStorage("-edit--input-series", seriesInput.value);
+                setLocalStorage("-edit--input-volume", volumeInput.value);
+                setLocalStorage("-edit--input-author", authorInput.value);
+                setLocalStorage("-edit--input-cover", coverInput.value);
+                setLocalStorage("-edit--input-isbn", isbnInput.value);
+                setLocalStorage("-edit--input-description", descriptionInput.value);
+                setLocalStorage("-edit--input-image", imageInput.value);
+            }
+
+            loadEdit();
 
             titleInput.addEventListener("input", e => {
                 setLocalStorage("-edit--input-title", e.target.value);

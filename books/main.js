@@ -375,7 +375,19 @@ function searchBooks(query) {
         return loaded.books;
     }
 
-    return Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    return results.map(book => ({
+        "title": book.titel,
+        "series": book.reihe,
+        "volume": book.band,
+        "author": book.autor,
+        "cover": book.umschlag,
+        "isbn": book.isbn,
+        "description": book.beschreibung,
+        "image": book["bild-link"],
+        "token": book.id,
+        "username": book.benutzer
+    }));
 }
 
 function findBookById(token) {
@@ -481,7 +493,20 @@ function searchWishes(query) {
         return loaded.wishes;
     }
 
-    return Listionary.searchQuery(loaded.convertedWishes, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = Listionary.searchQuery(loaded.convertedWishes, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    return results.map(book => ({
+        "title": book.titel,
+        "series": book.reihe,
+        "volume": book.band,
+        "author": book.autor,
+        "cover": book.umschlag,
+        "isbn": book.isbn,
+        "description": book.beschreibung,
+        "image": book["bild-link"],
+        "importance": book.relevanz,
+        "token": book.id,
+        "username": book.benutzer
+    }))
 }
 
 function findWishById(token) {
@@ -582,7 +607,36 @@ function searchAll(query) {
         return loaded.wishes.concat(loaded.books);
     }
 
-    return Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
+    const results = Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
+    return results.map(book => {
+        if (book.hasOwnProperty("relevanz")) {
+            return {
+                "title": book.titel,
+                "series": book.reihe,
+                "volume": book.band,
+                "author": book.autor,
+                "cover": book.umschlag,
+                "isbn": book.isbn,
+                "description": book.beschreibung,
+                "image": book["bild-link"],
+                "importance": book.relevanz,
+                "token": book.id,
+                "username": book.benutzer
+            }
+        }
+        return {
+            "title": book.titel,
+            "series": book.reihe,
+            "volume": book.band,
+            "author": book.autor,
+            "cover": book.umschlag,
+            "isbn": book.isbn,
+            "description": book.beschreibung,
+            "image": book["bild-link"],
+            "token": book.id,
+            "username": book.benutzer
+        }
+    });
 }
 
 // Users functions
@@ -644,7 +698,15 @@ function searchUsers(query) {
         return loaded.users;
     }
 
-    return Listionary.searchQuery(loaded.convertedUsers, query, ignore_keys=["id"]);
+    const results = Listionary.searchQuery(loaded.convertedUsers, query, ignore_keys=["id"]);
+    return results.map(user => ({
+        "name": user.name,
+        "books": user.bücher,
+        "series": user.reihen,
+        "authors": user.autoren,
+        "wishes": user.wünsche,
+        "token": user.id
+    }));
 }
 
 // Loading

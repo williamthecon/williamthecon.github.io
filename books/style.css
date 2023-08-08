@@ -155,6 +155,10 @@ ul a:hover {
     display: inline-block;
 }
 
+.folding-header-text {
+    width: calc(100% - 20px);
+}
+
 .chevron-down {
     font-size: 23px;
     float: right;

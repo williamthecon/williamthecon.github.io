@@ -15,6 +15,7 @@
     <body>
         <script>
             const requiredLoaders = ["wishes", "users"];
+            let tableSorting = [1, 2, 0, 3, 5, 4];
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
@@ -29,11 +30,12 @@
                 wishesTableHeader.classList.add("table-row");
                 wishesTableHeader.classList.add("table-header");
                 wishesTableHeader.innerHTML = `
-                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
-                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
-                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
-                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
-                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 5, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 5, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 5, 4)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 5, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3, 5)">Relevanz</span>
+                    <span class="table-cell" onclick="setSorting(5, 1, 2, 0, 3, 4)">Benutzer</span>
                 `;
                 wishesTable.appendChild(wishesTableHeader);
 
@@ -41,7 +43,7 @@
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
-                for (let book of searchBooks(query)) {
+                for (let book of searchWishes(query)) {
                     const bookRow = document.createElement("li");
                     bookRow.classList.add("table-row");
                     bookRow.onclick = () => view(book.token);
@@ -50,6 +52,7 @@
                         <span class="table-cell">${book.series}</span>
                         <span class="table-cell">${book.volume}</span>
                         <span class="table-cell">${book.author}</span>
+                        <span class="table-cell">${book.importance}</span>
                         <span class="table-cell">${findUserById(book.user).name}</span>
                     `;
                     wishesTable.appendChild(bookRow);
@@ -135,12 +138,12 @@
                 wishesTableHeader.classList.add("table-row");
                 wishesTableHeader.classList.add("table-header");
                 wishesTableHeader.innerHTML = `
-                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4, 5)">Titel</span>
-                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4, 5)">Reihe</span>
-                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3, 5)">Band</span>
-                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4, 5)">Autor</span>
-                    <span class="table-cell" onclick="setSorting(5, 1, 2, 0, 3, 4)">Wichtigkeit</span>
-                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3, 5)">Benutzer</span>
+                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 5, 4)">Titel</span>
+                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 5, 4)">Reihe</span>
+                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 5, 4)">Band</span>
+                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 5, 4)">Autor</span>
+                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3, 5)">Wichtigkeit</span>
+                    <span class="table-cell" onclick="setSorting(5, 1, 2, 0, 3, 4)">Benutzer</span>
                 `;
                 wishesTable.appendChild(wishesTableHeader);
 

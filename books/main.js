@@ -369,6 +369,7 @@ class Listionary {
     }
 }
 
+// Books functions
 function searchBooks(query) {
     if (!query) {
         return loaded.books;
@@ -439,6 +440,80 @@ async function asyncEditBook(book, newBook) {
     return data;
 }
 
+// Wishes functions
+function searchWishes(query) {
+    if (!query) {
+        return loaded.wishes;
+    }
+
+    return Listionary.searchQuery(loaded.wishes, {"titel": "title", "reihe": "series", "band": "volume", "autor": "author", "benutzer": "user", "umschlag": "cover", "isbn": "isbn", "beschreibung": "description", "bild-link": "image", "relevanz": "importance", "id": "token"}, query, ignore_keys=["token", "description", "image", "cover"]);
+}
+
+function findWishById(token) {
+    return loaded.wishes.find(book => book.token === token);
+}
+
+async function asyncFindWishById(token) {
+    while (!loaded.hasOwnProperty('wishes')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    return loaded.wishes.find(book => book.token === token);
+}
+
+function newWish(title, series, volume, author, cover, isbn, description, image, importance) {
+    addItem({
+        "titel": title,
+        "series": series,
+        "volume": volume,
+        "author": author,
+        "cover": cover,
+        "isbn": isbn,
+        "description": description,
+        "image": image,
+        "importance": importance,
+        "user": getLocalStorage("user"),
+        "token": generate_token()
+    }, "wishes");
+}
+
+async function asyncNewWish(title, series, volume, author, cover, isbn, description, image, importance) {
+    let data = null;
+    addItem({
+        "title": title,
+        "series": series,
+        "volume": volume,
+        "author": author,
+        "cover": cover,
+        "isbn": isbn,
+        "description": description,
+        "image": image,
+        "importance": importance,
+        "user": getLocalStorage("user"),
+        "token": generate_token()
+    }, "wishes", (d) => { data = d; });
+
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+    return data;
+}
+
+function rewish(book, newBook) {
+    editItem(book, newBook, "wishes");
+}
+
+async function asyncRewish(book, newBook) {
+    let data = null;
+    editItem(book, newBook, "wishes", (d) => { data = d; });
+
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+    return data;
+}
+
+// Users functions
 function findUserById(token) {
     return loaded.users.find(user => user.token === token);
 }

@@ -18,9 +18,8 @@ function viewMore() {
     // }
 }
 
-let tableSorting = [1, 2, 0, 3, 4];
-async function setSorting(colIndex1, colIndex2, colIndex3, colIndex4, colIndex5) {
-    tableSorting = [colIndex1, colIndex2, colIndex3, colIndex4, colIndex5];
+async function setSorting(...colIndices) {
+    tableSorting = [...colIndices];
     await sortTable();
 }
 
@@ -244,14 +243,13 @@ async function sortTable() {
         const tableRows2 = Array.from(tableRows);
         var importantTexts = [];
 
-        tableRows2.forEach(row => importantTexts.push([
-            convertToIntIfInteger(row.children[tableSorting[0]].textContent),
-            convertToIntIfInteger(row.children[tableSorting[1]].textContent),
-            convertToIntIfInteger(row.children[tableSorting[2]].textContent),
-            convertToIntIfInteger(row.children[tableSorting[3]].textContent),
-            convertToIntIfInteger(row.children[tableSorting[4]].textContent),
-            row
-        ]));
+        tableRows2.forEach(row => {
+            const rowTexts = [];
+            tableSorting.forEach(col => {
+                rowTexts.push(row.children[col].textContent);
+            })
+            importantTexts.push([...rowTexts, row]);
+        });
 
         const sortedRows = [];
         sortArray(importantTexts).forEach(info => sortedRows.push(info[5]));

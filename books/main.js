@@ -298,7 +298,7 @@ class Listionary {
             let approved = true;
 
             for (const [k, v] of Object.entries(kwargs)) {
-                if (!keys.includes(v) || !test(v, lowerValue[k])) {
+                if (!keys.includes(k) || !test(v, lowerValue[k])) {
                     approved = false;
                     break;
                 }

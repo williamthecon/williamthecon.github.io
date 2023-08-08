@@ -371,9 +371,9 @@ class Listionary {
 
 // Books functions
 function searchBooks(query) {
-    if (!query) {
-        return loaded.books;
-    }
+    // if (!query) {
+    //     return loaded.books;
+    // }
 
     const results = Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
@@ -683,7 +683,7 @@ async function convertUsers() {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }
 
-    loaded["convertedUsers"] = loaded.users.map(user => ({
+    loaded.convertedUsers = loaded.users.map(user => ({
         "name": user.name,
         "bücher": findBooksByUser(user.token).length.toString(),
         "reihen": findSeriesByUser(user.token).length.toString(),
@@ -729,12 +729,4 @@ if (requiredLoaders.includes("convertedWishes")) {
 const loaded = {};
 if (typeof requiredLoaders !== 'undefined') {
     requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
-}
-
-// Conversion Loaders
-if (requiredLoaders.includes("users")) {
-    convertUsers();
-}
-if (requiredLoaders.includes("books")) {
-    convertBooks();
 }

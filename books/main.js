@@ -696,22 +696,22 @@ function searchUsers(query) {
 // Loading
 const loaded = {};
 
-if (requiredLoaders.includes("convertedUsers")) {
-    requiredLoaders.splice(requiredLoaders.indexOf("convertedUsers"), 1);
-    requiredLoaders.push("users");
-    convertUsers();
-}
-if (requiredLoaders.includes("convertedBooks")) {
-    requiredLoaders.splice(requiredLoaders.indexOf("convertedBooks"), 1);
-    requiredLoaders.push("books");
-    convertBooks();
-}
-if (requiredLoaders.includes("convertedWishes")) {
-    requiredLoaders.splice(requiredLoaders.indexOf("convertedWishes"), 1);
-    requiredLoaders.push("wishes");
-    convertWishes();
-}
-
 if (typeof requiredLoaders !== 'undefined') {
+    if (requiredLoaders.includes("convertedUsers")) {
+        requiredLoaders.splice(requiredLoaders.indexOf("convertedUsers"), 1);
+        requiredLoaders.push("users");
+        convertUsers();
+    }
+    if (requiredLoaders.includes("convertedBooks")) {
+        requiredLoaders.splice(requiredLoaders.indexOf("convertedBooks"), 1);
+        requiredLoaders.push("books");
+        convertBooks();
+    }
+    if (requiredLoaders.includes("convertedWishes")) {
+        requiredLoaders.splice(requiredLoaders.indexOf("convertedWishes"), 1);
+        requiredLoaders.push("wishes");
+        convertWishes();
+    }
+
     requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
 }

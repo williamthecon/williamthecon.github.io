@@ -38,7 +38,7 @@
                 `;
                 booksTable.appendChild(booksTableHeader);
 
-                while (!loaded.hasOwnProperty('books')) {
+                while (!loaded.hasOwnProperty('convertedBooks')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 

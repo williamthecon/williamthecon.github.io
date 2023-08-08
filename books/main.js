@@ -604,6 +604,14 @@ async function loadUsername() {
 }
 
 async function convertUsers() {
+    while (!loaded.hasOwnProperty('books')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    while (!loaded.hasOwnProperty('wishes')) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
     while (!loaded.hasOwnProperty('users')) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
     }

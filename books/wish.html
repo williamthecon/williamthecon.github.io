@@ -128,7 +128,7 @@
                 bookBlock.appendChild(bookHeader);
 
                 //// Book cover
-                if (book.image) {
+                if (wish.image) {
                     const bookCover = document.createElement("div");
                     bookCover.id = "book-cover";
                     bookCover.innerHTML = `
@@ -172,7 +172,7 @@
                 bookBlock.appendChild(bookProfile);
 
                 //// Book description
-                if (book.description) {
+                if (wish.description) {
                     const bookDescription = document.createElement("div");
                     bookDescription.id = "book-description";
                     bookDescription.className = "book-block-block";

@@ -62,9 +62,9 @@
                 viewMore();
             }
 
-            function view(token) {
-                setLocalStorage("book-token", token);
-                window.location.href = "/books/view";
+            function wish(token) {
+                setLocalStorage("wish-token", token);
+                window.location.href = "/books/wish";
             }
         </script>
         <div id="header" class="container">
@@ -158,7 +158,7 @@
                 for (let book of loaded.wishes) {
                     const bookRow = document.createElement("li");
                     bookRow.classList.add("table-row");
-                    bookRow.onclick = () => view(book.token);
+                    bookRow.onclick = () => wish(book.token);
                     bookRow.innerHTML = `
                         <span class="table-cell">${book.title}</span>
                         <span class="table-cell">${book.series}</span>

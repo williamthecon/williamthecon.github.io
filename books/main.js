@@ -694,6 +694,8 @@ function searchUsers(query) {
 }
 
 // Loading
+const loaded = {};
+
 if (requiredLoaders.includes("convertedUsers")) {
     requiredLoaders.splice(requiredLoaders.indexOf("convertedUsers"), 1);
     requiredLoaders.push("users");
@@ -710,7 +712,6 @@ if (requiredLoaders.includes("convertedWishes")) {
     convertWishes();
 }
 
-const loaded = {};
 if (typeof requiredLoaders !== 'undefined') {
     requiredLoaders.forEach(loader => loadData(loader, value => {loaded[loader] = value;}));
 }

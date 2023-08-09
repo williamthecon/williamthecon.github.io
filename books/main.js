@@ -416,7 +416,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const results = searchQueryListionary(loaded.convertedBooks, query, keysToIgnore=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,

@@ -417,13 +417,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const start1 = performance.now();
-    const results1 = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]);
-    const end1 = performance.now();
-    const elapsed1 = end1 - start1;
-    console.log(elapsed1);
-    const start2 = performance.now();
-    const results2 = Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
+    return searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,
@@ -435,10 +429,6 @@ function searchBooks(query) {
         "token": book.id,
         "username": book.benutzer
     }));
-    const end2 = performance.now();
-    const elapsed2 = end2 - start2;
-    console.log(elapsed2);
-    return results1;
 }
 
 function findBookById(token) {

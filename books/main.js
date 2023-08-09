@@ -378,9 +378,26 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
         maxResults = listionary.length;
     }
 
+    console.log(info.args);
+    console.log(info.kwargs);
+
     const keys = Object.keys(listionary[0]);
     const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
     const ignoreKeys = (obj) => Object.keys(obj).filter((key) => !keysToIgnore.includes(key)).map((key) => obj[key]);
+
+    console.log(test("in", "in diesem inin enthalten"))
+    console.log(ignoreKeys({
+        "autor": "Ben Aaronovitch",
+        "band": "8",
+        "benutzer": "NameWind",
+        "beschreibung": "Peter Grant, der Londoner Bobby und Zauberlehrling, steht vor völlig neuen privaten Herausforderungen. Welche ihn zu gleichen Teilen mit Panik und Begeisterung erfüllen. Beruflich bekommt er es mit der Serious Cybernetics Corporation zu tun, dem neuesten Projekt des Silicon-Valley-Genies Terrence Skinner. Und mit einer geheimen magischen - und hochgefährlichen - Technologie, die bis weit in vergangene Jahrhunderte zurückreicht ...",
+        "bild-link": "https://i.imgur.com/n23etC4.jpg",
+        "id": "K5P7RGl9Ln7nI",
+        "isbn": "",
+        "reihe": "Peter Grant",
+        "titel": "Ein weißer Schwan in Tabernacle Street",
+        "umschlag": "Taschenbuch",
+    }));
 
     let resultsCount = 0;
     return listionary.filter(item => {
@@ -388,14 +405,15 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
             return false;
         }
 
-        for (let [k, v] of Object.entries(info.kwargs)) {
+        Object.entries(info.kwargs).forEach(([k, v]) => {
             k = k.toLowerCase();
             if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {
                 return false;
             }
-        }
+        });
 
         const itemValues = ignoreKeys(item);
+        console.log(itemValues);
 
         info.args.forEach(arg => {
             arg = arg.toLowerCase();

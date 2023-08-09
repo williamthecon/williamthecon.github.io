@@ -369,9 +369,37 @@ class Listionary {
     }
 }
 
+function searchQueryListionary(listionary, query, maxResults = -1, equals = false, keysToIgnore = []) {
+    return searchListionary(listionary, Listionary.parse_query(query), maxResults, equals, keysToIgnore);
+}
+
+function searchListionary(listionary, info, maxResults = -1, equals = false, keysToIgnore = []) {
+    const keys = Object.keys(listionary[0]);
+    const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
+    const ignoreKeys = (obj) => Object.keys(obj).filter((key) => keysToIgnore.includes(key)).map((key) => obj[key]);
+
+    return data.filter(item => {
+        for (const [k, v] of Object.entries(info.kwargs)) {
+            k = k.toLowerCase();
+            if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {
+                return false;
+            }
+        }
+
+        info.args.forEach(arg => {
+            arg = arg.toLowerCase();
+            if (!ignoreKeys(item).some(v => test(arg, v.toLowerCase()))) {
+                return false;
+            }
+        });
+
+        return true;
+    })
+}
+
 // Books functions
 function searchBooks(query) {
-    const results = Listionary.searchQuery(loaded.convertedBooks, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = searchQueryListionary(loaded.convertedBooks, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,

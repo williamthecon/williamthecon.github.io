@@ -404,11 +404,13 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
         info.args.forEach(arg => {
             arg = arg.toLowerCase();
             if (!itemValues.some(v => test(arg, v.toLowerCase()))) {
+                console.log(false);
                 return false;
             } else {
                 console.log(true);
             }
         });
+        console.log("Continue");
 
         resultsCount++;
         return true;

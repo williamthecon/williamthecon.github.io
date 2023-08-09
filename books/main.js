@@ -411,7 +411,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    return searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
+    return Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,

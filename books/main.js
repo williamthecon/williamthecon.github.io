@@ -399,9 +399,12 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
             }
         }
 
+        const itemValues = ignoreKeys(item);
+        console.log(itemValues);
+
         info.args.forEach(arg => {
             arg = arg.toLowerCase();
-            if (!ignoreKeys(item).some(v => test(arg, v.toLowerCase()))) {
+            if (!itemValues.some(v => test(arg, v.toLowerCase()))) {
                 return false;
             }
         });

@@ -402,7 +402,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
             arg = arg.toLowerCase();
             if (!itemValues.some(v => test(arg, v.toLowerCase()))) {
                 approved = false;
-                return false;
+                return;
             }
         });
 

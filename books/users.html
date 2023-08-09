@@ -14,7 +14,7 @@
     </head>
     <body>
         <script>
-            const requiredLoaders = ["books", "wishes", "users"];
+            const requiredLoaders = ["books", "wishes", "convertedUsers"];
             let tableSorting = [0, 1, 2, 3, 4]; // Username, Books, Series', Authors, Wishes
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
@@ -65,6 +65,7 @@
                 }
 
                 sortTable();
+                currentViewCap = 0;
                 viewMore();
             }
 
@@ -170,11 +171,11 @@
                     userRow.classList.add("table-row");
                     userRow.onclick = () => user(user.token);
                     userRow.innerHTML = `
-                        <span class="table-cell">${user.name}</span>
-                        <span class="table-cell">${user.books}</span>
-                        <span class="table-cell">${user.series}</span>
-                        <span class="table-cell">${user.authors}</span>
-                        <span class="table-cell">${user.wishes}</span>
+                        <span class="table-cell">${user["name"]}</span>
+                        <span class="table-cell">${user["bücher"]}</span>
+                        <span class="table-cell">${user["reihen"]}</span>
+                        <span class="table-cell">${user["autoren"]}</span>
+                        <span class="table-cell">${user["wünsche"]}</span>
                     `;
                     usersTable.appendChild(userRow);
                 }

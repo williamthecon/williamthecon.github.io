@@ -2,7 +2,7 @@ var currentViewCap = 0;
 function viewMore() {
     currentViewCap += 50;
     // Get all table rows
-    const rows = Array.from(document.querySelectorAll('.table-row:not(.table-header)'));
+    const rows = Array.from(document.querySelectorAll('.table-row:not(.table-header).important'));
 
     // Hide all rows except the first 50
     // var madeVisible = false;
@@ -231,19 +231,19 @@ function sortArray(arr) {
 async function sortTable() {
     return new Promise(resolve => {
         // const tableCells = Array.from(document.querySelectorAll(".table-cell")).filter(cell => window.getComputedStyle(cell).display !== "none");
-        const tableCells = document.querySelectorAll(".table-cell");
-        const tableRows = new Set();
-        const headerRow = document.querySelector(".table-header");
-        tableCells.forEach(cell => {
-            const parent = cell.parentElement;
-            if (!parent.classList.contains("table-header")) {
-                tableRows.add(parent);
-            }
-        });
-        const tableRows2 = Array.from(tableRows);
+        // const tableCells = document.querySelectorAll(".table-cell");
+        // const tableRows = new Set();
+        // const headerRow = document.querySelector(".table-header");
+        // tableCells.forEach(cell => {
+        //     const parent = cell.parentElement;
+        //     if (!parent.classList.contains("table-header")) {
+        //         tableRows.add(parent);
+        //     }
+        // });
+        const tableRows = Array.from(document.querySelectorAll(".table-row:not(.table-header)"));
         var importantTexts = [];
 
-        tableRows2.forEach(row => {
+        tableRows.forEach(row => {
             const rowTexts = [];
             tableSorting.forEach(col => {
                 rowTexts.push(row.children[col].textContent);

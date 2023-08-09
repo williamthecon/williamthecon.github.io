@@ -378,7 +378,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
     const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
     const ignoreKeys = (obj) => Object.keys(obj).filter((key) => keysToIgnore.includes(key)).map((key) => obj[key]);
 
-    return data.filter(item => {
+    return listionary.filter(item => {
         for (const [k, v] of Object.entries(info.kwargs)) {
             k = k.toLowerCase();
             if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {

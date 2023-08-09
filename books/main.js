@@ -400,7 +400,6 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
         }
 
         const itemValues = ignoreKeys(item);
-        console.log(itemValues);
 
         info.args.forEach(arg => {
             arg = arg.toLowerCase();
@@ -416,7 +415,12 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const results = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["id", "beschreibung", "bild-link", "umschlag"]);
+    const startTime = performance.now();
+    const results = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
+    console.log("Search time: " + performance.now() - startTime + "ms");
+    const startTime2 = performance.now();
+    const results2 = Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
+    console.log("Search time: " + performance.now() - startTime2 + "ms");
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,

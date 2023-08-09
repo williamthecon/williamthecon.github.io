@@ -411,12 +411,12 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const startTime = performance.now();
+    const startTime = Date.now();
     const results = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
-    console.log("Search time: " + performance.now() - startTime + "ms");
-    const startTime2 = performance.now();
+    console.log("Search time: " + Date.now() - startTime + "ms");
+    const startTime2 = Date.now();
     const results2 = Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
-    console.log("Search time: " + performance.now() - startTime2 + "ms");
+    console.log("Search time: " + Date.now() - startTime2 + "ms");
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,

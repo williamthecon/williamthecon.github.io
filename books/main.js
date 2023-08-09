@@ -411,17 +411,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const startTime = Date.now();
-    const results = searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
-    const endTime = Date.now();
-    const elapsedTime = endTime - startTime;
-    console.log("Search time: " + elapsedTime + "ms");
-    const startTime2 = Date.now();
-    const results2 = Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]);
-    const endTime2 = Date.now();
-    const elapsedTime2 = endTime2 - startTime2;
-    console.log("Search time: " + elapsedTime2 + "ms");
-    return results.map(book => ({
+    return searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,
@@ -534,8 +524,7 @@ async function convertBooks() {
 
 // Wishes functions
 function searchWishes(query) {
-    const results = Listionary.searchQuery(loaded.convertedWishes, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
-    return results.map(book => ({
+    return searchQueryListionary(loaded.convertedWishes, query, -1, false, keysToIgnore=["isbn", "id", "cover", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,
@@ -644,8 +633,7 @@ async function convertWishes() {
 
 // Wish + books functions
 function searchAll(query) {
-    const results = Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
-    return results.map(book => {
+    return searchQueryListionary(loaded.convertedWishes.concat(loaded.convertedBooks), query, -1, false, keysToIgnore=["cover", "isbn", "id", "beschreibung", "bild-link", "umschlag", "relevanz"]).map(book => {
         if (book.hasOwnProperty("relevanz")) {
             return {
                 "title": book.titel,
@@ -731,7 +719,7 @@ async function convertUsers() {
 }
 
 function searchUsers(query) {
-    const results = Listionary.searchQuery(loaded.convertedUsers, query, ignoreKeys=["id"]);
+    const results = searchQueryListionary(loaded.convertedUsers, query, -1, false, keysToIgnore=["id"]);
     return results.map(user => ({
         "name": user.name,
         "books": user.bücher,

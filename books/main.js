@@ -378,10 +378,6 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
         maxResults = listionary.length;
     }
 
-    // Temp. Logging
-    console.log(info.args);
-    console.log(info.kwargs);
-
     const keys = Object.keys(listionary[0]);
     const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
     const ignoreKeys = (obj) => Object.keys(obj).filter((key) => !keysToIgnore.includes(key)).map((key) => obj[key]);

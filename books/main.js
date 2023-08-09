@@ -384,7 +384,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
     const keys = Object.keys(listionary[0]);
     const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
-    const ignoreKeys = (obj) => Object.keys(obj).filter((key) => keysToIgnore.includes(key)).map((key) => obj[key]);
+    const ignoreKeys = (obj) => Object.keys(obj).filter((key) => !keysToIgnore.includes(key)).map((key) => obj[key]);
 
     let resultsCount = 0;
     return listionary.filter(item => {
@@ -413,7 +413,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    const results = searchQueryListionary(loaded.convertedBooks, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = searchQueryListionary(loaded.convertedBooks, query, keysToIgnore=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,

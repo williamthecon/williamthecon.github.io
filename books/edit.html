@@ -145,7 +145,7 @@
                 authorInput.value = (getLocalStorage("-edit--input-author")) ? getLocalStorage("-edit--input-author") : origBook.author;
                 coverInput.value = (getLocalStorage("-edit--input-cover")) ? getLocalStorage("-edit--input-cover") : origBook.cover;
                 isbnInput.value = (getLocalStorage("-edit--input-isbn")) ? getLocalStorage("-edit--input-isbn") : origBook.isbn;
-                descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : book.description;
+                descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : origBook.description;
                 imageInput.value = (getLocalStorage("-edit--input-image")) ? getLocalStorage("-edit--input-image") : origBook.image;
 
                 setLocalStorage("-edit--input-title", titleInput.value);

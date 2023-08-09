@@ -406,11 +406,12 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
         resultsCount++;
         return true;
-    })
+    });
 }
 
 // Books functions
 function searchBooks(query) {
+    console.log(searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]));
     return Listionary.searchQuery(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,

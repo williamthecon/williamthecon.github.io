@@ -374,12 +374,25 @@ function searchQueryListionary(listionary, query, maxResults = -1, equals = fals
 }
 
 function searchListionary(listionary, info, maxResults = -1, equals = false, keysToIgnore = []) {
+    if (maxResults === -1) {
+        maxResults = listionary.length;
+    }
+
+    // Temp. Logging
+    console.log(info.args);
+    console.log(info.kwargs);
+
     const keys = Object.keys(listionary[0]);
     const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
     const ignoreKeys = (obj) => Object.keys(obj).filter((key) => keysToIgnore.includes(key)).map((key) => obj[key]);
 
+    let resultsCount = 0;
     return listionary.filter(item => {
-        for (const [k, v] of Object.entries(info.kwargs)) {
+        if (resultsCount >= maxResults) {
+            return false;
+        }
+
+        for (let [k, v] of Object.entries(info.kwargs)) {
             k = k.toLowerCase();
             if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {
                 return false;
@@ -393,6 +406,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
             }
         });
 
+        resultsCount++;
         return true;
     })
 }

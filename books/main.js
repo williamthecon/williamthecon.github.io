@@ -290,7 +290,7 @@ class Listionary {
         const kwargs = info.kwargs;
 
         const test = (s1, s2) => (equals ? s1 === s2 : s2.includes(s1));
-        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key))); // TODO: Fix it, doesn't work
+        const doIgnoreKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, _]) => !ignoreKeys.includes(key)));
 
         const results = [];
         for (let value of data) {
@@ -371,7 +371,7 @@ class Listionary {
 
 // Books functions
 function searchBooks(query) {
-    const results = Listionary.searchQuery(loaded.convertedBooks, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = Listionary.searchQuery(loaded.convertedBooks, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,
@@ -485,7 +485,7 @@ async function convertBooks() {
 
 // Wishes functions
 function searchWishes(query) {
-    const results = Listionary.searchQuery(loaded.convertedWishes, query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag"]);
+    const results = Listionary.searchQuery(loaded.convertedWishes, query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag"]);
     return results.map(book => ({
         "title": book.titel,
         "series": book.reihe,
@@ -595,7 +595,7 @@ async function convertWishes() {
 
 // Wish + books functions
 function searchAll(query) {
-    const results = Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignore_keys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
+    const results = Listionary.searchQuery(loaded.convertedWishes.concat(loaded.convertedBooks), query, ignoreKeys=["id", "beschreibung", "bild-link", "umschlag", "relevanz"]);
     return results.map(book => {
         if (book.hasOwnProperty("relevanz")) {
             return {
@@ -682,7 +682,7 @@ async function convertUsers() {
 }
 
 function searchUsers(query) {
-    const results = Listionary.searchQuery(loaded.convertedUsers, query, ignore_keys=["id"]);
+    const results = Listionary.searchQuery(loaded.convertedUsers, query, ignoreKeys=["id"]);
     return results.map(user => ({
         "name": user.name,
         "books": user.bücher,

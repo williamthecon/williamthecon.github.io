@@ -24,19 +24,6 @@
             async function doSearch() {
                 const query = document.getElementById("query-input").value;
                 const booksTable = document.getElementById("books-table");
-                booksTable.innerHTML = "";
-
-                const booksTableHeader = document.createElement("li");
-                booksTableHeader.classList.add("table-row");
-                booksTableHeader.classList.add("table-header");
-                booksTableHeader.innerHTML = `
-                    <span class="table-cell" onclick="setSorting(0, 1, 2, 3, 4)">Titel</span>
-                    <span class="table-cell" onclick="setSorting(1, 2, 0, 3, 4)">Reihe</span>
-                    <span class="table-cell" onclick="setSorting(2, 1, 0, 3, 3)">Band</span>
-                    <span class="table-cell" onclick="setSorting(3, 1, 2, 0, 4)">Autor</span>
-                    <span class="table-cell" onclick="setSorting(4, 1, 2, 0, 3)">Benutzer</span>
-                `;
-                booksTable.appendChild(booksTableHeader);
 
                 while (!loaded.hasOwnProperty('convertedBooks')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
@@ -46,18 +33,32 @@
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
+                Array.from(document.querySelectorAll(".table-row:not(.table-header)")).forEach(tableRow => {
+                    if (tableRow.classList.contains("important")) {
+                        tableRow.classList.remove("important");
+                    }
+                    tableRow.style.display = "none";
+                });
+
                 for (let book of searchBooks(query)) {
-                    const bookRow = document.createElement("li");
-                    bookRow.classList.add("table-row");
-                    bookRow.onclick = () => view(book.token);
-                    bookRow.innerHTML = `
-                        <span class="table-cell">${book.title}</span>
-                        <span class="table-cell">${book.series}</span>
-                        <span class="table-cell">${book.volume}</span>
-                        <span class="table-cell">${book.author}</span>
-                        <span class="table-cell">${book.username}</span>
-                    `;
-                    booksTable.appendChild(bookRow);
+                    const bookRow = document.getElementById(book.token);
+                    if (bookRow === null) {
+                        const bookRow = document.createElement("li");
+                        bookRow.id = book.token;
+                        bookRow.classList.add("table-row");
+                        bookRow.onclick = () => view(book.token);
+                        bookRow.innerHTML = `
+                            <span class="table-cell">${book.title}</span>
+                            <span class="table-cell">${book.series}</span>
+                            <span class="table-cell">${book.volume}</span>
+                            <span class="table-cell">${book.author}</span>
+                            <span class="table-cell">${book.username}</span>
+                        `;
+                        booksTable.appendChild(bookRow);
+                    }
+
+                    bookRow.classList.add("important");
+                    bookRow.style.display = "table-row";
                 }
 
                 sortTable();
@@ -160,7 +161,9 @@
 
                 for (let book of loaded.books) {
                     const bookRow = document.createElement("li");
+                    bookRow.id = book.token;
                     bookRow.classList.add("table-row");
+                    bookRow.classList.add("important");
                     bookRow.onclick = () => view(book.token);
                     bookRow.innerHTML = `
                         <span class="table-cell">${book.title}</span>
@@ -176,10 +179,9 @@
                 viewMore();
             }
 
+            loadBooks();
             if (queryInput.value) {
                 doSearch();
-            } else {
-                loadBooks();
             }
         </script>
     </body>

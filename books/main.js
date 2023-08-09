@@ -411,7 +411,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
 
 // Books functions
 function searchBooks(query) {
-    return searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "cover", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
+    return searchQueryListionary(loaded.convertedBooks, query, -1, false, ["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,
@@ -524,7 +524,7 @@ async function convertBooks() {
 
 // Wishes functions
 function searchWishes(query) {
-    return searchQueryListionary(loaded.convertedWishes, query, -1, false, keysToIgnore=["isbn", "id", "cover", "beschreibung", "bild-link", "umschlag"]).map(book => ({
+    return searchQueryListionary(loaded.convertedWishes, query, -1, false, keysToIgnore=["isbn", "id", "beschreibung", "bild-link", "umschlag"]).map(book => ({
         "title": book.titel,
         "series": book.reihe,
         "volume": book.band,
@@ -633,7 +633,7 @@ async function convertWishes() {
 
 // Wish + books functions
 function searchAll(query) {
-    return searchQueryListionary(loaded.convertedWishes.concat(loaded.convertedBooks), query, -1, false, keysToIgnore=["cover", "isbn", "id", "beschreibung", "bild-link", "umschlag", "relevanz"]).map(book => {
+    return searchQueryListionary(loaded.convertedWishes.concat(loaded.convertedBooks), query, -1, false, keysToIgnore=["isbn", "id", "beschreibung", "bild-link", "umschlag", "relevanz"]).map(book => {
         if (book.hasOwnProperty("relevanz")) {
             return {
                 "title": book.titel,

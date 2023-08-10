@@ -26,8 +26,8 @@
 
                 const success = changeUsername(usernameInput.value, passwordInput.value);
                 if (success) {
-                    usernameInput.value = "";
-                    passwordInput.value = "";
+                    deleteLocalStorage("-change-username--input-username");
+                    deleteLocalStorage("-change-username--input-password");
                 }
                 return success;
             }

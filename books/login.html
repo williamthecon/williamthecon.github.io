@@ -23,9 +23,10 @@
                 var usernameInput = document.getElementById("username-input");
                 var passwordInput = document.getElementById("password-input");
                 const success = login(usernameInput.value, passwordInput.value);
+
                 if (success) {
-                    usernameInput.value = "";
-                    passwordInput.value = "";
+                    deleteLocalStorage("-login--input-username");
+                    deleteLocalStorage("-login--input-password");
                 }
                 return success;
             }

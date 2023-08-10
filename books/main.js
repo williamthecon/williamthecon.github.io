@@ -50,26 +50,6 @@ function loadData(type, define) {
         .catch(error => console.log(error));
 }
 
-// async function searchData(type, max_results = -1, equals = false, ignore_indices = [], args = [], kwargs = {}) {
-//     return await fetch("https://my-book-api.wtc248.repl.co/search/" + type, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json; charset=utf-8'
-//         },
-//         body: JSON.stringify({"max_results": max_results, "equals": equals, "ignore_indices": ignore_indices, "args": args, "kwargs": kwargs}),
-//     }).then(response => {d = response.json(); if (d.success) {return d.data}; return []}).catch(error => console.log(error));
-// }
-
-// async function findData(type, equals = false, ignore_indices = [], args = [], kwargs = {}) {
-//     return await fetch("https://my-book-api.wtc248.repl.co/find/" + type, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json; charset=utf-8'
-//         },
-//         body: JSON.stringify({"equals": equals, "ignore_indices": ignore_indices, "args": args, "kwargs": kwargs}),
-//     }).then(response => {d = response.json(); if (d.success) {return d.item}; return null}).catch(error => console.log(error));
-// }
-
 function saveData(data, type, define = (_) => {}) {
     fetch('https://my-book-api.wtc248.repl.co/save/' + type, {
         method: 'POST',

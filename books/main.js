@@ -545,6 +545,8 @@ async function convertBooks() {
         "benutzer": findUserById(book.user).name,
         "id": book.token
     }));
+
+    console.log("Successfully converted books");
 }
 
 // Wishes functions
@@ -653,7 +655,8 @@ async function convertWishes() {
         "relevanz": book.importance,
         "benutzer": findUserById(book.user).name,
         "id": book.token
-    }))
+    }));
+    console.log("Successfully converted wishes");
 }
 
 // Wish + books functions
@@ -741,6 +744,8 @@ async function convertUsers() {
         "wünsche": findWishesByUser(user.token).length.toString(),
         "id": user.token
     }));
+
+    console.log("Successfully converted users");
 }
 
 function searchUsers(query) {

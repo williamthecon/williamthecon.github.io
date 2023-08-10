@@ -365,7 +365,7 @@ function parseQuery(query) {
         }
     }
 
-    query.forEach(char => {
+    for (const char of query) {
         if (char === '"') {
             inStr = !inStr;
         } else if (char === " " && !inStr) {
@@ -374,7 +374,7 @@ function parseQuery(query) {
         } else {
             currentStr += char;
         }
-    })
+    }
 
     if (currentStr) {
         handleStr(currentStr);

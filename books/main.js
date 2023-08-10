@@ -349,8 +349,42 @@ class Listionary {
     }
 }
 
+function parseQuery(query) {
+    const info = {
+        "args": [],
+        "kwargs": {}
+    };
+    let currentStr = "";
+    let inStr = false;
+    const handleStr = (str) => {
+        if (currentStr.includes(":")) {
+            const [key, value] = str.split(":");
+            info.kwargs[key] = value;
+        } else {
+            info.args.push(str);
+        }
+    }
+
+    query.forEach(char => {
+        if (char === '"') {
+            inStr = !inStr;
+        } else if (char === " " && !inStr) {
+            handleStr(currentStr);
+            currentStr = "";
+        } else {
+            currentStr += char;
+        }
+    })
+
+    if (currentStr) {
+        handleStr(currentStr);
+    }
+
+    return info;
+}
+
 function searchQueryListionary(listionary, query, maxResults = -1, equals = false, keysToIgnore = []) {
-    return searchListionary(listionary, Listionary.parse_query(query), maxResults, equals, keysToIgnore);
+    return searchListionary(listionary, parseQuery(query), maxResults, equals, keysToIgnore);
 }
 
 function searchListionary(listionary, info, maxResults = -1, equals = false, keysToIgnore = []) {
@@ -371,7 +405,7 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
         let approved = true;
         Object.entries(info.kwargs).forEach(([k, v]) => {
             k = k.toLowerCase();
-            if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {
+            if (!keys.includes(k) || !test(v.toLowerCase(), item[k].toLowerCase())) {
                 approved = false;
                 return;
             }

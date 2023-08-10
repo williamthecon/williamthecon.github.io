@@ -388,16 +388,21 @@ function searchListionary(listionary, info, maxResults = -1, equals = false, key
             return false;
         }
 
+        let approved = true;
         Object.entries(info.kwargs).forEach(([k, v]) => {
             k = k.toLowerCase();
             if (!keys.includes(k) || !test(v.toLowerCase(), item[k])) {
-                return false;
+                approved = false;
+                return;
             }
         });
 
+        if (!approved) {
+            return false;
+        }
+
         const itemValues = ignoreKeys(item);
 
-        let approved = true;
         info.args.forEach(arg => {
             arg = arg.toLowerCase();
             if (!itemValues.some(v => test(arg, v.toLowerCase()))) {

@@ -22,6 +22,9 @@
         <script type="text/javascript" src="/books/table.js"></script>
         <script>
             async function doSearch() {
+                const message = document.getElementById("message");
+                message.innerHTML = "Lade Informationen und durchsuche Datenbank...";
+
                 const query = document.getElementById("query-input").value;
                 const usersTable = document.getElementById("users-table");
                 usersTable.innerHTML = "";
@@ -69,10 +72,15 @@
                 viewMore();
 
                 const viewMoreButton = document.getElementById("view-more");
-                if (Array.from(document.querySelectorAll('.table-row:not(.table-header)')).length <= currentViewCap) {
+                const tableRows = Array.from(document.querySelectorAll('.table-row:not(.table-header)'));
+                if (tableRows.length <= currentViewCap) {
                     viewMoreButton.style.display = "none";
                 } else if (viewMoreButton.style.display === "none") {
                     viewMoreButton.style.display = "initial";
+                }
+
+                if (tableRows.length === 0) {
+                    message.innerHTML = "Keine Benutzer wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
                 }
             }
 
@@ -121,6 +129,9 @@
                 <ul id="users-table" class="table"></ul>
             </div>
             <div class="content-block">
+                <p id="message"></p>
+            </div>
+            <div class="content-block">
                 <button id="view-more" onclick="viewMore();">Mehr</button>
             </div>
         </div>
@@ -147,6 +158,9 @@
 
             // Books Table
             async function loadUsers() {
+                const message = document.getElementById("message");
+                message.innerHTML = "Lade Informationen...";
+
                 const usersTable = document.getElementById("users-table");
 
                 const usersTableHeader = document.createElement("li");
@@ -173,6 +187,10 @@
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
+                if (!loaded.convertedUsers) {
+                    loaded.convertedUsers = [];
+                }
+
                 for (let user of loaded.convertedUsers) {
                     const userRow = document.createElement("li");
                     userRow.classList.add("table-row");
@@ -190,9 +208,17 @@
                 sortTable();
                 viewMore();
 
-                if (Array.from(document.querySelectorAll(".table-row:not(.table-header)")).length <= viewMoreIncrease) {
+                const tableRows = Array.from(document.querySelectorAll(".table-row:not(.table-header)"));
+                if (tableRows.length <= viewMoreIncrease) {
                     const viewMoreButton = document.getElementById("view-more");
                     viewMoreButton.style.display = "none";
+                }
+
+                if (tableRows.length == 0) {
+                    const message = document.getElementById("message");
+                    message.innerHTML = "Keine Benutzer wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
+                } else {
+                    message.innerHTML = "";
                 }
             }
 

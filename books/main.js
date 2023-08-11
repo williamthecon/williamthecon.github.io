@@ -709,7 +709,7 @@ async function asyncFindUserById(token) {
 }
 
 function findConvertedUserById(token) {
-    return loaded.convertedUsers.find(user => user.token === token);
+    return loaded.convertedUsers.find(user => user.id === token);
 }
 
 function findUserByName(name) {

@@ -143,19 +143,19 @@
                         <h4>Steckbrief</h4>
                     </div>
                     <div class="user-info">
-                        <p><b>Name</b>: ${user.name}</p>
+                        <p><b>Name</b>: ${user["name"]}</p>
                     </div>
                     <div class="user-info">
-                        <p><b>Bücher</b>: ${user.books}</p>
+                        <p><b>Bücher</b>: ${user["bücher"]}</p>
                     </div>
                     <div class="user-info">
-                        <p><b>Reihen</b>: ${user.series}</p>
+                        <p><b>Reihen</b>: ${user["reihen"]}</p>
                     </div>
                     <div class="user-info">
-                        <p><b>Autoren</b>: ${user.authors}</p>
+                        <p><b>Autoren</b>: ${user["autoren"]}</p>
                     </div>
                     <div class="user-info">
-                        <p><b>Wünschen</b>: ${user.wishes}</p>
+                        <p><b>Wünschen</b>: ${user["wünsche"]}</p>
                     </div>
                     <div class="user-info">
                         <p><b>Namensverlauf</b>: ` + (defaultUser.history ? "<i>" + defaultUser.history.join("</i>, <i>") + "</i>" : "-") +`</p>

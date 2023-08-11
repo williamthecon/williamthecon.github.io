@@ -47,7 +47,10 @@ function loadData(type, define) {
                 console.log("No success loading " + type);
             };
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            define([]);
+            console.log(error);
+        });
 }
 
 function saveData(data, type, define = (_) => {}) {

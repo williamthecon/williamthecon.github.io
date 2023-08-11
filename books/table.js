@@ -1,6 +1,7 @@
 var currentViewCap = 0;
+const viewMoreIncrease = 50;
 function viewMore() {
-    currentViewCap += 50;
+    currentViewCap += viewMoreIncrease;
     // Get all table rows
     const rows = Array.from(document.querySelectorAll('.table-row:not(.table-header)'));
 

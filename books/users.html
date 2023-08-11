@@ -67,6 +67,13 @@
                 sortTable();
                 currentViewCap = 0;
                 viewMore();
+
+                const viewMoreButton = document.getElementById("view-more");
+                if (Array.from(document.querySelectorAll('.table-row:not(.table-header)')).length <= currentViewCap) {
+                    viewMoreButton.style.display = "none";
+                } else if (viewMoreButton.style.display === "none") {
+                    viewMoreButton.style.display = "initial";
+                }
             }
 
             function viewUser(token) {
@@ -114,7 +121,7 @@
                 <ul id="users-table" class="table"></ul>
             </div>
             <div class="content-block">
-                <button onclick="viewMore();">Mehr</button>
+                <button id="view-more" onclick="viewMore();">Mehr</button>
             </div>
         </div>
         <div id="footer" class="container">
@@ -182,6 +189,11 @@
 
                 sortTable();
                 viewMore();
+
+                if (Array.from(document.querySelectorAll(".table-row:not(.table-header)")).length <= viewMoreIncrease) {
+                    const viewMoreButton = document.getElementById("view-more");
+                    viewMoreButton.style.display = "none";
+                }
             }
 
             if (queryInput.value) {

@@ -36,7 +36,7 @@ function popLocalStorage(key) {
 }
 
 function loadData(type, define) {
-    fetch("https://my-book-api.wtc248.repl.co/load/" + type)
+    fetch("https://my-book-api.wtc248.repl.co/load/" + type + "?timestamp=" + Date.now())
         .then(response => response.json())
         .then(data => {
             if (data.success) {

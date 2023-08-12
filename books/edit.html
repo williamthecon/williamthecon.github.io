@@ -43,6 +43,11 @@
                             deleteLocalStorage("-edit--input-isbn");
                             deleteLocalStorage("-edit--input-description");
                             deleteLocalStorage("-edit--input-image");
+
+                            if (getLocalStorage("redirect-to")) {
+                                window.location.href = getLocalStorage("redirect-to");
+                            }
+
                         } else {
                             alert("Fehlermeldung: " + data.cause);
                         };
@@ -188,11 +193,6 @@
             editForm.addEventListener("submit", e => {
                 e.preventDefault();
                 doEdit();
-
-                if (getLocalStorage("redirect-to")) {
-                    window.location.href = getLocalStorage("redirect-to");
-                }
-
             })
         </script>
     </body>

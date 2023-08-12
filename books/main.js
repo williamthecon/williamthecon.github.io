@@ -523,17 +523,17 @@ async function asyncEditBook(book, newBook) {
     return data;
 }
 
-function delBook(token) {
-    const data = delItem(token, "books");
+function delBook(book) {
+    const data = delItem(book, "books");
     if (data.success) {
         alert("Das Buch wurde erfolgreich gelöscht!");
     }
     alert("Fehlermeldung: " + data.cause);
 }
 
-async function asyncDelBook(token) {
+async function asyncDelBook(book) {
     let data = null;
-    delItem(token, "books", (d) => { data = d; });
+    delItem(book, "books", (d) => { data = d; });
 
     while (data === null) {
         await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds

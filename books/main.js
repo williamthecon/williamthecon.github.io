@@ -523,6 +523,24 @@ async function asyncEditBook(book, newBook) {
     return data;
 }
 
+function delBook(token) {
+    const data = delItem(token, "books");
+    if (data.success) {
+        alert("Das Buch wurde erfolgreich gelöscht!");
+    }
+    alert("Fehlermeldung: " + data.cause);
+}
+
+async function asyncDelBook(token) {
+    let data = null;
+    delItem(token, "books", (d) => { data = d; });
+
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+    return data;
+}
+
 function findBooksByUser(user) {
     return loaded.books.filter(book => book.user === user);
 }

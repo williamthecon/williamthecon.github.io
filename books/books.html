@@ -135,9 +135,9 @@
 
             // Inputs
             const queryInput = document.getElementById("query-input");
-            queryInput.value = getLocalStorage("query");
+            queryInput.value = getLocalStorage("books-query");
             queryInput.addEventListener("input", () => {
-                setLocalStorage("query", queryInput.value);
+                setLocalStorage("books-query", queryInput.value);
             });
 
             // Block the form redirection

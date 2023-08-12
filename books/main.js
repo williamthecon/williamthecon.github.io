@@ -62,7 +62,7 @@ function saveData(data, type, define = (_) => {}) {
         body: JSON.stringify({"data": data}),
     }).then(response => response.json())
         .then(data => {
-            define(data.success);
+            define(data);
             if (data.success) {
                 console.log("Success saving " + type);
             } else {
@@ -81,7 +81,7 @@ function addItem(item, type, define = (_) => {}) {
         body: JSON.stringify({"item": item}),
     }).then(response => response.json())
         .then(data => {
-            define(data.success);
+            define(data);
             if (data.success) {
                 console.log("Success adding " + type);
             } else {
@@ -100,7 +100,7 @@ function editItem(item, newItem, type, define = (_) => {}) {
         body: JSON.stringify({"item": item, "new-item": newItem}),
     }).then(response => response.json())
         .then(data => {
-            define(data.success);
+            define(data);
             if (data.success) {
                 console.log("Success editing " + type);
             } else {
@@ -119,7 +119,7 @@ function delItem(item, type, define = (_) => {}) {
         body: JSON.stringify({"item": item}),
     }).then(response => response.json())
         .then(data => {
-            define(data.success);
+            define(data);
             if (data.success) {
                 console.log("Success deleting " + type);
             } else {
@@ -466,7 +466,7 @@ async function asyncFindBookById(token) {
 }
 
 function addBook(title, series, volume, author, cover, isbn, description, image) {
-    const success = addItem({
+    const data = addItem({
         "titel": title,
         "series": series,
         "volume": volume,
@@ -478,10 +478,10 @@ function addBook(title, series, volume, author, cover, isbn, description, image)
         "user": getLocalStorage("user"),
         "token": generate_token()
     }, "books");
-    if (success) {
+    if (data.success) {
         alert("Das Buch wurde erfolgreich hinzugefügt!");
     }
-    alert("Das Buch konnte nicht hinzugefügt werden!");
+    alert("Fehlermeldung: " + data.cause);
 }
 
 async function asyncAddBook(title, series, volume, author, cover, isbn, description, image) {
@@ -506,11 +506,11 @@ async function asyncAddBook(title, series, volume, author, cover, isbn, descript
 }
 
 function editBook(book, newBook) {
-    const success = editItem(book, newBook, "books");
-    if (success) {
+    const data = editItem(book, newBook, "books");
+    if (data.success) {
         alert("Das Buch wurde erfolgreich geändert!");
     }
-    alert("Das Buch konnte nicht geändert werden!");
+    alert("Fehlermeldung: " + data.cause);
 }
 
 async function asyncEditBook(book, newBook) {

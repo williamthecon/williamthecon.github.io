@@ -42,7 +42,7 @@
                 `;
                 wishesTable.appendChild(wishesTableHeader);
 
-                while (!loaded.hasOwnProperty('wishes')) {
+                while (!loaded.hasOwnProperty('convertedWishes')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
@@ -187,7 +187,7 @@
                         <span class="table-cell">${book.volume}</span>
                         <span class="table-cell">${book.author}</span>
                         <span class="table-cell">${book.importance}</span>
-                        <span class="table-cell">${book.username}</span>
+                        <span class="table-cell">${findUserById(book.user).name}</span>
                     `;
                     wishesTable.appendChild(bookRow);
                 }

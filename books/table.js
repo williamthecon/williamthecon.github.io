@@ -8,7 +8,7 @@ function viewMore() {
     // Hide all rows except the first 50
     // var madeVisible = false;
     rows.forEach((row, index) => {
-        if (index <= currentViewCap && row.style.display === "") {
+        if (index < currentViewCap && row.style.display === "") {
             row.style.display = 'table-row';
             madeVisible = true;
         }

@@ -81,6 +81,8 @@
 
                 if (tableRows.length === 0) {
                     message.innerHTML = "Keine Benutzer wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
+                } else {
+                    message.innerHTML = "";
                 }
             }
 
@@ -215,7 +217,6 @@
                 }
 
                 if (tableRows.length == 0) {
-                    const message = document.getElementById("message");
                     message.innerHTML = "Keine Benutzer wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
                 } else {
                     message.innerHTML = "";

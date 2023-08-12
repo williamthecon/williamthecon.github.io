@@ -22,6 +22,9 @@
         <script type="text/javascript" src="/books/table.js"></script>
         <script>
             async function doSearch() {
+                const message = document.getElementById("message");
+                message.innerHTML = "Lade Informationen und durchsuche Datenbank...";
+
                 const query = document.getElementById("query-input").value;
                 const wishesTable = document.getElementById("wishes-table");
                 wishesTable.innerHTML = "";
@@ -63,7 +66,22 @@
                 }
 
                 sortTable();
+                currentViewCap = 0;
                 viewMore();
+
+                const viewMoreButton = document.getElementById("view-more");
+                const tableRows = Array.from(document.querySelectorAll('.table-row:not(.table-header)'));
+                if (tableRows.length <= currentViewCap) {
+                    viewMoreButton.style.display = "none";
+                } else if (viewMoreButton.style.display === "none") {
+                    viewMoreButton.style.display = "initial";
+                }
+
+                if (tableRows.length === 0) {
+                    message.innerHTML = "Keine Bücher wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
+                } else {
+                    message.innerHTML = "";
+                }
             }
 
             function wish(token) {
@@ -111,7 +129,10 @@
                 <ul id="wishes-table" class="table"></ul>
             </div>
             <div class="content-block">
-                <button onclick="viewMore();">Mehr</button>
+                <p id="message"></p>
+            </div>
+            <div class="content-block">
+                <button id="view-more" onclick="viewMore();">Mehr</button>
             </div>
         </div>
         <div id="footer" class="container">
@@ -137,6 +158,9 @@
 
             // Wishes Table
             async function loadWishes() {
+                const message = document.getElementById("message");
+                message.innerHTML = "Lade Informationen...";
+
                 const wishesTable = document.getElementById("wishes-table");
 
                 const wishesTableHeader = document.createElement("li");
@@ -176,8 +200,19 @@
                 }
 
                 sortTable();
-                currentViewCap = 0;
                 viewMore();
+
+                const tableRows = Array.from(document.querySelectorAll(".table-row:not(.table-header)"));
+                if (tableRows.length <= viewMoreIncrease) {
+                    const viewMoreButton = document.getElementById("view-more");
+                    viewMoreButton.style.display = "none";
+                }
+
+                if (tableRows.length == 0) {
+                    message.innerHTML = "Keine Bücher wurden gefunden! Falls ein Fehler aufgetreten sein sollte, muss die Seite neu geladen werden.";
+                } else {
+                    message.innerHTML = "";
+                }
             }
 
             if (queryInput.value) {

@@ -14,6 +14,13 @@ function viewMore() {
         }
     });
 
+    const viewMoreButton = document.getElementById("view-more");
+    if (rows.length <= currentViewCap) {
+        viewMoreButton.style.display = 'none';
+    } else {
+        viewMoreButton.style.display = 'initial';
+    }
+
     // if (madeVisible) {
     //     sortTable();
     // }

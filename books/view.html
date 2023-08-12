@@ -67,6 +67,12 @@
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script>
+            function edit() {
+                setLocalStorage("redirect-to", window.location.href);
+                window.location.href = "/books/edit";
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Buch</h1>
             <h4 id="username-container"></h4>
@@ -191,7 +197,8 @@
                     const editButton = document.createElement("button");
                     editButton.id = "edit-button";
                     editButton.type = "button";
-                    editButton.innerHTML = "<a href='/books/edit'>Bearbeiten</a>";
+                    editButton.onclick = edit;
+                    editButton.innerHTML = "Bearbeiten";
                     bookBlock.appendChild(editButton);
                 };
             }

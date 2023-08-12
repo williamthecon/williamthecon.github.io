@@ -194,7 +194,7 @@
                 for (let user of loaded.convertedUsers) {
                     const userRow = document.createElement("li");
                     userRow.classList.add("table-row");
-                    userRow.onclick = () => viewUser(user.token);
+                    userRow.onclick = () => viewUser(user.id);
                     userRow.innerHTML = `
                         <span class="table-cell">${user["name"]}</span>
                         <span class="table-cell">${user["bücher"]}</span>

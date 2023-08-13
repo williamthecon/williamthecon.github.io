@@ -25,7 +25,9 @@
                 const message = document.getElementById("message");
                 message.innerHTML = "Lade Informationen und durchsuche Datenbank...";
 
-                const query = document.getElementById("query-input").value;
+                const queryInput = document.getElementById("query-input");
+                queryInput.focus()
+                const query = queryInput.value
                 const booksTable = document.getElementById("books-table");
                 booksTable.innerHTML = "";
 
@@ -135,6 +137,7 @@
 
             // Inputs
             const queryInput = document.getElementById("query-input");
+            queryInput.focus();
             queryInput.value = getLocalStorage("books-query");
             queryInput.addEventListener("input", () => {
                 setLocalStorage("books-query", queryInput.value);

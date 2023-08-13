@@ -105,7 +105,7 @@
                     <textarea id="description-input" type="text" name="description" placeholder="Beschreibung" rows=5></textarea>
                 </div>
                 <div>
-                    <input id="image-input" type="text" name="image" placeholder="Bild-Link">
+                    <input id="image-input" type="text" name="image" placeholder="Cover-Bild">
                 </div>
                 <button type="submit">Hinzufügen</button>
             </form>
@@ -167,6 +167,26 @@
                 e.preventDefault();
                 doAdd();
             })
+
+            document.addEventListener('keydown', function(event) {
+                if (event.altKey && event.key === 't') {
+                    titleInput.focus();
+                } else if (event.altKey && event.key === 'r') {
+                    seriesInput.focus();
+                } else if (event.altKey && event.key === 'b') {
+                    volumeInput.focus();
+                } else if (event.altKey && event.key === 'a') {
+                    authorInput.focus();
+                } else if (event.altKey && event.key === 'u') {
+                    coverInput.focus();
+                } else if (event.altKey && event.key === 'i') {
+                    isbnInput.focus();
+                } else if (event.altKey && event.key === 'b') {
+                    descriptionInput.focus();
+                } else if (event.altKey && event.key === 'c') {
+                    imageInput.focus();
+                }
+            });
         </script>
     </body>
 </html>

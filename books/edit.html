@@ -108,7 +108,7 @@
                         <textarea rows=5 id="description-input" name="description" placeholder="Beschreibung"></textarea>
                     </div>
                     <div>
-                        <input type="text" id="image-input" name="image" placeholder="Cover-Bild">
+                        <input type="text" id="image-input" name="image" placeholder="Bild-Link">
                     </div>
                     <button type="submit">Speichern</button>
                 </form>
@@ -197,23 +197,23 @@
                 e.preventDefault();
                 doEdit();
             })
-            
+
             document.addEventListener('keydown', function(event) {
-                if (event.altKey && event.key === 't') {
+                if (event.altKey && event.key === '1') {
                     titleInput.focus();
-                } else if (event.altKey && event.key === 'r') {
+                } else if (event.altKey && event.key === '2') {
                     seriesInput.focus();
-                } else if (event.altKey && event.key === 'b') {
+                } else if (event.altKey && event.key === '3') {
                     volumeInput.focus();
-                } else if (event.altKey && event.key === 'a') {
+                } else if (event.altKey && event.key === '4') {
                     authorInput.focus();
-                } else if (event.altKey && event.key === 'u') {
+                } else if (event.altKey && event.key === '5') {
                     coverInput.focus();
-                } else if (event.altKey && event.key === 'i') {
+                } else if (event.altKey && event.key === '6') {
                     isbnInput.focus();
-                } else if (event.altKey && event.key === 'b') {
+                } else if (event.altKey && event.key === '7') {
                     descriptionInput.focus();
-                } else if (event.altKey && event.key === 'c') {
+                } else if (event.altKey && event.key === '8') {
                     imageInput.focus();
                 }
             });

@@ -228,6 +228,12 @@ ul a:hover {
         padding: 4px 11px;
     }
 
+    textarea {
+        font-size: 0.85em;
+        margin: 8px;
+        padding: 4px 11px;
+    }
+
     button {
         font-size: 0.9em;
         margin: 8px;

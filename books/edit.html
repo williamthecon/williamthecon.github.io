@@ -145,6 +145,7 @@
                 }
 
                 origBook = findBookById(getLocalStorage("book-token"));
+                console.log("Token: " + getLocalStorage("book-token") + " -> " + origBook);
 
                 if (!origBook) {
                     window.location.href = "/books/books";

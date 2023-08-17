@@ -139,6 +139,7 @@
                 if (book.image) {
                     const bookCover = document.createElement("div");
                     bookCover.id = "book-cover";
+                    bookCover.className = "book-block-block";
                     bookCover.innerHTML = `
                         <img src="${book.image}" alt="'${book.title}' Cover">
                     `;

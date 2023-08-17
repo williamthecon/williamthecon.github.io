@@ -89,6 +89,7 @@ ul a:hover {
 }
 
 .table {
+    position: relative;
     display: table;
     width: calc(100% - 10px);
     border-collapse: collapse;
@@ -106,6 +107,7 @@ ul a:hover {
 }
 
 .table-header {
+    position: sticky;
     display: table-row;
     font-weight: bold;
     border-bottom: 1px solid rgb(24, 132, 219);

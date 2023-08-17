@@ -31,10 +31,10 @@
                 var importanceInput = document.getElementById("importance-input");
 
                 const newBook = {"title": titleInput.value, "series": seriesInput.value, "volume": volumeInput.value, "author": authorInput.value, "cover": coverInput.value, "isbn": isbnInput.value, "description": descriptionInput.value, "image": imageInput.value, "importance": importanceInput.value, "user": origBook.user, "token": origBook.token}
-                await asyncEditBook(origBook, newBook)
+                await asyncRewishBook(origBook, newBook)
                     .then(data => {
                         if (data.success) {
-                            alert("Veränderungen erfolgreich gespeichert!");
+                            alert("Änderungen erfolgreich gespeichert!");
 
                             deleteLocalStorage("-rewish--input-title");
                             deleteLocalStorage("-rewish--input-series");
@@ -46,11 +46,22 @@
                             deleteLocalStorage("-rewish--input-image");
                             deleteLocalStorage("-rewish--input-importance");
 
-                            origBook = data.book;
+                            if (getLocalStorage("redirect-to")) {
+                                window.location.href = getLocalStorage("redirect-to");
+                            }
                         } else {
                             alert("Fehlermeldung: " + data.cause);
                         };
                     });
+            }
+
+            async function doRemove() {
+                const data = await asyncRemWish(origBook.token);
+                if (data.success) {
+                    alert("Der Wunsch wurde erfolgreich gelöscht!");
+                } else {
+                    alert("Fehlermeldung: " + data.cause);
+                }
             }
         </script>
         <div id="header" class="container">
@@ -106,11 +117,14 @@
                     <div>
                         <input type="text" id="image-input" name="image" placeholder="Bild-Link">
                     </div>
+                    <div>
+                        <input type="text" id="importance-input" name="importance" placeholder="Relevanz">
+                    </div>
                     <button type="submit">Speichern</button>
                 </form>
             </div>
             <div class="content-block">
-                <button type="button"><a href="?id={{ book.id }}&del=True">Löschen</a></button>
+                <button type="button" onclick="doRemove();">Löschen</button>
             </div>
         </div>
         <div id="footer" class="container">
@@ -129,13 +143,14 @@
             const isbnInput = document.getElementById("isbn-input");
             const descriptionInput = document.getElementById("description-input");
             const imageInput = document.getElementById("image-input");
+            const importanceInput = document.getElementById("importance-input");
 
-            async function loadEdit() {
-                while (!loaded.hasOwnProperty('books')) {
+            async function loadRewish() {
+                while (!loaded.hasOwnProperty('wishes')) {
                     await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
                 }
 
-                origBook = findBookById(getLocalStorage("book-token"));
+                origBook = findBookById(getLocalStorage("wish-token"));
 
                 if (!origBook) {
                     window.location.href = "/books/books";

@@ -46,6 +46,7 @@
 
             #book-cover img {
                 width: 100%;
+                border-radius: 16px;
             }
 
             @media screen and (max-width: 800px) {
@@ -67,6 +68,12 @@
         </script>
         <script type="text/javascript" src="/books/main.js"></script>
         <script type="text/javascript" src="/books/foldableDivs.js"></script>
+        <script>
+            function rewish() {
+                setLocalStorage("redirect-to", window.location.href);
+                window.location.href = "/books/rewish";
+            }
+        </script>
         <div id="header" class="container">
             <h1>Meine Bücher - Wunsch</h1>
             <h4 id="username-container"></h4>
@@ -103,7 +110,7 @@
             // Username Container
             loadUsername();
 
-            async function loadView() {
+            async function loadWish() {
                 // Book Block
                 const bookBlock = document.getElementById("book-block");
 
@@ -133,6 +140,7 @@
                 if (wish.image) {
                     const bookCover = document.createElement("div");
                     bookCover.id = "book-cover";
+                    bookCover.className = "book-block-block";
                     bookCover.innerHTML = `
                         <img src="${wish.image}" alt="'${wish.title}' Cover">
                     `;
@@ -170,6 +178,9 @@
                     <div class="book-info">
                         <p><b>ISBN</b>: ` + (wish.isbn !== "" ? wish.isbn : "?") + `</p>
                     </div>
+                    <div class="book-info">
+                        <p><b>Relevanz</b>: ${wish.importance}</p>
+                    </div>
                 `;
                 bookBlock.appendChild(bookProfile);
 
@@ -193,7 +204,8 @@
                     const rewishButton = document.createElement("button");
                     rewishButton.id = "rewish-button";
                     rewishButton.type = "button";
-                    rewishButton.innerHTML = "<a href='/books/rewish'>Ändern</a>";
+                    rewishButton.onclick = rewish;
+                    rewishButton.innerHTML = "Wunsch ändern";
                     bookBlock.appendChild(rewishButton);
                 };
             }

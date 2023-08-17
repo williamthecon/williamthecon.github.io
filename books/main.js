@@ -659,6 +659,25 @@ async function asyncRewish(book, newBook) {
     return data;
 }
 
+function remWish(book) {
+    const data = delItem(book, "books");
+    if (data.success) {
+        alert("Das Buch wurde erfolgreich gelöscht!");
+    }
+    alert("Fehlermeldung: " + data.cause);
+}
+
+async function asyncRemWish(book) {
+    let data = null;
+    delItem(book, "wishes", (d) => { data = d; });
+
+    while (data === null) {
+        await new Promise(resolve => setTimeout(resolve, 100)); // Check every 100 milliseconds
+    }
+
+    return data;
+}
+
 function findWishesByUser(user) {
     return loaded.wishes.filter(book => book.user === user);
 }

@@ -178,6 +178,26 @@
                 e.preventDefault();
                 doNew();
             })
+
+            document.addEventListener('keydown', function(event) {
+                if (event.altKey && event.key === '1') {
+                    titleInput.focus();
+                } else if (event.altKey && event.key === '2') {
+                    seriesInput.focus();
+                } else if (event.altKey && event.key === '3') {
+                    volumeInput.focus();
+                } else if (event.altKey && event.key === '4') {
+                    authorInput.focus();
+                } else if (event.altKey && event.key === '5') {
+                    coverInput.focus();
+                } else if (event.altKey && event.key === '6') {
+                    isbnInput.focus();
+                } else if (event.altKey && event.key === '7') {
+                    descriptionInput.focus();
+                } else if (event.altKey && event.key === '8') {
+                    imageInput.focus();
+                }
+            });
         </script>
     </body>
 </html>

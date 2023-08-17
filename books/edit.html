@@ -54,7 +54,12 @@
             }
 
             async function doDelete() {
-                await asyncDelBook(origBook.token)
+                const data = await asyncDelBook(origBook.token);
+                if (data.success) {
+                    alert("Das Buch wurde erfolgreich gelöscht!");
+                } else {
+                    alert("Fehlermeldung: " + data.cause);
+                }
             }
         </script>
         <div id="header" class="container">

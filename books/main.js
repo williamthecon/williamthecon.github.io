@@ -524,6 +524,7 @@ async function asyncEditBook(book, newBook) {
 }
 
 function delBook(book) {
+    book = findBookById(book);
     const data = delItem(book, "books");
     if (data.success) {
         alert("Das Buch wurde erfolgreich gelöscht!");
@@ -532,6 +533,7 @@ function delBook(book) {
 }
 
 async function asyncDelBook(book) {
+    book = findBookById(book);
     let data = null;
     delItem(book, "books", (d) => { data = d; });
 
@@ -660,6 +662,7 @@ async function asyncRewish(book, newBook) {
 }
 
 function remWish(book) {
+    book = findWishById(book);
     const data = delItem(book, "books");
     if (data.success) {
         alert("Das Buch wurde erfolgreich gelöscht!");
@@ -668,6 +671,7 @@ function remWish(book) {
 }
 
 async function asyncRemWish(book) {
+    book = findWishById(book);
     let data = null;
     delItem(book, "wishes", (d) => { data = d; });
 

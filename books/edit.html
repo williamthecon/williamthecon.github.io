@@ -151,14 +151,26 @@
                     window.location.href = "/books/books";
                 }
 
-                titleInput.value = (getLocalStorage("-edit--input-title")) ? getLocalStorage("-edit--input-title") : origBook.title;
-                seriesInput.value = (getLocalStorage("-edit--input-series")) ? getLocalStorage("-edit--input-series") : origBook.series;
-                volumeInput.value = (getLocalStorage("-edit--input-volume")) ? getLocalStorage("-edit--input-volume") : origBook.volume;
-                authorInput.value = (getLocalStorage("-edit--input-author")) ? getLocalStorage("-edit--input-author") : origBook.author;
-                coverInput.value = (getLocalStorage("-edit--input-cover")) ? getLocalStorage("-edit--input-cover") : origBook.cover;
-                isbnInput.value = (getLocalStorage("-edit--input-isbn")) ? getLocalStorage("-edit--input-isbn") : origBook.isbn;
-                descriptionInput.value = (getLocalStorage("-edit--input-description")) ? getLocalStorage("-edit--input-description") : origBook.description;
-                imageInput.value = (getLocalStorage("-edit--input-image")) ? getLocalStorage("-edit--input-image") : origBook.image;
+                if (getLocalStorage("-edit--edited") == origBook.token) {
+                    titleInput.value = getLocalStorage("-edit--input-title")
+                    seriesInput.value = getLocalStorage("-edit--input-series")
+                    volumeInput.value = getLocalStorage("-edit--input-volume")
+                    authorInput.value = getLocalStorage("-edit--input-author")
+                    coverInput.value = getLocalStorage("-edit--input-cover")
+                    isbnInput.value = getLocalStorage("-edit--input-isbn")
+                    descriptionInput.value = getLocalStorage("-edit--input-description")
+                    imageInput.value = getLocalStorage("-edit--input-image")
+                } else {
+                    setLocalStorage("-edit--edited", origBook.token);
+                    titleInput.value = origBook.title;
+                    seriesInput.value = origBook.series;
+                    volumeInput.value = origBook.volume;
+                    authorInput.value = origBook.author;
+                    coverInput.value = origBook.cover;
+                    isbnInput.value = origBook.isbn;
+                    descriptionInput.value = origBook.description;
+                    imageInput.value = origBook.image;
+                }
 
                 setLocalStorage("-edit--input-title", titleInput.value);
                 setLocalStorage("-edit--input-series", seriesInput.value);
@@ -173,27 +185,51 @@
             loadEdit();
 
             titleInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-title", e.target.value);
             });
             seriesInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-series", e.target.value);
             });
             volumeInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-volume", e.target.value);
             });
             authorInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-author", e.target.value);
             });
             coverInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-cover", e.target.value);
             });
             isbnInput.addEventListener("input", e =>  {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-isbn", e.target.value);
             });
             descriptionInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-description", e.target.value);
             });
             imageInput.addEventListener("input", e => {
+                if (!getLocalStorage("-edit--edited")) {
+                    setLocalStorage("-edit--edited", origBook.token);
+                }
                 setLocalStorage("-edit--input-image", e.target.value);
             });
 

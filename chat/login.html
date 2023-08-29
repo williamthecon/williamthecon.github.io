@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Chat - Login">
+        <meta name="keywords" content="chat login">
+        <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
+        <title>Chat - Login</title>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body>
+        <div id="header" class="container">
+            <h1>Chat - Login</h1>
+        </div>
+        <hr class="break">
+        <div id="content" class="container">
+            <form id="login-form">
+                <input type="text" name="id" placeholder="Id" autocomplete="off" maxlength="33" minlength="3" required autofocus>
+                <input type="password" name="password" placeholder="Password" autocomplete="off" maxlength="333" minlength="8" required>
+            </form>
+            <div id="loading" class="container"></div>
+        </div>
+        <div id="footer" class="container">
+            <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></p>
+        </div>
+        <script>
+            var isLoading = false;
+            const loginForm = document.getElementById("login-form");
+
+            async function doLogin(id, password) {
+                const response = await fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id, password }),
+                }).then(response => response.json());
+                if (response.success) {
+                    document.cookie = "session=${response.session.id}; expires=${response.session.expires}; path=/chat/";
+                } else {
+                    alert(response.message);
+                }
+                isLoading = false;
+            }
+
+            async function loading() {
+                const message = document.getElementById("loading");
+                while (isLoading) {
+                    if (message.innerHTML === "" || message.innerHTML === "...") {
+                        message.innerHTML = ".";
+                    } else if (message.innerHTML === ".") {
+                        message.innerHTML = "..";
+                    } else if (message.innerHTML === "..") {
+                        message.innerHTML = "...";
+                    }
+                    await new Promise(r => setTimeout(r, 333));
+                }
+            }
+
+            loginForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(loginForm);
+
+                const id = formData.get("id");
+                const password = formData.get("password");
+
+                isLoading = true;
+                doLogin(id, password);
+                loading();
+            })
+        </script>
+    </body>
+</html>

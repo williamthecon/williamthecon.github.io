@@ -1,0 +1,113 @@
+/* Make the background color dark gray */
+body {
+    background-color: rgb(21, 21, 21);
+    color: rgb(143, 173, 192);
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.25em;
+    min-width: 463px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(24, 132, 219);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: rgb(24, 132, 219);
+    margin: 0 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    padding: 8px;
+}
+
+input {
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.3em;
+    margin: 8px;
+    padding: 8px 18px;
+    color: rgb(143, 173, 192);
+    background-color: rgb(21, 21, 21);
+    border: 1px solid rgb(21, 98, 162);
+    border-radius: 25px;
+    outline: none;
+    text-align: center;
+}
+
+input::placeholder {
+    color: rgb(21, 98, 162);
+}
+
+input:hover::placeholder {
+    color: rgb(22, 109, 194);
+}
+
+input:focus::placeholder {
+    color: rgb(24, 132, 219);
+}
+
+input:hover {
+    background-color: rgb(25, 25, 25);
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px rgb(19, 135, 229)
+}
+
+input:focus {
+    background-color: rgb(34, 34, 34);
+    border: 1px solid rgb(24, 132, 219);
+    outline: none;
+    box-shadow: 0 0 2px 2px rgb(24, 132, 219);
+}
+
+.default-text {
+    font-size: 1.1em;
+    padding: 0.5em;
+}
+
+.topic {
+    margin: 1.5em;
+}
+
+#header {
+    text-align: center;
+    margin: 1em;
+}
+
+#header h1 {
+    margin: 8px;
+    font-size: 3em;
+    text-decoration: underline rgb(24, 132, 219) 2px solid;
+    text-underline-offset: 4px;
+    text-shadow: rgb(24, 132, 219) 1px 1px;
+}
+
+#content {
+    font-size: 1.3em;
+    padding: 0.5em;
+}
+
+#footer {
+    font-size: 0.7em;
+}
+
+#loading {
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+@media screen and (max-width: 464px) {
+    .topic-header {
+        white-space: initial;
+        margin-bottom: 45px;
+    }
+}

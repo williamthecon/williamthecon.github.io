@@ -55,6 +55,9 @@
                     }
                     await new Promise(r => setTimeout(r, 333));
                 }
+                message.innerHTML = "";
+
+                window.location.href = "/chat/";
             }
 
             loginForm.addEventListener("submit", (e) => {

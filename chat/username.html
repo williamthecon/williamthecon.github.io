@@ -30,9 +30,6 @@
             async function setUsername(username) {
                 const response = await fetch("https://chat-api.wtc248.repl.co/session/new", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
                     body: JSON.stringify({ username }),
                 }).then(response => response.json());
                 if (response.success) {

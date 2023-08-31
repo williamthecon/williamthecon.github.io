@@ -36,9 +36,9 @@
                     body: JSON.stringify({ username }),
                 }).then(response => response.json());
                 if (response.success) {
-                    document.cookie = "session=${response.session.id}; expires=${response.session.expires}; path=/chat/";
+                    document.cookie = "sessionId=${response.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/";
                 } else {
-                    alert(response.message);
+                    alert(response.cause);
                 }
                 isLoading = false;
             }

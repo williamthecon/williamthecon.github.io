@@ -10,6 +10,6 @@ function getCookie(name) {
 }
 
 // Check if user has a session
-if (!getCookie("sessionId")) {
-    window.location.href = "/chat/username";
-}
+// if (!getCookie("sessionId")) {
+//     window.location.href = "/chat/username";
+// }

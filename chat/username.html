@@ -40,6 +40,10 @@
                 }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        console.log("Set cookie");
+                        setTimeout(() => {
+                            return;
+                        }, 5000);
                         document.cookie = "sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/";
                     } else {
                         alert(data.cause);

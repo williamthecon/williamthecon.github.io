@@ -32,16 +32,13 @@
                 fetch("https://chat-api.wtc248.repl.co/session/new", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        // "Access-Control-Allow-Origin": "*",
-                        // "Access-Control-Allow-Headers": "*"
+                        "Content-Type": "application/json; charset=utf-8"
                     },
                     body: JSON.stringify({ username }),
                 }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.cookie = "sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/";
-                        alert("Set cookie 'sessionId=${data.data['session-id']}'");
+                        document.cookie = `sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/`;
                     } else {
                         alert(data.cause);
                     }

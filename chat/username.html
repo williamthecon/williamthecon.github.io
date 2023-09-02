@@ -28,10 +28,6 @@
             var isLoading = false;
             const loginForm = document.getElementById("login-form");
 
-            function callAfter(func, seconds) {
-                return new Promise(resolve => setTimeout(() => {func(); resolve()}, seconds * 1000));
-            }
-
             async function setUsername(username) {
                 fetch("https://chat-api.wtc248.repl.co/session/new", {
                     method: "POST",
@@ -44,10 +40,8 @@
                 }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log("Set cookie");
-                        callAfter(() => {
-                            document.cookie = "sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/";
-                        }, 10);
+                        document.cookie = "sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/";
+                        alert("Set cookie 'sessionId=${data.data['session-id']}'");
                     } else {
                         alert(data.cause);
                     }

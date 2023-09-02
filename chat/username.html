@@ -45,6 +45,9 @@
                         alert(data.cause);
                     }
                     isLoading = false;
+                })
+                .catch(error => {
+                    console.log(error);
                 });
             }
 

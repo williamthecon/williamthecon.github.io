@@ -10,6 +10,11 @@ function getCookie(name) {
 }
 
 // Check if user has a session
+const isUsernamePage = ["https://williamthecon.github.io/chat/username", "https://williamthecon.github.io/chat/username.html"].includes(window.location.href);
 if (!getCookie("sessionId")) {
-    window.location.href = "/chat/username";
+    if (!isUsernamePage) {
+        window.location.href = "/chat/username";
+    }
+} else if (isUsernamePage) {
+    window.location.href = "/chat/";
 }

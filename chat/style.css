@@ -84,6 +84,7 @@ button {
 button:hover {
     background-color: rgb(24, 132, 219);
     color: rgb(21, 21, 21);
+    cursor: pointer;
 }
 
 button:focus:hover {

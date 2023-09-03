@@ -51,6 +51,7 @@
             }
 
             async function loading() {
+                isLoading = true;
                 const message = document.getElementById("loading");
                 while (isLoading) {
                     if (message.innerHTML === "" || message.innerHTML === "...") {
@@ -59,6 +60,8 @@
                         message.innerHTML = "..";
                     } else if (message.innerHTML === "..") {
                         message.innerHTML = "...";
+                    } else {
+                        message.innerHTML = "There happens to be an error...";
                     }
                     await new Promise(r => setTimeout(r, 333));
                 }
@@ -74,9 +77,8 @@
 
                 const username = formData.get("username");
 
-                isLoading = true;
-                setUsername(username);
                 loading();
+                setUsername(username);
             })
         </script>
     </body>

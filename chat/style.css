@@ -57,11 +57,43 @@ input:hover {
     box-shadow: 0 0 1px 1px rgb(19, 135, 229)
 }
 
+input:focus:hover {
+    cursor: text;
+}
+
 input:focus {
     background-color: rgb(34, 34, 34);
     border: 1px solid rgb(24, 132, 219);
     outline: none;
     box-shadow: 0 0 2px 2px rgb(24, 132, 219);
+}
+
+button {
+    font-family: "Source Code Pro", monospace;
+    font-size: 1.3em;
+    margin: 8px;
+    padding: 8px 18px;
+    color: rgb(143, 173, 192);
+    background-color: rgb(21, 21, 21);
+    border: 1px solid rgb(24, 132, 219);
+    border-radius: 25px;
+    outline: none;
+    text-align: center;
+}
+
+button:hover {
+    background-color: rgb(24, 132, 219);
+    color: rgb(21, 21, 21);
+}
+
+button:focus:hover {
+    cursor: text;
+}
+
+button:focus {
+    background-color: rgb(24, 132, 219);
+    border: 1px solid rgb(24, 132, 219);
+    outline: none;
 }
 
 .default-text {

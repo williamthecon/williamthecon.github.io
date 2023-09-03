@@ -19,12 +19,43 @@
         <hr class="break">
         <div id="content" class="container">
             <div id="chats"></div>
-            <input type="text" id="user-search" placeholder="Search for a user" onsubmit="searchUser()">
+            <form id="user-search-form">
+                <input type="text" id="user-search" placeholder="Search for a user" onsubmit="searchUser()">
+            </form>
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></p>
         </div>
         <script>
+            async function loadChats() {
+                fetch("https://chat-api.wtc248.repl.co/chats/get", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    body: JSON.stringify({ username }),
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const chats = document.getElementById("chats");
+                        for (const chat of data.data["chats"]) {
+                            const chatDiv = document.createElement("div");
+                            chatDiv.classList.add("chat");
+                            chatDiv.onclick = () => {
+                                window.location.href = "/chat/?username=" + chat;
+                            }
+                            chatDiv.innerHTML = chat;
+                            chats.appendChild(chatDiv);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            }
+
+            loadChats();
+
             function logout() {
                 document.cookie = "sessionId=; SameSite=Strict; Secure; path=/chat/";
                 location.reload();

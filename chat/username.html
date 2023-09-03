@@ -38,8 +38,8 @@
                 }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.cookie = `sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/`;
-                        alert("Cookie set, or?")
+                        document.cookie = `sessionId=${data.data['session-id']}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/chat/;`;
+                        alert("Cookie string: " + document.cookie);
                     } else {
                         alert(data.cause);
                     }

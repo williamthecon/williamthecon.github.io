@@ -18,54 +18,96 @@
         </div>
         <hr class="break">
         <div id="content" class="container">
-            <div id="chats"></div>
-            <form id="user-search-form">
-                <input type="text" id="user-search" placeholder="Search for a user" onsubmit="searchUser()">
-            </form>
+            <!-- <div id="chats"></div>
+            <form id="user-form">
+                <input type="text" id="user-input" placeholder="Add User">
+            </form> -->
         </div>
         <div id="footer" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></p>
         </div>
         <script>
-            async function loadChats() {
-                fetch("https://chat-api.wtc248.repl.co/chats/get", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8"
-                    },
-                    body: JSON.stringify({ username }),
-                }).then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const chats = document.getElementById("chats");
-                        for (const chat of data.data["chats"]) {
+            const content = document.getElementById("content");
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("username") !== null) {
+                document.getElementById("user-input").value = urlParams.get("username");
+            } else {
+                const chats = document.createElement("div");
+                chats.id = "chats";
+                content.appendChild(chats);
+                const userForm = document.createElement("form");
+                userForm.id = "user-form";
+                userForm.innerHTML = `
+                    <input type="text" name="username" placeholder="Username" autocomplete="off" maxlength="33" minlength="3" required autofocus>
+                `;
+                content.appendChild(userForm);
+
+                async function loadChats() {
+                    fetch("https://chat-api.wtc248.repl.co/chats/get", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8"
+                        },
+                        body: JSON.stringify({ username }),
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const chats = document.getElementById("chats");
+                            for (const chat of data.data["chats"]) {
+                                const chatDiv = document.createElement("div");
+                                chatDiv.classList.add("chat");
+                                chatDiv.onclick = () => {
+                                    window.location.href = "/chat/?username=" + chat;
+                                }
+                                chatDiv.innerHTML = chat;
+                                chats.appendChild(chatDiv);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+
+                loadChats();
+
+                function logout() {
+                    document.cookie = "sessionId=; SameSite=Strict; Secure; path=/chat/";
+                    location.reload();
+                }
+
+                async function addUser() {
+                    const username = document.getElementById("user-input").value;
+                    fetch("https://chat-api.wtc248.repl.co/chats/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8"
+                        },
+                        body: JSON.stringify({ username }),
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const chats = document.getElementById("chats");
                             const chatDiv = document.createElement("div");
                             chatDiv.classList.add("chat");
+                            chatDiv.innerHTML = username;
                             chatDiv.onclick = () => {
-                                window.location.href = "/chat/?username=" + chat;
+                                window.location.href = "/chat/?username=" + username;
                             }
-                            chatDiv.innerHTML = chat;
                             chats.appendChild(chatDiv);
+                        } else {
+                            alert(data.cause);
                         }
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+
+                document.getElementById("user-form").addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    addUser();
                 });
-            }
-
-            loadChats();
-
-            function logout() {
-                document.cookie = "sessionId=; SameSite=Strict; Secure; path=/chat/";
-                location.reload();
-            }
-
-            function searchUser() {
-                const username = document.getElementById("user-search").value;
-                // TODO: Search whether the user exists
-                //       ... send chat request
-                //       ... add chat
             }
         </script>
     </body>

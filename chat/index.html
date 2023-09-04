@@ -45,11 +45,10 @@
 
                 async function loadChats() {
                     fetch("https://chat-api.wtc248.repl.co/chat/get", {
-                        method: "POST",
+                        method: "GET",
                         headers: {
                             "Content-Type": "application/json; charset=utf-8"
-                        },
-                        body: JSON.stringify({ username }),
+                        }
                     }).then(response => response.json())
                     .then(data => {
                         if (data.success) {

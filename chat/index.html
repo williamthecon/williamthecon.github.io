@@ -29,7 +29,8 @@
         <script>
             const content = document.getElementById("content");
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get("username") !== null) {
+            const username = urlParams.get("username");
+            if (username !== null) {
                 document.getElementById("user-input").value = urlParams.get("username");
             } else {
                 const chats = document.createElement("div");
@@ -43,7 +44,7 @@
                 content.appendChild(userForm);
 
                 async function loadChats() {
-                    fetch("https://chat-api.wtc248.repl.co/chats/get", {
+                    fetch("https://chat-api.wtc248.repl.co/chat/get", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json; charset=utf-8"
@@ -78,7 +79,7 @@
 
                 async function addUser() {
                     const username = document.getElementById("user-input").value;
-                    fetch("https://chat-api.wtc248.repl.co/chats/add", {
+                    fetch("https://chat-api.wtc248.repl.co/chat/add", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json; charset=utf-8"

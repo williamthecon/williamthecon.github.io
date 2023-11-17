@@ -11,10 +11,24 @@ body {
     min-width: 463px;
 }
 
+a {
+    color: #00dc8a;
+}
+
 /* Set the text decoration of links to none and the color to the inherited color. */
 .invisible-link {
     text-decoration: none;
     color: inherit;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.header-block--nav-bar--nav {
+    display: inline-block;
+    vertical-align: top;
+    padding: 20px 17px;
 }
 
 #header-block {

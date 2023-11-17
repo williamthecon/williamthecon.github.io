@@ -12,6 +12,10 @@
 
         <link rel="stylesheet" type="text/css" href="/school/style.css">
         <link rel="icon" href="/school/icon.png"/>
+
+        <style>
+
+        </style>
     </head>
     <body>
         <script type="text/javascript" src="/school/main.js"></script>
@@ -22,12 +26,41 @@
             <div id="header-block--nav-bar"></div>
         </div>
         <div id="content-block" class="container">
-            <div id="content-block--content">
-                <p>Diese Seite ist leider noch leer. Versuche es später noch einmal.</p>
+            <div id="content-block--header">
+                <h1 class="no-margin">Anmeldung</h1>
+            </div>
+            <div id="content-block--input-form">
+                <form id="login-form">
+                    <div id="login-form--error"></div>
+                    <div id="login-form--username">
+                        <input type="text" name="username" placeholder="Benutzername" autocomplete="username" required autofocus>
+                    </div>
+                    <div id="login-form--password">
+                        <input type="password" name="password" placeholder="Passwort" autocomplete="current-password" required>
+                    </div>
+                    <button id="login-form--submit" type="submit">Anmelden</button>
+                </form>
             </div>
         </div>
         <div id="footer-block" class="container">
             <p>&copy; 2023 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
         </div>
+        <script>
+            const loginForm = document.getElementById("login-form");
+            const loginFormUsername = document.getElementById("login-form--username").querySelector("input");
+            const loginFormPassword = document.getElementById("login-form--password").querySelector("input");
+
+            async function login() {
+                let username = loginFormUsername.value;
+                let password = loginFormPassword.value;
+
+                // TODO: Implement login with username and password using API
+            }
+
+            loginForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+            })
+        </script>
     </body>
 </html>

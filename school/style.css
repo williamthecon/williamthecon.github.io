@@ -2,13 +2,13 @@
 /* The hex color codes sorted from dark to light are as follows: */
 /* #000805, #003220, #005d3a, #008755, #00b26f, #00dc8a */
 
-/* Set the background color to very dark gray, the text color to medium light green, the font to Source Code Pro, and the font size to 1.25em. The min-width is 463px. */
+/* Set the background color to very dark gray, the text color to medium light green, the font to Source Code Pro, and the font size to 1.25em. The min-width is 244px. */
 body {
     background-color: #000805;
     color: #00b26f;
     font-family: "Source Code Pro", monospace;
     font-size: 1.25em;
-    min-width: 463px;
+    min-width: 244px;
 }
 
 a {

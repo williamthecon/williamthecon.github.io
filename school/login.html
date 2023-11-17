@@ -38,17 +38,23 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                font-size: 1.5em;
                 width: 100%;
                 margin: 8px;
+            }
+
+            #login-form--username input {
                 border: 1px solid #008755;
                 border-radius: 16px;
                 padding: 8px 18px;
                 background-color: #000805;
                 color: #00b26f;
+                outline: none;
+                text-align: center;
+                font-family: "Source Code Pro", monospace;
+                font-size: 1.5em;
             }
 
-            #login-form--username:focus {
+            #login-form--username input:focus {
                 background-color: #003220;
             }
 
@@ -60,14 +66,21 @@
                 font-size: 1.5em;
                 width: 100%;
                 margin: 8px;
+            }
+
+            #login-form--password input {
                 border: 1px solid #008755;
                 border-radius: 16px;
                 padding: 8px 18px;
                 background-color: #000805;
                 color: #00b26f;
+                outline: none;
+                text-align: center;
+                font-family: "Source Code Pro", monospace;
+                font-size: 1.5em;
             }
 
-            #login-form--password:focus {
+            #login-form--password input:focus {
                 background-color: #003220;
             }
 
@@ -88,12 +101,7 @@
 
             #login-form--submit:hover {
                 background-color: #00dc8a;
-                color: #000;
-            }
-
-            #login-form--submit:active {
-                background-color: #00b26f;
-                color: #fff;
+                cursor: pointer;
             }
         </style>
     </head>

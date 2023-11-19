@@ -34,3 +34,8 @@ function popLocalStorage(key) {
     localStorage.removeItem(key);
     return value;
 }
+
+// Some simple methods for moving between pages
+function redirect(url) {
+    window.location.href = url;
+}

@@ -76,8 +76,8 @@
     color: #fff;
     outline: none;
     text-align: center;
-    font-size: 1.5em;
     font-family: "Source Code Pro", monospace;
+    font-size: 1.5em;
 }
 
 #login-form--submit:hover {

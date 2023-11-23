@@ -90,6 +90,6 @@ a {
 
 @media screen and (max-width: 340px) {
     body {
-        font-size: 0.9em;
+        font-size: 0.75em;
     }
 }

@@ -31,6 +31,14 @@ a {
     padding: 20px 17px;
 }
 
+.button-link {
+    text-decoration: none;
+    color: #008755;
+    padding: 8px 18px;
+    border: 1px solid #008755;
+    border-radius: 20px;
+}
+
 #header-block {
     display: flex;
     flex-direction: row;

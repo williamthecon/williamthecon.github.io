@@ -5,7 +5,7 @@
     justify-content: center;
     width: calc(100% - 40px);
     height: 100%;
-    margin: 0 20px;
+    margin: 20px;
 }
 
 #login-form--error {

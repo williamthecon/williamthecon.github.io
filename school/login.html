@@ -16,6 +16,7 @@
     </head>
     <body>
         <script type="text/javascript" src="/school/main.js"></script>
+        <script type="text/javascript" src="/school/login.js"></script>
         <div id="header-block" class="container">
             <div id="header-block--header">
                 <h2 class="no-margin"><a href="/school/" class="invisible-link">Schule</a></h2>
@@ -43,16 +44,27 @@
             const loginFormUsername = document.getElementById("login-form--username");
             const loginFormPassword = document.getElementById("login-form--password");
 
-            async function login() {
+            async function doLogin() {
                 let username = loginFormUsername.value;
                 let password = loginFormPassword.value;
 
-                // TODO: Implement login with username and password using API
+                let response = await login(username, password);
+
+                if (response.success) {
+                    setLocalStorage("token", response.data.token);
+                    window.location.href = getLocalStorage("redirect-to");
+                } else {
+                    if (response.message === undefined) {
+                        document.getElementById("login-form--error").innerHTML = response.cause;
+                    } else {
+                        document.getElementById("login-form--error").innerHTML = response.cause + ": " + response.message;
+                    }
+                }
             }
 
             loginForm.addEventListener("submit", (event) => {
                 event.preventDefault();
-                login();
+                doLogin();
             })
         </script>
     </body>

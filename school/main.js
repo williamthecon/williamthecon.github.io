@@ -1,7 +1,7 @@
 // Check if already logged in or page is already the login page
-const username = localStorage.getItem("user");
+const token = localStorage.getItem("token");
 
-if (username === null) {
+if (token === null) {
     if (!window.location.href.startsWith("https://williamthecon.github.io/school/login")) {
         localStorage.setItem('redirect-to', window.location.href);
         window.location.href = "https://williamthecon.github.io/school/login";

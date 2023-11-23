@@ -1,0 +1,3 @@
+# This is a private website with no content for other people, so no need to index or crawl it at all.
+User-agent: *
+Disallow: /

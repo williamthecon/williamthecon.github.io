@@ -32,12 +32,12 @@ a {
     padding: 20px 17px;
 }
 
-.header-block--nav-bar--activator--bar {
+/* .header-block--nav-bar--activator--bar {
     width: 35px;
     height: 5px;
     background-color: #008755;
     margin: 6px 0;
-}
+} */
 
 .button-link {
     text-decoration: none;
@@ -71,6 +71,10 @@ a {
 
 #header-block--nav-bar--activator {
     display: none;
+}
+
+#header-block--nav-bar--activator::before {
+    content: "\f0c9";
 }
 
 #content-block {

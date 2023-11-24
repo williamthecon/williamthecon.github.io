@@ -25,7 +25,7 @@ if (!window.location.href.startsWith("file:///")) {
 const urlParams = new URLSearchParams(window.location.search);
 
 // Some default methods for retrieving data
-function get(name) {
+function getParam(name) {
     return urlParams.get(name) || "";
 }
 

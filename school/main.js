@@ -1,12 +1,24 @@
-// Check if already logged in or page is already the login page
-const token = localStorage.getItem("token");
+if (!window.location.href.startsWith("file:///")) {
+    // Check if already logged in or page is already the login page
+    const token = localStorage.getItem("token");
 
-if (token === null) {
-    if (!window.location.href.startsWith("https://williamthecon.github.io/school/login")) {
-        localStorage.setItem('redirect-to', window.location.href);
-        window.location.href = "https://williamthecon.github.io/school/login";
-    } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
-        localStorage.setItem('redirect-to', "https://williamthecon.github.io/school/");
+    if (token === null) {
+        if (!window.location.href.endsWith("/school/login")) {
+            localStorage.setItem('redirect-to', window.location.href);
+            window.location.href = "/school/login";
+        } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
+            localStorage.setItem('redirect-to', "/school/");
+        }
+    } else {
+        if (window.location.href.endsWith("/school/login")) {
+            if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
+                window.location.href = "/school/";
+            } else {
+                let redirectTo = localStorage.getItem('redirect-to');
+                localStorage.removeItem('redirect-to');
+                window.location.href = redirectTo;
+            }
+        }
     }
 }
 

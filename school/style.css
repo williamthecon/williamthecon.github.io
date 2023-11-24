@@ -73,7 +73,7 @@ a {
     display: none;
 }
 
-#main-block {
+#content-block {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,7 +99,7 @@ a {
         display: none;
     }
 
-    #header-block--nav-bar--activator {
+    #header-block--nav-bar--activator { /* TODO: Position the activator on the right. */
         display: inline-block;
     }
 }

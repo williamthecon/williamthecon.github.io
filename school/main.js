@@ -1,3 +1,4 @@
+// Initial check and setup
 if (!window.location.href.startsWith("file:///")) {
     // Check if already logged in or page is already the login page
     const token = localStorage.getItem("token");
@@ -23,6 +24,19 @@ if (!window.location.href.startsWith("file:///")) {
 }
 
 const urlParams = new URLSearchParams(window.location.search);
+
+// Navbar (sidebar) toggler
+function openNavbar() {
+    if (window.innerWidth < 250) {
+        document.getElementById("header-block--nav-bar").style.width = "100%";
+    } else {
+        document.getElementById("header-block--nav-bar").style.width = "250px";
+    }
+}
+
+function closeNavbar() {
+    document.getElementById("header-block--nav-bar").style.width = "0";
+}
 
 // Some default methods for retrieving data
 function getParam(name) {

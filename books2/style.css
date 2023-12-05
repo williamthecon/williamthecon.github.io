@@ -2,10 +2,44 @@
 /* The hex color codes sorted from dark to light are as follows: */
 /* #000805, #003220, #005d3a, #008755, #00b26f, #00dc8a */
 
+:root {
+    /* Custom properties; use them by calling 'var(--property-name)' */
+    --thdark-color-very-dark: #000805;
+    --thdark-color-medium-dark: #003220;
+    --thdark-color-dark: #005d3a;
+    --thdark-color-light: #008755;
+    --thdark-color-medium-light: #00b26f;
+    --thdark-color-very-light: #00dc8a;
+
+    /* Colors have yet to be chosen
+    --thlight-color-very-dark: #062017;
+    --thlight-color-medium-dark: #0a2b1e;
+    --thlight-color-dark: #0f3e2a;
+    --thlight-color-light: #144a34;
+    --thlight-color-medium-light: #1a5f3d;
+    --thlight-color-very-light: #1f6b46; */
+
+    --background-color: var(--thdark-color-very-dark);
+    --border-color: var(--thdark-color-dark);
+    --text-color: var(--thdark-color-light);
+    --highlight-color: var(--thdark-color-medium-light);
+    --glowing-text-color: var(--thdark-color-very-light);
+    --nav-bar-color: var(--thdark-color-medium-dark);
+}
+
+body.light {
+    --background-color: var(--thlight-color-light);
+    --border-color: var(--thlight-color-dark);
+    --text-color: var(--thlight-color-very-dark);
+    --highlight-color: var(--thlight-color-medium-dark);
+    --glowing-text-color: var(--thlight-color-very-light);
+    --nav-bar-color: var(--thlight-color-medium-light);
+}
+
 /* Set the background color to very dark gray, the text color to medium light green, the font to Source Code Pro, and the font size to 1.25em. The min-width is 244px. */
 body {
-    background-color: #000805;
-    color: #00b26f;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: "Source Code Pro", monospace;
     font-size: 1.25em;
     min-width: 244px;
@@ -13,18 +47,14 @@ body {
 }
 
 a {
-    color: #00b26f;
+    text-decoration: none;
+    color: var(--highlight-color);
     transition: 0.3s;
 }
 
-/* Set the text decoration of links to none and the color to the inherited color. */
-.invisible-link {
-    text-decoration: none;
-    color: inherit;
-}
-
 a:hover {
-    color: #00dc8a;
+    color: var(--glowing-text-color);
+    text-shadow: 0 0 5px var(--highlight-color);
 }
 
 .no-margin {
@@ -40,13 +70,21 @@ a:hover {
 }
 
 #header-block {
+    /* Not sure yet if this should be sticky or not.
+    position: sticky;
+    top: 0; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #005d3a;
+    border-bottom: 1px solid var(--border-color);
     width: 100%;
-    height: 90px;
+    height: 60px;
+    /* background-color: #003220; */
+    /* background-color: #002216; */
+    background-color: #001c12;
+    /* background-color: #000805; */
+    user-select: none;
 }
 
 #header-block--header {
@@ -58,23 +96,23 @@ a:hover {
 #header-block--nav-bar--activator {
     display: none;
     vertical-align: top;
-    margin: 13px 33px 13px 0;
+    margin: 13px 17px 13px 0;
     padding: 7px;
     cursor: pointer;
     font-size: 1.5em;
-    color: #008755;
-    user-select: none;
+    color: var(--highlight-color);
     transition: 0.3s;
 }
 
 #header-block--nav-bar--activator:hover {
-    color: #00b26f;
+    color: var(--glowing-text-color);
+    text-shadow: 0 0 5px var(--highlight-color);
 }
 
 #header-block--nav-bar--deactivator {
     display: none;
     cursor: pointer;
-    color: #008755;
+    color: var(--highlight-color);
     user-select: none;
     position: absolute;
     padding: 5px;
@@ -86,7 +124,8 @@ a:hover {
 }
 
 #header-block--nav-bar--deactivator:hover {
-    color: #00b26f;
+    color: var(--glowing-text-color);
+    text-shadow: 0 0 5px var(--highlight-color);
 }
 
 #content-block {
@@ -96,19 +135,28 @@ a:hover {
     position: relative;
     width: 60%;
     left: 20%;
+    z-index: -1;
     /* width: calc(800px + 10%);
     left: calc((100% - calc(800px + 10%)) / 2); */
 }
 
 #footer-block {
+    /* Not sure yet if this should be sticky or not.
+    position: sticky;
+    bottom: 0; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #005d3a;
+    border-top: 1px solid var(--border-color);
     width: calc(100% - 40px);
-    height: 90px;
+    height: 50px;
     padding: 0 20px;
+    /* background-color: #003220; */
+    /* background-color: #002216; */
+    background-color: #001c12;
+    /* background-color: #000805; */
+    user-select: none;
 }
 
 @media screen and (min-width: 1096px) {
@@ -137,10 +185,11 @@ a:hover {
         z-index: 1;
         top: 0;
         left: 0;
-        background-color: #062017;
-        overflow-x: hidden;
+        /* background-color: #062017; */
+        background: linear-gradient(to right, #062017, #082e21); /* , 95%, #0b432f */
+        overflow-x: scroll;
         transition: 0.5s;
-        padding-top: 60px;
+        padding-top: 30px;
     }
 
     #header-block--nav-bar a {
@@ -159,6 +208,36 @@ a:hover {
     #header-block--nav-bar--activator { /* TODO: Position the activator on the right. */
         display: inline-block;
     }
+}
+
+@media screen and (max-width: 500px) {
+    body {
+        font-size: 1.15em;
+    }
+
+    #header-block--nav-bar--activator {
+        margin: 13px 15px 13px 0;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    body {
+        font-size: 0.8em;
+    }
+
+    #header-block--nav-bar--activator {
+        margin: 13px 13px 13px 0;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .sidebar-active {
+        width: 100% !important;
+    }
+
+    #header-block--nav-bar {
+        padding-top: 47px;
+    }
 
     #header-block--nav-bar--deactivator {
         display: inline-block;
@@ -169,25 +248,19 @@ a:hover {
     #header-block--nav-bar {
         padding-top: 15px;
     }
+
     #header-block--nav-bar a {
         font-size: 18px;
     }
-}
 
-@media screen and (max-width: 500px) {
-    body {
-        font-size: 1.15em;
-    }
-}
+    @media screen and (max-width: 300px) {
+        #header-block--nav-bar {
+            padding-top: 37px;
+        }
 
-@media screen and (max-width: 340px) {
-    body {
-        font-size: 0.8em;
-    }
-}
-
-@media screen and (max-width: 300px) {
-    .sidebar-active {
-        width: 100% !important;
+        #header-block--nav-bar--deactivator {
+            right: 10px;
+            font-size: 32px;
+        }
     }
 }

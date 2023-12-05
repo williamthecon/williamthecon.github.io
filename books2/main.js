@@ -30,6 +30,17 @@ function toggleNavbar() {
     document.getElementById("header-block--nav-bar").classList.toggle("sidebar-active");
 }
 
+document.addEventListener('click', function(e) {
+    const navbar = document.getElementById('header-block--nav-bar');
+    if (navbar.classList.contains('sidebar-active')) {
+        const activator = document.getElementById('header-block--nav-bar--activator');
+        if (e.target !== navbar && e.target !== activator) {
+            toggleNavbar();
+        }
+    }
+});
+
+
 // Some default methods for retrieving data
 function getParam(name) {
     return urlParams.get(name) || "";

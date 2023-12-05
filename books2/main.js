@@ -4,16 +4,16 @@ if (!window.location.href.startsWith("file:///")) {
     const token = localStorage.getItem("token");
 
     if (token === null) {
-        if (!window.location.href.endsWith("/school/login")) {
+        if (!window.location.href.endsWith("./login")) {
             localStorage.setItem('redirect-to', window.location.href);
-            window.location.href = "/school/login";
+            window.location.href = "./login";
         } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
-            localStorage.setItem('redirect-to', "/school/");
+            localStorage.setItem('redirect-to', "./");
         }
     } else {
-        if (window.location.href.endsWith("/school/login")) {
+        if (window.location.href.endsWith("./login")) {
             if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
-                window.location.href = "/school/";
+                window.location.href = "./";
             } else {
                 let redirectTo = localStorage.getItem('redirect-to');
                 localStorage.removeItem('redirect-to');
@@ -67,4 +67,20 @@ function popLocalStorage(key) {
 // Some simple methods for moving between pages
 function redirect(url) {
     window.location.href = url;
+}
+
+// Fetch data
+async function request(url, method, body=null, returnJSON=true) {
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: body
+    });
+    if (returnJSON) {
+        return response.json();
+    } else {
+        return response;
+    }
 }

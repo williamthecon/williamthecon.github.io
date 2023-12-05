@@ -1,0 +1,133 @@
+#header-block--nav-bar--activator {
+    display: none;
+    vertical-align: top;
+    margin: 13px 17px 13px 0;
+    padding: 7px;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--highlight-color);
+    transition: 0.3s;
+}
+
+#header-block--nav-bar--activator:hover {
+    color: var(--glowing-text-color);
+    text-shadow: 0 0 5px var(--highlight-color);
+}
+
+#header-block--nav-bar--deactivator {
+    display: none;
+    cursor: pointer;
+    color: var(--highlight-color);
+    user-select: none;
+    position: absolute;
+    padding: 5px;
+    top: 0;
+    right: 17px;
+    font-size: 42px;
+    margin-left: 50px;
+    transition: 0.3s;
+}
+
+#header-block--nav-bar--deactivator:hover {
+    color: var(--glowing-text-color);
+    text-shadow: 0 0 5px var(--highlight-color);
+}
+
+@media screen and (min-width: 1096px) {
+    .header-block--nav-bar--nav {
+        display: inline-block;
+        vertical-align: top;
+        padding: 20px 17px;
+    }
+
+    #header-block--nav-bar {
+        display: inline-block;
+        vertical-align: top;
+        padding: 10px 20px 10px 0;
+    }
+}
+
+@media screen and (max-width: 1095px) { /* That's when the nav bar links will be replaced by the nav bar. */
+    .sidebar-active {
+        width: 250px !important;
+    }
+
+    #header-block--nav-bar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        /* background-color: #062017; */
+        background: linear-gradient(to right, #062017, #082e21); /* , 95%, #0b432f */
+        overflow-x: scroll;
+        transition: 0.5s;
+        padding-top: 30px;
+    }
+
+    #header-block--nav-bar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: var(--highlight-color);
+        display: block;
+        transition: 0.3s;
+    }
+
+    #header-block--nav-bar a:hover {
+        color: var(--glowing-text-color);
+        text-shadow: 0 0 5px var(--highlight-color);
+    }
+
+    #header-block--nav-bar--activator {
+        display: inline-block;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #header-block--nav-bar--activator {
+        margin: 13px 15px 13px 0;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    #header-block--nav-bar--activator {
+        margin: 13px 13px 13px 0;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .sidebar-active {
+        width: 100% !important;
+    }
+
+    #header-block--nav-bar {
+        padding-top: 47px;
+    }
+
+    #header-block--nav-bar--deactivator {
+        display: inline-block;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    #header-block--nav-bar {
+        padding-top: 15px;
+    }
+
+    #header-block--nav-bar a {
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 300px) {
+        #header-block--nav-bar {
+            padding-top: 37px;
+        }
+
+        #header-block--nav-bar--deactivator {
+            right: 10px;
+            font-size: 32px;
+        }
+    }
+}

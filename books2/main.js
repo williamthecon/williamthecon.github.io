@@ -47,31 +47,16 @@ function redirect(url) {
     window.location.href = url;
 }
 
-// Initial check and setup
-if (window.location.protocol === "https:") {
-    if (window.location.href.endsWith(".html")) {
-        redirect(window.location.href.substring(0, window.location.href.length - 5));
-    }
-
-    // Check if already logged in or page is already the login page
-    const token = getLST("token");
-
-    if (token === null) { // Not logged in
-        if (!window.location.href.endsWith("/login")) { // Not on login page -> redirect to login
-            setLST('redirect-to', window.location.href);
-            redirect("./login");
-        } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) { // On login page but no redirect set -> set redirect to home
-            setLST('redirect-to', "./");
-        }
-    } else { // Already logged in
-        if (window.location.href.endsWith("/login")) { // On login page although being logged in
-            redirect("./");
-        }
-    }
-}
-
 // Fetch data
-async function request(url, method, body=null, returnJSON=true) {
+async function request(endpoint, method, args={}, body=null, returnJSON=true) {
+    var url = "https://mgp-api.j9zwm20di.repl.co" + endpoint
+    if (Object.keys(args).length > 0) {
+        url += "?";
+        for (const [key, value] of Object.entries(args)) {
+            url += key + "=" + value + "&";
+        }
+        url = url.substring(0, url.length - 1);
+    }
     const response = await fetch(url, {
         method: method,
         headers: {
@@ -83,5 +68,31 @@ async function request(url, method, body=null, returnJSON=true) {
         return response.json();
     } else {
         return response;
+    }
+}
+
+// Initial check and setup
+if (window.location.protocol === "https:") {
+    if (window.location.href.endsWith(".html")) {
+        redirect(window.location.href.substring(0, window.location.href.length - 5));
+    }
+
+    // Check if already logged in or page is already the login page
+    const token = getLST("token");
+
+    if ([null, "", undefined].includes(token)) { // Not logged in
+        if (!window.location.href.endsWith("/login")) { // Not on login page -> redirect to login
+            setLST("redirect-to", window.location.href);
+            redirect("./login");
+        } else {
+            if ([null, "", undefined].includes(getLST("redirect-to"))) { // On login page but no redirect set -> set redirect to home
+                setLST("redirect-to", "./");
+            }
+        }
+    } else { // Session Token is set -> needs to be verified
+        // TODO: Check if token is valid (using a request)
+        if (window.location.href.endsWith("/login")) { // On login page although being logged in
+            redirect("./");
+        }
     }
 }

@@ -80,18 +80,26 @@ if (window.location.protocol === "https:") {
     // Check if already logged in or page is already the login page
     const token = getLST("token");
 
-    if ([null, "", undefined].includes(token)) { // Not logged in
-        if (!window.location.href.endsWith("/login")) { // Not on login page -> redirect to login
+    if ([null, "", undefined].includes(token)) {
+        // Not logged in
+        if (!window.location.href.endsWith("/login")) {
+            // Not on login page -> redirect to login
             setLST("redirect-to", window.location.href);
             redirect("./login");
-        } else {
-            if ([null, "", undefined].includes(getLST("redirect-to"))) { // On login page but no redirect set -> set redirect to home
-                setLST("redirect-to", "./");
-            }
+        } else if ([null, "", undefined].includes(getLST("redirect-to"))) {
+            // On login page but no redirect set -> set redirect to home
+            setLST("redirect-to", "./");
         }
-    } else { // Session Token is set -> needs to be verified
-        // TODO: Check if token is valid (using a request)
-        if (window.location.href.endsWith("/login")) { // On login page although being logged in
+    } else {
+        // Session Token is set -> needs to be verified
+        var responseJSON = await request("/books/validate", "GET", { token }, null, true);
+        if (!responseJSON.success) {
+            delLST("token");
+            alert("Fehler: Sitzung ist nicht (mehr) gültig. Bitte melde dich (erneut) an.");
+            setLST("redirect-to", window.location.href);
+            redirect("./login");
+        } else if (window.location.href.endsWith("/login")) {
+            // On login page although being logged in -> redirect to home
             redirect("./");
         }
     }

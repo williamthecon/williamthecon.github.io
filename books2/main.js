@@ -49,7 +49,7 @@ function redirect(url) {
 
 // Fetch data
 async function request(endpoint, method, args={}, body=null, returnJSON=true) {
-    var url = "https://mgp-api.j9zwm20di.repl.co" + endpoint
+    var url = "https://mgp-api--j9zwm20di.repl.co" + endpoint
     if (Object.keys(args).length > 0) {
         url += "?";
         for (const [key, value] of Object.entries(args)) {

@@ -92,15 +92,17 @@ if (window.location.protocol === "https:") {
         }
     } else {
         // Session Token is set -> needs to be verified
-        var responseJSON = await request("/books/validate", "GET", { token }, null, true);
-        if (!responseJSON.success) {
-            delLST("token");
-            alert("Fehler: Sitzung ist nicht (mehr) gültig. Bitte melde dich (erneut) an.");
-            setLST("redirect-to", window.location.href);
-            redirect("./login");
-        } else if (window.location.href.endsWith("/login")) {
-            // On login page although being logged in -> redirect to home
-            redirect("./");
-        }
+        request("/books/validate", "GET", { token }, null, true)
+        .then((responseJSON) => {
+            if (!responseJSON.success) {
+                delLST("token");
+                alert("Fehler: Sitzung ist nicht (mehr) gültig. Bitte melde dich (erneut) an.");
+                setLST("redirect-to", window.location.href);
+                redirect("./login");
+            } else if (window.location.href.endsWith("/login")) {
+                // On login page although being logged in -> redirect to home
+                redirect("./");
+            }
+        });
     }
 }

@@ -57,14 +57,14 @@ if (window.location.protocol === "https:") {
     const token = getLST("token");
 
     if (token === null) { // Not logged in
-        if (!window.location.href.endsWith("./login")) { // Not on login page -> redirect to login
+        if (!window.location.href.endsWith("/login")) { // Not on login page -> redirect to login
             setLST('redirect-to', window.location.href);
             redirect("./login");
         } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) { // On login page but no redirect set -> set redirect to home
             setLST('redirect-to', "./");
         }
     } else { // Already logged in
-        if (window.location.href.endsWith("./login")) { // On login page although being logged in
+        if (window.location.href.endsWith("/login")) { // On login page although being logged in
             redirect("./");
         }
     }

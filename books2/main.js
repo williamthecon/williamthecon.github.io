@@ -1,24 +1,6 @@
 // Initial methods
 const urlParams = new URLSearchParams(window.location.search);
 
-// Navbar (sidebar) toggler
-function toggleNavbar() {
-    document.getElementById("header-block--nav-bar").classList.toggle("sidebar-active");
-}
-
-document.addEventListener('click', function(e) { // Closes the sidebar when clicking outside
-    const navbar = document.getElementById('header-block--nav-bar');
-    if (navbar !== null) {
-        if (navbar.classList.contains('sidebar-active')) {
-            const activator = document.getElementById('header-block--nav-bar--activator');
-            if (e.target !== navbar && e.target !== activator) {
-                toggleNavbar();
-            }
-        }
-    }
-});
-
-
 // Some default methods for retrieving data
 function getParam(name) {
     return urlParams.get("books2--" + name) || "";
@@ -104,5 +86,35 @@ if (window.location.protocol === "https:") {
                 redirect("./");
             }
         });
+    }
+}
+
+// Navbar (sidebar) toggler
+function toggleNavbar() {
+    document.getElementById("header-block--nav-bar").classList.toggle("sidebar-active");
+}
+
+document.addEventListener('click', function(e) { // Closes the sidebar when clicking outside
+    const navbar = document.getElementById('header-block--nav-bar');
+    if (navbar !== null) {
+        if (navbar.classList.contains('sidebar-active')) {
+            const activator = document.getElementById('header-block--nav-bar--activator');
+            if (e.target !== navbar && e.target !== activator) {
+                toggleNavbar();
+            }
+        }
+    }
+});
+
+// Theme toggler
+function setTheme(theme) {
+    if (theme === "light") {
+        document.body.classList.add('light-theme');
+        document.getElementById("footer-block--theme-switcher--light").classList.add("theme-switcher--active");
+        document.getElementById("footer-block--theme-switcher--dark").classList.remove("theme-switcher--active");
+    } else if (theme === "dark") {
+        document.body.classList.remove('light-theme');
+        document.getElementById("footer-block--theme-switcher--light").classList.remove("theme-switcher--active");
+        document.getElementById("footer-block--theme-switcher--dark").classList.add("theme-switcher--active");
     }
 }

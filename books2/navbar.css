@@ -11,7 +11,7 @@
 
 #header-block--nav-bar--activator:hover {
     color: var(--glowing-text-color);
-    text-shadow: 0 0 5px var(--highlight-color);
+    text-shadow: 0 0 5px var(--glowing-shadow-color);
 }
 
 #header-block--nav-bar--deactivator {
@@ -30,7 +30,7 @@
 
 #header-block--nav-bar--deactivator:hover {
     color: var(--glowing-text-color);
-    text-shadow: 0 0 5px var(--highlight-color);
+    text-shadow: 0 0 5px var(--glowing-shadow-color);
 }
 
 @media screen and (min-width: 1096px) {
@@ -60,7 +60,7 @@
         top: 0;
         left: 0;
         /* background-color: #062017; */
-        background: linear-gradient(to right, #062017, #082e21); /* , 95%, #0b432f */
+        background: var(--sidebar-background-gradient); /* , 95%, #0b432f */
         overflow-x: scroll;
         transition: 0.5s;
         padding-top: 30px;
@@ -73,11 +73,6 @@
         color: var(--highlight-color);
         display: block;
         transition: 0.3s;
-    }
-
-    #header-block--nav-bar a:hover {
-        color: var(--glowing-text-color);
-        text-shadow: 0 0 5px var(--highlight-color);
     }
 
     #header-block--nav-bar--activator {

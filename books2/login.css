@@ -106,7 +106,7 @@ input[type="submit"]:hover {
 }
 
 #content-block--content--form--error {
-    /* display: none; */
+    display: none;
     color: var(--warning-color);
     background-color: var(--warning-background-color);
     padding: 8px;

@@ -11,18 +11,38 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,1,200">
         <link rel="stylesheet" type="text/css" href="./style.css">
+        <link rel="stylesheet" type="text/css" href="./login.css">
         <link rel="icon" href="./icon.png"/>
     </head>
     <body>
         <script type="text/javascript" src="./main.js"></script>
+        <script type="text/javascript" src="./login.js"></script>
         <div id="header-block" class="container">
             <div id="header-block--header">
-                <h2 class="no-margin">Bücher - Anmeldung</h2>
+                <h2 class="no-margin">Bücher</h2>
             </div>
         </div>
         <div id="content-block" class="container">
             <div id="content-block--content">
-                <p>Diese Seite ist leider noch leer. Versuche es später noch einmal.</p>
+                <div id="content-block--content--form">
+                    <div id="content-block--content--form--title">
+                        <h3>Anmeldung</h3>
+                    </div>
+                    <div id="content-block--content--form--error">Anmeldung fehlgeschlagen!</div>
+                    <form onsubmit="login(event)">
+                        <div id="content-block--content--form--username">
+                            <label for="username">Benutzername</label>
+                            <input type="text" name="username" id="content-block--content--form--username--input" autocomplete="username" required autofocus/>
+                        </div>
+                        <div id="content-block--content--form--password">
+                            <label for="password">Passwort</label>
+                            <input type="password" name="password" id="content-block--content--form--password--input" autocomplete="current-password" required/>
+                        </div>
+                        <div id="content-block--content--form--submit">
+                            <input type="submit" value="Anmelden"/>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <div id="footer-block" class="container">

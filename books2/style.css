@@ -3,62 +3,53 @@
 /* #000805, #003220, #005d3a, #008755, #00b26f, #00dc8a */
 
 :root {
-    /* Custom properties; use them by calling 'var(--property-name)' */
-    --thdark-color-very-dark: #000805;
-    --thdark-color-quite-dark: #001c12;
-    --thdark-color-medium-dark: #003220;
-    --thdark-color-dark: #005d3a;
-    --thdark-color-medium: #008755;
-    --thdark-color-light: #00a367;
-    --thdark-color-medium-light: #00c378;
-    --thdark-color-very-light: #00dc8a;
+    --color-very-dark: hsl(150, 100%, 2%);
+    --color-quite-dark: hsl(150, 100%, 5%);
+    --color-medium-dark: hsl(150, 100%, 10%);
+    --color-dark: hsl(150, 100%, 18%);
+    --color-medium: hsl(150, 57%, 31%);
+    --color-light: hsl(150, 84%, 31%);
+    --color-medium-light: hsl(150, 84%, 31%);
+    --color-quite-light: hsl(150, 91%, 35%);
+    --color-very-light: hsl(150, 94%, 42%);
 
-    /* Colors have yet to be chosen */
-    --thlight-color-very-dark: #020a06;
-    --thlight-color-medium-dark: #0d3a28;
-    --thlight-color-dark: #155739;
-    --thlight-color-medium: #227c4f;
-    --thlight-color-light: #0d904f;
-    --thlight-color-medium-light: #0d904f;
-    --thlight-color-quite-light: #08ad5a;
-    --thlight-color-very-light: #06d26c;
-
-    --background-color: var(--thdark-color-very-dark);
-    --border-color: var(--thdark-color-dark);
-    --text-color: var(--thdark-color-light);
-    --highlight-color: var(--thdark-color-medium-light);
-    --glowing-text-color: var(--thdark-color-very-light);
-    --glowing-shadow-color: var(--thdark-color-medium-light);
-    --semi-background-color: var(--thdark-color-medium-dark);
-    --semi-background-hover-color: var(--thdark-color-medium);
-    --navbar-background-color: var(--thdark-color-quite-dark);
-    --footer-background-color: var(--thdark-color-quite-dark);
+    --background-color: var(--color-very-dark);
+    --border-color: var(--color-dark);
+    --text-color: var(--color-light);
+    --highlight-color: var(--color-medium-light);
+    --glowing-text-color: var(--color-very-light);
+    --glowing-shadow-color: var(--color-very-light);
+    --semi-background-color: var(--color-medium-dark);
+    --semi-background-hover-color: var(--color-medium);
+    --navbar-background-color: var(--color-quite-dark);
+    --footer-background-color: var(--color-quite-dark);
     --sidebar-background-gradient: linear-gradient(to right, #062017, #082e21);
+
+    --font-size: 1.25em;
 }
 
 body.light-theme {
-    --background-color: var(--thlight-color-very-light);
-    --border-color: var(--thlight-color-light);
-    --text-color: var(--thlight-color-very-dark);
-    --highlight-color: var(--thlight-color-medium-dark);
-    --glowing-text-color: var(--thlight-color-dark);
-    --glowing-shadow-color: var(--thlight-color-medium);
-    --semi-background-color: var(--thlight-color-medium-light);
-    --semi-background-hover-color: var(--thlight-color-medium);
-    --navbar-background-color: var(--thlight-color-quite-light);
-    --footer-background-color: var(--thlight-color-quite-light);
+    --background-color: var(--color-very-light);
+    --border-color: var(--color-light);
+    --text-color: var(--color-very-dark);
+    --highlight-color: var(--color-medium-dark);
+    --glowing-text-color: var(--color-medium-dark);
+    --glowing-shadow-color: var(--color-medium);
+    --semi-background-color: var(--color-medium-light);
+    --semi-background-hover-color: var(--color-medium);
+    --navbar-background-color: var(--color-quite-light);
+    --footer-background-color: var(--color-quite-light);
     --sidebar-background-gradient: linear-gradient(to right, #0ebb64, #109f57);
 }
 
-/* Set the background color to very dark gray, the text color to medium light green, the font to Source Code Pro, and the font size to 1.25em. The min-width is 244px. */
 body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: "Source Code Pro", monospace;
-    font-size: 1.25em;
-    min-width: 244px;
+    font-size: var(--font-size);
+    min-width: 268px;
     margin: 0;
     min-height: 100vh;
 }
@@ -109,6 +100,7 @@ a:hover {
     height: 60px;
     background-color: var(--navbar-background-color);
     user-select: none;
+    /* z-index: 1; */
 }
 
 #header-block--header {
@@ -125,7 +117,6 @@ a:hover {
     position: relative;
     width: 60%;
     left: 20%;
-    z-index: -1;
 }
 
 #footer-block {
@@ -140,11 +131,9 @@ a:hover {
     width: calc(100% - 40px);
     height: 50px;
     padding: 0 20px;
-    /* background-color: #003220; */
-    /* background-color: #002216; */
     background-color: var(--footer-background-color);
-    /* background-color: #000805; */
     user-select: none;
+    /* z-index: 1; */
 }
 
 #footer-block--theme-switcher {
@@ -175,12 +164,12 @@ a:hover {
 
 @media screen and (max-width: 500px) {
     body {
-        font-size: 1.15em;
+        --font-size: 1.15em;
     }
 }
 
 @media screen and (max-width: 340px) {
     body {
-        font-size: 0.8em;
+        --font-size: 0.8em;
     }
 }

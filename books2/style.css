@@ -11,19 +11,17 @@
     --thdark-color-medium: #008755;
     --thdark-color-light: #00a367;
     --thdark-color-medium-light: #00c378;
-    --thdark-color-quite-light: #00d57d;
     --thdark-color-very-light: #00dc8a;
 
     /* Colors have yet to be chosen */
     --thlight-color-very-dark: #020a06;
-    --thlight-color-quite-dark: #082217;
     --thlight-color-medium-dark: #0d3a28;
     --thlight-color-dark: #155739;
     --thlight-color-medium: #227c4f;
-    --thlight-color-light: #239668;
-    --thlight-color-medium-light: #1fc271;
-    --thlight-color-quite-light: #65eeac;
-    --thlight-color-very-light: #a4f6cc;
+    --thlight-color-light: #0d904f;
+    --thlight-color-medium-light: #0d904f;
+    --thlight-color-quite-light: #08ad5a;
+    --thlight-color-very-light: #06d26c;
 
     --background-color: var(--thdark-color-very-dark);
     --border-color: var(--thdark-color-dark);
@@ -49,7 +47,7 @@ body.light-theme {
     --semi-background-hover-color: var(--thlight-color-medium);
     --navbar-background-color: var(--thlight-color-quite-light);
     --footer-background-color: var(--thlight-color-quite-light);
-    --sidebar-background-gradient: linear-gradient(to right, #17d492, #5feebc);
+    --sidebar-background-gradient: linear-gradient(to right, #0ebb64, #109f57);
 }
 
 /* Set the background color to very dark gray, the text color to medium light green, the font to Source Code Pro, and the font size to 1.25em. The min-width is 244px. */

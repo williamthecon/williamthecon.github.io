@@ -4,20 +4,19 @@ async function login(event) {
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;
 
-    request("/books/login", "POST", {}, { username, password }, true)
-    .then(data => {
-        if (data.success) {
-            window.location.href = getLST("redirect-to");
+    const response = await request("/books/login", "POST", {}, { username, password }, true);
+    if (response.success) {
+        TODO: setLST("token", response.data["token"]);
+        window.location.href = getLST("redirect-to");
+    } else {
+        const error = document.getElementById("content-block--content--form--error");
+        error.style.display = "block";
+        if (response.cause === "invalid username/password") {
+            error.innerHTML = "Benutzername oder Passwort ungültig";
         } else {
-            const error = document.getElementById("content-block--content--form--error");
-            error.style.display = "block";
-            if (data.cause === "invalid username/password") {
-                error.innerHTML = "Benutzername oder Passwort ungültig";
-            } else {
-                error.innerHTML = "Anmeldung fehlgeschlagen: '" + data.cause + "'";
-            }
+            error.innerHTML = "Anmeldung fehlgeschlagen: '" + response.cause + "'";
         }
-    })
+    }
 
     return false;
 }

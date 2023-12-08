@@ -31,6 +31,7 @@ function redirect(url) {
 
 // Fetch data
 async function request(endpoint, method, args={}, body=null, returnJSON=true) {
+    // Prepare URL
     var url = "https://mgp-api--j9zwm20di.repl.co" + endpoint
     if (Object.keys(args).length > 0) {
         url += "?";
@@ -39,13 +40,17 @@ async function request(endpoint, method, args={}, body=null, returnJSON=true) {
         }
         url = url.substring(0, url.length - 1);
     }
+
+    // Fetch data
     const response = await fetch(url, {
         method: method,
         headers: {
             "Content-Type": "application/json; charset=utf-8"
         },
-        body: body
+        body: JSON.stringify(body)
     });
+
+    // Return JSON or response
     if (returnJSON) {
         return response.json();
     } else {

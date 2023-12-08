@@ -32,11 +32,11 @@
                     <form onsubmit="login(event)">
                         <div id="content-block--content--form--username">
                             <label for="username">Benutzername</label>
-                            <input type="text" name="username" id="content-block--content--form--username--input" autocomplete="username" required autofocus/>
+                            <input type="text" name="username" id="content-block--content--form--username--input" autocomplete="username" maxlength="32" required autofocus/>
                         </div>
                         <div id="content-block--content--form--password">
                             <label for="password">Passwort</label>
-                            <input type="password" name="password" id="content-block--content--form--password--input" autocomplete="current-password" required/>
+                            <input type="password" name="password" id="content-block--content--form--password--input" autocomplete="current-password" maxlength="128" required/>
                         </div>
                         <div id="content-block--content--form--submit">
                             <input type="submit" value="Anmelden"/>

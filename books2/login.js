@@ -1,12 +1,23 @@
+var lastRequest = Math.round(Date.now() / 1000);
+
 async function login(event) {
     event.preventDefault();
+
+    const now = Math.round(Date.now() / 1000);
+    if (lastRequest + 2.5 > now) {
+        const error = document.getElementById("content-block--content--form--error");
+        error.style.display = "block";
+        error.innerHTML = "Bitte warten Sie noch einen Moment";
+        return false;
+    }
+    const lastRequest = now;
 
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;
 
     const response = await request("/books/login", "POST", {}, { username, password }, true);
     if (response.success) {
-        TODO: setLST("token", response.data["token"]);
+        setLST("session-id", response.data["session-id"]);
         window.location.href = getLST("redirect-to");
     } else {
         const error = document.getElementById("content-block--content--form--error");

@@ -30,7 +30,25 @@ function redirect(url) {
 }
 
 // Fetch data
-async function request(endpoint, method, args={}, body=null, returnJSON=true) {
+async function request(endpoint, method, authorized=false, args={}, body=null, headers={}, returnJSON=true) {
+    // Check appropriate method and body
+    if (method.toLowerCase() !== "get" && body === null) {
+        body = {};
+    }
+
+    // Add session ID if required
+    if (authorized) {
+        if (method.toLowerCase() === "get") {
+            if (!args.hasOwnProperty("session-id")) {
+                args["session-id"] = getLST("session-id");
+            }
+        } else {
+            if (!body.hasOwnProperty("session-id")) {
+                body["session-id"] = getLST("session-id");
+            }
+        }
+    }
+
     // Prepare URL
     var url = "https://mgp-api--j9zwm20di.repl.co" + endpoint
     if (Object.keys(args).length > 0) {
@@ -41,12 +59,20 @@ async function request(endpoint, method, args={}, body=null, returnJSON=true) {
         url = url.substring(0, url.length - 1);
     }
 
+    // Prepare headers
+    const _headers = {
+        "Content-Type": "application/json; charset=utf-8"
+    }
+    if (Object.keys(headers).length > 0) {
+        for (const [key, value] of Object.entries(headers)) {
+            _headers[key] = value;
+        }
+    }
+
     // Fetch data
     const response = await fetch(url, {
         method: method,
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
+        headers: _headers,
         body: JSON.stringify(body)
     });
 
@@ -65,7 +91,7 @@ if (window.location.protocol === "https:") {
     }
 
     // Check if already logged in or page is already the login page
-    const token = getLST("token");
+    const sessionID = getLST("session-id");
 
     if ([null, "", undefined].includes(token)) {
         // Not logged in
@@ -79,10 +105,10 @@ if (window.location.protocol === "https:") {
         }
     } else {
         // Session Token is set -> needs to be verified
-        request("/books/validate", "GET", { token }, null, true)
+        request("/books/validate", "GET", { sessionID }, null, true)
         .then((responseJSON) => {
             if (!responseJSON.success) {
-                delLST("token");
+                delLST("session-id");
                 alert("Fehler: Sitzung ist nicht (mehr) gültig. Bitte melde dich (erneut) an.");
                 setLST("redirect-to", window.location.href);
                 redirect("./login");

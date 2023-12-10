@@ -93,7 +93,7 @@ if (window.location.protocol === "https:") {
     // Check if already logged in or page is already the login page
     const sessionID = getLST("session-id");
 
-    if ([null, "", undefined].includes(token)) {
+    if ([null, "", undefined].includes(sessionID)) {
         // Not logged in
         if (!window.location.href.endsWith("/login")) {
             // Not on login page -> redirect to login

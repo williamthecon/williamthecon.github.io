@@ -15,7 +15,7 @@ async function login(event) {
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;
 
-    const response = await request("/books/login", "POST", {}, { username, password }, true);
+    const response = await request("/books/login", "POST", false, {}, { username, password });
     if (response.success) {
         setLST("session-id", response.data["session-id"]);
         window.location.href = getLST("redirect-to");

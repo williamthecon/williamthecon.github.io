@@ -105,7 +105,7 @@ if (window.location.protocol === "https:") {
         }
     } else {
         // Session Token is set -> needs to be verified
-        request("/books/validate", "GET", { sessionID }, null, true)
+        request("/books/validate", "get", true)
         .then((responseJSON) => {
             if (!responseJSON.success) {
                 delLST("session-id");

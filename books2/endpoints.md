@@ -80,7 +80,7 @@ On this page a book is showcased with all it's features and there will be numero
 
 ## /wishlist
 
-This page will be almost identical to [/booklist](#booklist). The only difference will be, that one wish is only for one user obviously, so everything will look a little different, and there will be showcased the importance of each wish somehow.
+This page will be almost identical to [/booklist](#booklist). The only difference will be, that a wish has other properties than a book, so everything will look a little different, and there will be showcased the importance of each wish somehow.
 
 **TODO**:
 
@@ -88,11 +88,15 @@ This page will be almost identical to [/booklist](#booklist). The only differenc
 
 ## /wish
 
+With page and [/book](#book) it's obviously the same as with [/wishlist](#wishlist) and [/booklist](#booklist). A wish has different properties than a book, but apart from that, the pages ought to be the same.
+
 **TODO**:
 
 - Add __everything__!
 
 ## /miscellaneous
+
+This page basically only exists, because [/authors](#authors) and [/publishers](#publishers) didn't fit on the navigation bar together nicely. And so, here are and will be all the pages of this endpoint collected, that didn't fit on the navigation bar properly and that need to somewhat be presented in a way. Maybe later there will be added a few more pages.
 
 **TODO**:
 
@@ -100,11 +104,15 @@ This page will be almost identical to [/booklist](#booklist). The only differenc
 
 ## /authors
 
+For this page, it's really the same as with [/wishlist](#wishlist) and [/booklist](#booklist). This is too, the same like latter, just with authors.
+
 **TODO**:
 
 - Add __everything__!
 
 ## /author
+
+Look at [/book](#book) and [/wish](#wish). This is  the same, just with an author.
 
 **TODO**:
 
@@ -112,11 +120,15 @@ This page will be almost identical to [/booklist](#booklist). The only differenc
 
 ## /publishers
 
+Again, look at [/booklist](#booklist), [/wishlist](#wishlist) and/or [/authors](#authors) and apply it to here.
+
 **TODO**:
 
 - Add __everything__!
 
 ## /publisher
+
+Another time, it's like with [/book](#book), [/wish](#wish) and/or [/author](#author)
 
 **TODO**:
 

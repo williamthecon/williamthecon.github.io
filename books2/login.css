@@ -18,16 +18,17 @@ body.light-theme {
     --warning-background-color: hsl(0, 56%, 52%);
 }
 
+input {
+    border: 1px solid var(--form-border-color);
+    background-color: var(--form-background-color);
+    color: var(--form-color);
+    font-size: 16px;
+    font-family: "Source Code Pro", monospace;
+}
 
 input[type="text"], input[type="password"] {
     padding: 8px 10px;
     border-radius: 8px;
-    border: 1px solid var(--form-border-color);
-    background-color: var(--form-background-color);
-    /* color: rgb(255, 255, 255); */
-    color: var(--form-color);
-    font-size: 16px;
-    /* cursor: text; */
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
@@ -39,10 +40,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 input[type="submit"] {
     padding: 8px 18px;
     border-radius: 20px;
-    border: 1px solid var(--form-border-color);
-    background-color: var(--form-background-color);
-    color: var(--form-color);
-    font-size: 16px;
     cursor: pointer;
 }
 
@@ -71,7 +68,7 @@ input[type="submit"]:hover {
     justify-content: center;
     width: calc(300px + 20%);
     padding: 30px;
-    margin: 20px 0;
+    margin: 40px 0;
     border-radius: 20px;
     border: 1px solid var(--form-color);
     background-color: var(--form-background-color);

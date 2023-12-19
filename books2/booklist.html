@@ -7,15 +7,17 @@
         <meta name="keywords" content="williamthecon.github.io williamthecon github books">
         <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 
-        <title>Bücher - Startseite</title>
+        <title>Bücher - Buchliste</title>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,200,1,200">
         <link rel="stylesheet" type="text/css" href="./style.css">
         <link rel="stylesheet" type="text/css" href="./navbar.css">
+        <link rel="stylesheet" type="text/css" href="./booklist.css">
         <link rel="icon" href="./icon.png"/>
     </head>
     <body>
         <script type="text/javascript" src="./main.js"></script>
+        <script type="text/javascript" src="./booklist.js"></script>
         <div id="header-block" class="container">
             <div id="header-block--header">
                 <h2 class="no-margin"><a href="./">Bücher</a></h2>
@@ -48,7 +50,28 @@
         </div>
         <div id="content-block" class="container">
             <div id="content-block--content">
-                <p>Diese Seite ist leider noch leer. Versuche es später noch einmal.</p>
+                <div id="content-block--content--form">
+                    <div id="content-block--content--form--title">
+                        <h3>Suche</h3>
+                    </div>
+                    <form onsubmit="search(event)">
+                        <div id="content-block--content--form--search">
+                            <input type="text" name="search" id="content-block--content--form--search--input" placeholder=""/>
+                        </div>
+                        <div id="content-block--content--form--submit">
+                            <input type="submit" value="Suchen"/>
+                        </div>
+                    </form>
+                </div>
+                <div id="content-block--content--message">Es wurden keine Ergebnisse gefunden. Versuchen Sie es erneut.</div>
+                <div id="content-block--content--results"></div>
+                <div id="content-block--content--pages">
+                    <div id="content-block--content--pages--previous" class="disabled-page" onclick="previousPage()">&lt;</div>
+                    <div id="content-block--content--pages--page-before" class="disabled-page"></div>
+                    <div id="content-block--content--pages--current">1</div>
+                    <div id="content-block--content--pages--page-after" onclick="nextPage()">2</div>
+                    <div id="content-block--content--pages--next" onclick="nextPage()">&gt;</div>
+                </div>
             </div>
         </div>
         <div id="footer-block" class="container">

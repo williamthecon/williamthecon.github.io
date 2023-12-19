@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 
 // Some default methods for retrieving data
 function getParam(name) {
-    return urlParams.get("books2--" + name) || "";
+    return urlParams.get(name) || "";
 }
 
 function getLST(key) {

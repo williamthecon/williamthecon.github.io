@@ -30,7 +30,7 @@ function redirect(url) {
 }
 
 // Fetch data
-async function request(endpoint, method, authorized=false, args={}, body=null, headers={}, returnJSON=true) {
+async function request(endpoint, method, authorized=false, args={}, body=null, headers={}) {
     // Check appropriate method and body
     if (method.toLowerCase() !== "get" && body === null) {
         body = {};
@@ -69,19 +69,19 @@ async function request(endpoint, method, authorized=false, args={}, body=null, h
         }
     }
 
+    if (body !== null) {
+        body = JSON.stringify(body);
+    }
+
     // Fetch data
     const response = await fetch(url, {
         method: method,
         headers: _headers,
-        body: JSON.stringify(body)
+        body: body,
     });
 
-    // Return JSON or response
-    if (returnJSON) {
-        return response.json();
-    } else {
-        return response;
-    }
+    // Return JSON
+    return response.json();
 }
 
 // Initial check and setup

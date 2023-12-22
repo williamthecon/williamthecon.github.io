@@ -53,7 +53,7 @@
                     <div id="content-block--content--form--title">
                         <h3>Suche</h3>
                     </div>
-                    <form onsubmit="search(event)">
+                    <form onsubmit="sendToSearch(event)">
                         <div id="content-block--content--form--search">
                             <input type="text" name="search" id="content-block--content--form--search--input" placeholder=""/>
                         </div>
@@ -62,14 +62,15 @@
                         </div>
                     </form>
                 </div>
-                <div id="content-block--content--message">Es wurden keine Ergebnisse gefunden. Versuchen Sie es erneut.</div>
+                <div id="content-block--content--error"></div>
+                <div id="content-block--content--message"></div>
                 <div id="content-block--content--results"></div>
                 <div id="content-block--content--pages">
-                    <div id="content-block--content--pages--previous" class="disabled-page" onclick="previousPage()">&lt;</div>
+                    <div id="content-block--content--pages--previous" class="disabled-page" onclick="sendToPreviousPage()">&lt;</div>
                     <div id="content-block--content--pages--page-before" class="disabled-page"></div>
                     <div id="content-block--content--pages--current">1</div>
-                    <div id="content-block--content--pages--page-after" onclick="nextPage()">2</div>
-                    <div id="content-block--content--pages--next" onclick="nextPage()">&gt;</div>
+                    <div id="content-block--content--pages--page-after" onclick="sendToNextPage()">2</div>
+                    <div id="content-block--content--pages--next" onclick="sendToNextPage()">&gt;</div>
                 </div>
             </div>
         </div>

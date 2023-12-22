@@ -4,21 +4,20 @@ Just to prevent you from getting confused: This endpoint, although currently bei
 
 __Content-Overview__:
 
-- [/index](#index)
-- [/login](#login)
-- [/logout](#logout)
-- [/profile](#profile)
-- [/booklist](#booklist)
-- [/book](#book)
-- [/wishlist](#wishlist)
-- [/wish](#wish)
-- [/miscellaneous](#miscellaneous)
-- [/authors](#authors)
-- [/author](#author)
-- [/publishers](#publishers)
-- [/publisher](#publisher)
-- [/helplist](#helplist)
-- [/help](#help)
+- [Endpoints](#endpoints)
+  - [/index](#index)
+  - [/login](#login)
+  - [/logout](#logout)
+  - [/profile](#profile)
+  - [/booklist](#booklist)
+  - [/book](#book)
+  - [/miscellaneous](#miscellaneous)
+  - [/authors](#authors)
+  - [/author](#author)
+  - [/publishers](#publishers)
+  - [/publisher](#publisher)
+  - [/helps](#helps)
+  - [/help](#help)
 
 ---
 
@@ -64,7 +63,7 @@ If the URL parameter `id` or `name` is not given, your profile is shown with a s
 
 ## /booklist
 
-This page should by default showcase the full list of books. There will also be a search bar and possibly an `advanced search` option too to make less complicated to search with different filters. The search happens server-side, because the presented books will only count up to something like 50 and there the user has to, that's still unclear, either go to the next _page_ or he has to click a `load more` button, and make a new request to the server. There will also be a sort selection menu, but the sorting is also supposed to happen server side because of the same reason as for the search.
+This page should by default showcase the full list of books. There will also be a search bar and possibly an `advanced search` option too to make less complicated to search with different filters. The search happens server-side, because the presented books will only count up to something like 20 and there the user has to, that's still unclear, either go to the next _page_ or he has to click a `load more` button, and make a new request to the server. There will also be a sort selection menu, but the sorting is also supposed to happen server side because of the same reason as for the search.
 
 **TODO**:
 
@@ -73,22 +72,6 @@ This page should by default showcase the full list of books. There will also be 
 ## /book
 
 On this page a book is showcased with all it's features and there will be numerous (local) links to for example all the owners ([/profile](#profile)), that have that same book, the author(s) ([/author](#author)), who wrote that book, and the publisher ([/publisher](#publisher)) of that book.
-
-**TODO**:
-
-- Add __everything__!
-
-## /wishlist
-
-This page will be almost identical to [/booklist](#booklist). The only difference will be, that a wish has other properties than a book, so everything will look a little different, and there will be showcased the importance of each wish somehow.
-
-**TODO**:
-
-- Add __everything__!
-
-## /wish
-
-With page and [/book](#book) it's obviously the same as with [/wishlist](#wishlist) and [/booklist](#booklist). A wish has different properties than a book, but apart from that, the pages ought to be the same.
 
 **TODO**:
 
@@ -104,7 +87,7 @@ This page basically only exists, because [/authors](#authors) and [/publishers](
 
 ## /authors
 
-For this page, it's really the same as with [/wishlist](#wishlist) and [/booklist](#booklist). This is too, the same like latter, just with authors.
+This page will be almost identical to [/booklist](#booklist). The only difference will be, that an author has other properties than a book, so everything will look a little different.
 
 **TODO**:
 
@@ -112,7 +95,7 @@ For this page, it's really the same as with [/wishlist](#wishlist) and [/booklis
 
 ## /author
 
-Look at [/book](#book) and [/wish](#wish). This is  the same, just with an author.
+With page and [/book](#book) it's obviously the same as with [/authors](#authors) and [/booklist](#booklist). An author has different properties than a book, but apart from that, the pages ought to be the same.
 
 **TODO**:
 
@@ -120,7 +103,7 @@ Look at [/book](#book) and [/wish](#wish). This is  the same, just with an autho
 
 ## /publishers
 
-Again, look at [/booklist](#booklist), [/wishlist](#wishlist) and/or [/authors](#authors) and apply it to here.
+Again, look at [/booklist](#booklist) and [/authors](#authors) and apply it to here.
 
 **TODO**:
 
@@ -128,13 +111,13 @@ Again, look at [/booklist](#booklist), [/wishlist](#wishlist) and/or [/authors](
 
 ## /publisher
 
-Another time, it's like with [/book](#book), [/wish](#wish) and/or [/author](#author)
+Another time, it's like with [/book](#book) and [/author](#author)
 
 **TODO**:
 
 - Add __everything__!
 
-## /helplist
+## /helps
 
 This is supposed to be a help for starters, but idealy everything that could possibly be helped with is covered here. There should be search bar too. Each item is linked to the specific [/help](#help) page.
 
@@ -144,4 +127,8 @@ This is supposed to be a help for starters, but idealy everything that could pos
 
 ## /help
 
-This showcases just one of the items from the [/helplist](#helplist) page. It is basically an article of variable length, that helps to use and/or understand one specific feature of this `/books/` endpoint
+This showcases just one of the items from the [/helps](#helps) page. It is basically an article of variable length, that helps to use and/or understand one specific feature of this `/books/` endpoint
+
+**TODO**:
+
+- Add __everything__!

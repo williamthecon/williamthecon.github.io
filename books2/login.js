@@ -10,7 +10,7 @@ async function login(event) {
         error.innerHTML = "Bitte warten Sie noch einen Moment!";
         return false;
     }
-    setLST("lastRequest", now);
+    setLST("last-request", now);
 
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;

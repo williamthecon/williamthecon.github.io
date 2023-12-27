@@ -1,16 +1,16 @@
-var lastRequest = Math.round(Date.now() / 1000);
+setLST("last-request", Math.round(Date.now() / 1000));
 
 async function login(event) {
     event.preventDefault();
 
     const now = Math.round(Date.now() / 1000);
-    if (lastRequest + 2.5 > now) {
+    if (getLST("lastRequest") + 2.5 > now) {
         const error = document.getElementById("content-block--content--form--error");
         error.style.display = "block";
-        error.innerHTML = "Bitte warten Sie noch einen Moment";
+        error.innerHTML = "Bitte warten Sie noch einen Moment!";
         return false;
     }
-    const lastRequest = now;
+    setLST("lastRequest", now);
 
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;
@@ -18,6 +18,7 @@ async function login(event) {
     const response = await request("/books/login", "POST", false, {}, { username, password });
     if (response.success) {
         setLST("session-id", response.data["session-id"]);
+        setLST("user-id", response.data["user-id"]);
         window.location.href = getLST("redirect-to");
     } else {
         const error = document.getElementById("content-block--content--form--error");

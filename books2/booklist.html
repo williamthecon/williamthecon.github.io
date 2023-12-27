@@ -53,7 +53,7 @@
                     <div id="content-block--content--form--title">
                         <h3>Suche</h3>
                     </div>
-                    <form onsubmit="sendToSearch(event)">
+                    <form onsubmit="search(event)">
                         <div id="content-block--content--form--search">
                             <input type="text" name="search" id="content-block--content--form--search--input" placeholder=""/>
                         </div>
@@ -62,16 +62,8 @@
                         </div>
                     </form>
                 </div>
-                <div id="content-block--content--error"></div>
                 <div id="content-block--content--message"></div>
-                <div id="content-block--content--results"></div>
-                <div id="content-block--content--pages">
-                    <div id="content-block--content--pages--previous" class="disabled-page" onclick="sendToPreviousPage()">&lt;</div>
-                    <div id="content-block--content--pages--page-before" class="disabled-page"></div>
-                    <div id="content-block--content--pages--current">1</div>
-                    <div id="content-block--content--pages--page-after" onclick="sendToNextPage()">2</div>
-                    <div id="content-block--content--pages--next" onclick="sendToNextPage()">&gt;</div>
-                </div>
+                <div id="content-block--content--results"></div> <!-- Watchdog will watch last or second last element to be visible and then load more books -->
             </div>
         </div>
         <div id="footer-block" class="container">

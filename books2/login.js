@@ -4,7 +4,7 @@ async function login(event) {
     event.preventDefault();
 
     const now = Math.round(Date.now() / 1000);
-    if (getLST("lastRequest") + 2.5 > now) {
+    if (parseInt(getLST("lastRequest")) + 2.5 > now) {
         const error = document.getElementById("content-block--content--form--error");
         error.style.display = "block";
         error.innerHTML = "Bitte warten Sie noch einen Moment!";

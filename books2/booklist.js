@@ -64,14 +64,16 @@ async function setResults(query) {
     }
 }
 
-// Initial page setup
-if (getParam("query")) {
-    // Get param
-    const query = getParam("query");
+function init() {
+    // Initial page setup
+    if (getParam("query")) {
+        // Get param
+        const query = getParam("query");
 
-    // Set input value
-    document.getElementById("content-block--content--form--search--input").value = query;
+        // Set input value
+        document.getElementById("content-block--content--form--search--input").value = query;
 
-    // Set results
-    setResults(query);
+        // Set results
+        setResults(query);
+    }
 }

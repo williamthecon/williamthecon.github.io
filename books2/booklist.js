@@ -1,11 +1,3 @@
-function search(event) {
-    event.preventDefault();
-
-    const query = document.getElementById("content-block--content--form--search--input").value;
-
-    redirect("./booklist?query=" + query);
-}
-
 function addPage() {
     // TODO: Implement pagination logic here (will be called when user scrolls to the bottom of the results)
 }

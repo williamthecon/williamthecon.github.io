@@ -18,18 +18,17 @@ async function setResults(query) {
                 result.id = "book-" + book.id;
                 result.classList.add("result");
                 const userID = getLST("user-id");
-                if (userID in book.readers || userID in book.owners || userID in book.wishers)
                 result.innerHTML = `
                     <div class="result--top">
                         <div class="result--top--header">
-                            <h4><a href="./book.html?id=${book.id}">${book.title}</a></h4>
-                            <h5><a href="./author.html?author=${book.author.id}">${book.author.name}</a></h5>
+                            <h4><a href="./book?id=${book.id}">${book.title}</a></h4>
+                            <h5>` + book.authors.map(author => `<a href="./author?author=${author.id}">${author.name}</a>`).join(', ') + `</h5>
                         </div>
                         <div class="result--top--attributes>
-                            <span class="material-symbols-outlined` + (userID in book.readers ? " material-symbols-outlined-filled" : "") + `">bookmark</span>
-                            <span class="material-symbols-outlined` + (userID in book.favourites ? " material-symbols-outlined-filled" : "") + `">favorite</span>
-                            <span class="material-symbols-outlined` + (userID in book.owners ? " material-symbols-outlined-filled" : "") + `">folder</span>
-                            <span class="material-symbols-outlined` + (userID in book.wishers ? " material-symbols-outlined-filled" : "") + `">star</span>
+                            <span class="material-symbols-outlined` + (book.readers.includes(userID) ? " material-symbols-outlined-filled" : "") + `">bookmark</span>
+                            <span class="material-symbols-outlined` + (book.favourites.includes(userID) ? " material-symbols-outlined-filled" : "") + `">favorite</span>
+                            <span class="material-symbols-outlined` + (book.owners.includes(userID) ? " material-symbols-outlined-filled" : "") + `">folder</span>
+                            <span class="material-symbols-outlined` + (book.wishers.includes(userID) ? " material-symbols-outlined-filled" : "") + `">star</span>
                         </div>
                     </div>
                     <div class="result--body"></div>

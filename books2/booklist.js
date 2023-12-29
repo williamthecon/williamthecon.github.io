@@ -62,9 +62,26 @@ function init() {
         const query = getParam("query");
 
         // Set input value
-        document.getElementById("content-block--content--form--search--input").value = query;
+        document.getElementById("search-popup--form--query--input").value = query;
 
         // Set results
         setResults(query);
+    } else {
+        // Set results
+        setResults("");
+    }
+}
+
+function toggleSearch() {
+    if (document.getElementById("search-popup").style.display == "flex") {
+        document.body.style.overflow = "auto";
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("content-block--content--search-open").style.display = "block";
+        document.getElementById("search-popup").style.display = "none";
+    } else {
+        document.body.style.overflow = "hidden";
+        document.getElementById("overlay").style.display = "flex";
+        document.getElementById("content-block--content--search-open").style.display = "none";
+        document.getElementById("search-popup").style.display = "flex";
     }
 }

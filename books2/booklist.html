@@ -18,6 +18,26 @@
     <body>
         <script type="text/javascript" src="./main.js"></script>
         <script type="text/javascript" src="./booklist.js"></script>
+        <div id="overlay">
+            <div id="search-popup">
+                <form id="search-popup--form" onsubmit="search(event)">
+                    <div id="search-popup--form--header">
+                        <h2>Suche</h2>
+                    </div>
+                    <div id="search-popup--form--query">
+                        <input type="text" name="query" id="search-popup--form--query--input" autocomplete="off" maxlength="9999" required/>
+                    </div>
+                    <div id="search-popup--form--buttons">
+                        <div id="search-popup--form--submit">
+                            <input type="submit" value="Suchen"/>
+                        </div>
+                        <div id="search-popup--form--cancel">
+                            <button type="button" onclick="toggleSearch()">Abbrechen</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div id="header-block" class="container">
             <div id="header-block--header">
                 <h2 class="no-margin"><a href="./">Bücher</a></h2>
@@ -35,33 +55,23 @@
                     <a href="./booklist">Buchliste</a>
                 </div>
                 <div id="header-block--nav-bar--nav-4" class="header-block--nav-bar--nav">
-                    <a href="./wishlist">Wunschliste</a>
+                    <a href="./miscellaneous">Verschiedenes</a>
                 </div>
                 <div id="header-block--nav-bar--nav-5" class="header-block--nav-bar--nav">
-                    <a href="./miscellaneous">Sonstiges</a>
+                    <a href="./helpist">Hilfen</a>
                 </div>
-                <div id="header-block--nav-bar--nav-7" class="header-block--nav-bar--nav">
-                    <a href="./hellist">Hilfen</a>
-                </div>
-                <div id="header-block--nav-bar--nav-8" class="header-block--nav-bar--nav">
+                <div id="header-block--nav-bar--nav-6" class="header-block--nav-bar--nav">
                     <a href="./logout">Abmelden</a>
                 </div>
             </div>
         </div>
         <div id="content-block" class="container">
             <div id="content-block--content">
-                <div id="content-block--content--form">
-                    <div id="content-block--content--form--title">
-                        <h3>Suche</h3>
-                    </div>
-                    <form>
-                        <div id="content-block--content--form--search">
-                            <input type="text" name="query" id="content-block--content--form--search--input" autocomplete="off"/>
-                        </div>
-                        <div id="content-block--content--form--submit">
-                            <input type="submit" value="Suchen"/>
-                        </div>
-                    </form>
+                <div id="content-block--content--header">
+                    <h2 class="no-margin"></h2>
+                </div>
+                <div id="content-block--content--search-open">
+                    <button type="button" onclick="toggleSearch()">Suche</button>
                 </div>
                 <div id="content-block--content--message"></div>
                 <div id="content-block--content--results"></div> <!-- Watchdog will watch last or second last element to be visible and then load more books -->

@@ -39,7 +39,7 @@ async function setResults(query="") {
                         </div>
                         <div class="result--footer--user">
                             <span class="material-symbols-outlined">person</span>
-                            <span>${JSON.parse(book.readers).length}</span>
+                            <span>${book.readers.length}</span>
                         </div>
                     </div>
                 `;

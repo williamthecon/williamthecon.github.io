@@ -2,9 +2,9 @@ function addPage() {
     // TODO: Implement pagination logic here (will be called when user scrolls to the bottom of the results)
 }
 
-async function setResults(query) {
+async function setResults(query="") {
     const page = 0;
-    const response = await request("/books/book/list", "GET", true, { query, page });
+    const response = await request("/books/book/list", "GET", true, { query, page, visualize: true });
     if (response.success) {
         if (response.data.results.length == 0) {
             const message = document.getElementById("content-block--content--message");
@@ -25,21 +25,21 @@ async function setResults(query) {
                             <h5>` + book.authors.map(author => `<a href="./author?author=${author.id}">${author.name}</a>`).join(', ') + `</h5>
                         </div>
                         <div class="result--top--attributes>
-                            <span class="material-symbols-outlined` + (book.readers.includes(userID) ? " material-symbols-outlined-filled" : "") + `">bookmark</span>
-                            <span class="material-symbols-outlined` + (book.favourites.includes(userID) ? " material-symbols-outlined-filled" : "") + `">favorite</span>
-                            <span class="material-symbols-outlined` + (book.owners.includes(userID) ? " material-symbols-outlined-filled" : "") + `">folder</span>
-                            <span class="material-symbols-outlined` + (book.wishers.includes(userID) ? " material-symbols-outlined-filled" : "") + `">star</span>
+                            <span class="material-symbols-outlined` + (book.readers.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">bookmark</span>
+                            <span class="material-symbols-outlined` + (book.favourites.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">favorite</span>
+                            <span class="material-symbols-outlined` + (book.owners.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">folder</span>
+                            <span class="material-symbols-outlined` + (Object.keys(book.wishers).includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">star</span>
                         </div>
                     </div>
                     <div class="result--body"></div>
                     <div class="result--footer">
                         <div class="result--footer--rating">
                             <span class="material-symbols-outlined">star</span>
-                            <span>${book.rating}</span>
+                            <span>${book.ratings}</span>
                         </div>
                         <div class="result--footer--user">
                             <span class="material-symbols-outlined">person</span>
-                            <span>${book.readers.length}</span>
+                            <span>${JSON.parse(book.readers).length}</span>
                         </div>
                     </div>
                 `;
@@ -61,14 +61,18 @@ function init() {
         // Get param
         const query = getParam("query");
 
-        // Set input value
+        // Set header title
+        document.getElementById("content-block--header--title").innerHTML = query;
+
+        // Set search parameters
         document.getElementById("search-popup--form--query--input").value = query;
+        // TODO: Add more search parameters
 
         // Set results
         setResults(query);
     } else {
         // Set results
-        setResults("");
+        setResults();
     }
 }
 

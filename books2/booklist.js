@@ -62,7 +62,7 @@ function init() {
         const query = getParam("query");
 
         // Set header title
-        document.getElementById("content-block--header--title").innerHTML = query;
+        document.getElementById("content-block--content--header--title").innerHTML = query;
 
         // Set search parameters
         document.getElementById("search-popup--form--query--input").value = query;

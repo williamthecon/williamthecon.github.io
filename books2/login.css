@@ -28,7 +28,7 @@ input {
 
 input[type="text"], input[type="password"] {
     padding: 8px 10px;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
@@ -77,7 +77,8 @@ input[type="submit"]:hover {
 }
 
 #content-block--content--form h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 18px 0;
+    font-size: 30px;
 }
 
 #content-block--content--form form {
@@ -92,14 +93,18 @@ input[type="submit"]:hover {
     width: 100%;
     text-align: left;
     margin: 10px 0 0 0;
-    font-size:  18px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 #content-block--content--form input {
     width: 100%;
     margin: 10px 0;
-    font-size: 18px;
+    font-size: 22px;
+}
+
+#content-block--content--form input[type="submit"] {
+    margin: 25px 0 18px 0;
 }
 
 #content-block--content--form--error {
@@ -138,8 +143,35 @@ input[type="submit"]:hover {
     width: 100%;
 }
 
+@media screen and (max-width: 1000px) {
+    #content-block--content--form h3 {
+        margin: 0 0 11px 0;
+        font-size: 24px;
+    }
+
+    #content-block--content--form label {
+        margin: 10px 0 0 0;
+        font-size: 18px;
+    }
+
+    #content-block--content--form input {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    #content-block--content--form input[type="submit"] {
+        margin: 15px 0 11px 0;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    #content-block--content--form {
+        width: calc(100% - 60px);
+    }
+}
+
 @media screen and (max-width: 500px) {
     #content-block--content--form {
-        width: 90%;
+        width: calc(100% - 60px);
     }
 }

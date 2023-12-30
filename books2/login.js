@@ -1,4 +1,4 @@
-setLST("last-request", Math.round(Date.now() / 1000));
+setLST("last-request", Math.round(Date.now() / 1000 - 2.5));
 
 async function login(event) {
     event.preventDefault();

@@ -20,24 +20,24 @@ async function setResults(query="") {
                 const userID = getLST("user-id");
                 result.innerHTML = `
                     <div class="result--top">
+                    <div class="result--top--attributes">
+                        <span class="result--top--attributes--attribute material-symbols-outlined` + (book.readers.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">bookmark</span>
+                        <span class="result--top--attributes--attribute material-symbols-outlined` + (book.favourites.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">favorite</span>
+                        <span class="result--top--attributes--attribute material-symbols-outlined` + (book.owners.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">folder</span>
+                        <span class="result--top--attributes--attribute material-symbols-outlined` + (Object.keys(book.wishers).includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">star</span>
+                    </div>
                         <div class="result--top--header">
-                            <h4><a href="./book?id=${book.id}">${book.title}</a></h4>
-                            <h5>` + book.authors.map(author => `<a href="./author?author=${author.id}">${author.name}</a>`).join(', ') + `</h5>
-                        </div>
-                        <div class="result--top--attributes>
-                            <span class="material-symbols-outlined` + (book.readers.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">bookmark</span>
-                            <span class="material-symbols-outlined` + (book.favourites.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">favorite</span>
-                            <span class="material-symbols-outlined` + (book.owners.includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">folder</span>
-                            <span class="material-symbols-outlined` + (Object.keys(book.wishers).includes(userID) ? "" : " material-symbols-outlined-unfilled") + `">star</span>
+                            <h4 class="result--top--header--title"><a href="./book?id=${book.id}">${book.title}</a></h4>
+                            <h5 class="result--top--header--authors">` + book.authors.map(author => `<a href="./author?author=${author.id}">${author.name}</a>`).join(', ') + `</h5>
                         </div>
                     </div>
                     <div class="result--body"></div>
-                    <div class="result--footer">
-                        <div class="result--footer--rating">
+                    <div class="result--bottom">
+                        <div class="result--bottom--attribute result--bottom--rating">
                             <span class="material-symbols-outlined">star</span>
-                            <span>${book.ratings}</span>
+                            <span>${book.ratings.length /* Only temporary */}</span>
                         </div>
-                        <div class="result--footer--user">
+                        <div class="result--bottom--attribute result--bottom--user">
                             <span class="material-symbols-outlined">person</span>
                             <span>${book.readers.length}</span>
                         </div>
@@ -80,12 +80,12 @@ function toggleSearch() {
     if (document.getElementById("search-popup").style.display == "flex") {
         document.body.style.overflow = "auto";
         document.getElementById("overlay").style.display = "none";
-        document.getElementById("content-block--content--search-open").style.display = "block";
+        // document.getElementById("content-block--content").style.display = "block";
         document.getElementById("search-popup").style.display = "none";
     } else {
         document.body.style.overflow = "hidden";
         document.getElementById("overlay").style.display = "flex";
-        document.getElementById("content-block--content--search-open").style.display = "none";
+        // document.getElementById("content-block--content").style.display = "none";
         document.getElementById("search-popup").style.display = "flex";
     }
 }

@@ -18,6 +18,7 @@ input, button {
     color: var(--form-color);
     font-size: 16px;
     font-family: "Source Code Pro", monospace;
+    transition: 0.2s;
 }
 
 input[type="text"], input[type="password"] {
@@ -236,7 +237,7 @@ button:hover {
     width: 100%;
 }
 
-#search-popup--form--more {
+#search-popup--form--advanced {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -245,30 +246,14 @@ button:hover {
     margin: 10px 0;
 }
 
-#search-popup--form--more div {
-    display: flex;
-    flex-direction: row;
-}
-
-#search-popup--form--more div * {
-    margin: 0 5px;
-    size: 20px;
-}
-
-#search-popup--form--advanced {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
 #search-popup--form--advanced--link {
     box-sizing: border-box;
     padding: 10px;
     border-right: 1px solid var(--form-color);
     border-left: 1px solid var(--form-color);
     border-radius: 10px;
+    text-align: center;
+    width: 50%;
 }
 
 #search-popup--form--advanced--link:hover {

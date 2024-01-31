@@ -76,11 +76,6 @@ function init() {
         // Set results
         setResults();
     }
-
-    // Initialize search button
-    const more = document.getElementById("search-popup--form--more--input");
-    more.checked = true;
-    if (more.checked) more.click();
 }
 
 function toggleSearch() {
@@ -94,14 +89,5 @@ function toggleSearch() {
         document.getElementById("overlay").style.display = "flex";
         // document.getElementById("content-block--content").style.display = "none";
         document.getElementById("search-popup").style.display = "flex";
-    }
-}
-
-function toggleAdvancedSearch() {
-    console.log(document.getElementById("search-popup--form--advanced").style.display);
-    if (document.getElementById("search-popup--form--advanced").style.display !== "none") {
-        document.getElementById("search-popup--form--advanced").style.display = "none";
-    } else {
-        document.getElementById("search-popup--form--advanced").style.display = "block";
     }
 }

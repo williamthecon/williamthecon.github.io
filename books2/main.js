@@ -50,7 +50,7 @@ async function request(endpoint, method, authorized=false, args={}, body=null, h
     }
 
     // Prepare URL
-    var url = "http://wtc248.pythonanywhere.com/books" + endpoint
+    var url = "https://wtc248.pythonanywhere.com/books" + endpoint
     if (Object.keys(args).length > 0) {
         url += "?";
         for (const [key, value] of Object.entries(args)) {

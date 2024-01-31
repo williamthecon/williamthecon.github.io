@@ -1,6 +1,4 @@
 /* The mainly used colors will be variants of green and very dark gray. */
-/* The hex color codes sorted from dark to light are as follows: */
-/* #000805, #003220, #005d3a, #008755, #00b26f, #00dc8a */
 
 :root {
     --color-very-dark: hsl(150, 100%, 2%);

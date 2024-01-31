@@ -26,66 +26,6 @@ hr.break {
     padding: 0.5em;
 }
 
-.topic {
-    margin: 1.5em;
-    border: 1px solid rgb(24, 132, 219);
-    border-radius: 15px;
-    padding: 1.1em;
-}
-
-.topic-header {
-    position: relative;
-    white-space: nowrap;
-    width: 100%;
-}
-
-.topic-header * {
-    display: inline-block;
-    margin: 0;
-}
-
-.topic-header h2 {
-    text-decoration: underline rgb(24, 132, 219) 1px solid;
-    text-underline-offset: 4px;
-}
-
-.topic-content * {
-    margin-bottom: 0;
-}
-
-.topic-footer {
-    font-size: 0.8em;
-}
-
-.button-link {
-    position: absolute;
-    padding: 5px 10px;
-    border-radius: 15px;
-    border: 1px solid rgb(24, 132, 219);
-    background-color: rgb(21, 21, 21);
-    color: white;
-    right: 0;
-}
-
-.button-link:hover {
-    background-color: rgb(24, 132, 219, 0.9);
-}
-
-.button-link-text-2 {
-    display: none;
-}
-
-.horizontal-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 18px 0 0 0;
-}
-
-.horizontal-list * {
-    display: inline-block;
-    margin: 0;
-}
-
 #header {
     text-align: center;
     margin: 1em;
@@ -116,27 +56,6 @@ hr.break {
 }
 
 @media screen and (max-width: 464px) {
-    .topic-header {
-        white-space: initial;
-        margin-bottom: 45px;
-    }
-
-    .topic-header * {
-        display: inline-block;
-        margin: 0;
-    }
-
-    .button-link-text-1 {
-        display: none;
-        /* right: auto;
-        left: 0;
-        top: 100%; */
-    }
-
-    .button-link-text-2 {
-        display: inline;
-    }
-
     #header {
         text-align: left;
     }

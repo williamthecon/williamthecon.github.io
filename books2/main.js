@@ -50,7 +50,7 @@ async function request(endpoint, method, authorized=false, args={}, body=null, h
     }
 
     // Prepare URL
-    var url = "https://mgp-api--j9zwm20di.repl.co" + endpoint
+    var url = "http://wtc248.pythonanywhere.com/books" + endpoint
     if (Object.keys(args).length > 0) {
         url += "?";
         for (const [key, value] of Object.entries(args)) {
@@ -105,7 +105,7 @@ if (window.location.protocol === "https:") {
         }
     } else {
         // Session Token is set -> needs to be verified
-        request("/books/validate", "get", true)
+        request("/validate", "get", true)
         .then((responseJSON) => {
             if (!responseJSON.success) {
                 delLST("session-id");

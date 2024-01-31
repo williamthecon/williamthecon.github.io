@@ -15,7 +15,7 @@ async function login(event) {
     const username = document.getElementById("content-block--content--form--username--input").value;
     const password = document.getElementById("content-block--content--form--password--input").value;
 
-    const response = await request("/books/login", "POST", false, {}, { username, password });
+    const response = await request("/login", "POST", false, {}, { username, password });
     if (response.success) {
         setLST("session-id", response.data["session-id"]);
         setLST("user-id", response.data["user-id"]);

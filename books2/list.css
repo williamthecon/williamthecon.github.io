@@ -43,6 +43,17 @@ input[type="submit"]:hover {
     color: var(--form-background-color);
 }
 
+input[type="checkbox"] {
+    box-sizing: border-box;
+    transform: scale(1.5);
+    accent-color: var(--form-color);
+}
+
+input[type="checkbox"]:hover {
+    cursor: pointer;
+    transform: scale(1.8);
+}
+
 button {
     padding: 8px 18px;
     border-radius: 20px;
@@ -225,6 +236,50 @@ button:hover {
     width: 100%;
 }
 
+#search-popup--form--more {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#search-popup--form--more div {
+    display: flex;
+    flex-direction: row;
+}
+
+#search-popup--form--more div * {
+    margin: 0 5px;
+    size: 20px;
+}
+
+#search-popup--form--advanced {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#search-popup--form--advanced--link {
+    box-sizing: border-box;
+    padding: 10px;
+    border-right: 1px solid var(--form-color);
+    border-left: 1px solid var(--form-color);
+    border-radius: 10px;
+}
+
+#search-popup--form--advanced--link:hover {
+    background-color: var(--form-focus-background-color);
+}
+
+/* #search-popup--form--advanced > * {
+    box-sizing: border-box;
+    margin: 0 5px;
+} */
+
 #search-popup--form--buttons {
     display: flex;
     flex-direction: row;
@@ -242,7 +297,7 @@ button:hover {
 }
 
 #search-popup--form--buttons div * {
-    width: 80%;
+    width: 90%;
     margin: 20px 0;
 }
 

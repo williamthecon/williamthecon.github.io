@@ -4,7 +4,7 @@ function addPage() {
 
 async function setResults(query="") {
     const page = 0;
-    const response = await request("/books/book/list", "GET", true, { query, page, visualize: true });
+    const response = await request("/book/list", "GET", true, { query, page });
     if (response.success) {
         if (response.data.results.length == 0) {
             const message = document.getElementById("content-block--content--message");
@@ -70,10 +70,17 @@ function init() {
 
         // Set results
         setResults(query);
+    } else if (getParam("title") || getParam("author")) {
+        // Set results
     } else {
         // Set results
         setResults();
     }
+
+    // Initialize search button
+    const more = document.getElementById("search-popup--form--more--input");
+    more.checked = true;
+    if (more.checked) more.click();
 }
 
 function toggleSearch() {
@@ -87,5 +94,14 @@ function toggleSearch() {
         document.getElementById("overlay").style.display = "flex";
         // document.getElementById("content-block--content").style.display = "none";
         document.getElementById("search-popup").style.display = "flex";
+    }
+}
+
+function toggleAdvancedSearch() {
+    console.log(document.getElementById("search-popup--form--advanced").style.display);
+    if (document.getElementById("search-popup--form--advanced").style.display !== "none") {
+        document.getElementById("search-popup--form--advanced").style.display = "none";
+    } else {
+        document.getElementById("search-popup--form--advanced").style.display = "block";
     }
 }

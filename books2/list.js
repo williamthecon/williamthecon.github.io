@@ -2,9 +2,13 @@ function addPage() {
     // TODO: Implement pagination logic here (will be called when user scrolls to the bottom of the results)
 }
 
-async function setResults(query="") {
-    const page = 0;
-    const response = await request("/book/list", "GET", true, { query, page });
+async function setResults(query="", searchID="") {
+    let response;
+    if (searchID) {
+        response = await request("/book/list", "GET", true, { searchID });
+    } else {
+        response = await request("/book/list", "GET", true, { query });
+    }
     if (response.success) {
         if (response.data.results.length == 0) {
             const message = document.getElementById("content-block--content--message");
@@ -66,12 +70,14 @@ function init() {
 
         // Set search parameters
         document.getElementById("search-popup--form--query--input").value = query;
-        // TODO: Add more search parameters
 
         // Set results
         setResults(query);
-    } else if (getParam("title") || getParam("author")) {
+    } else if (getParam("search-id")) {
+        const searchID = getParam("search-id");
+
         // Set results
+            setResults("", searchID);
     } else {
         // Set results
         setResults();

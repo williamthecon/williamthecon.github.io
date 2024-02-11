@@ -4,16 +4,16 @@ if (!window.location.href.startsWith("file:///")) {
     const token = localStorage.getItem("token");
 
     if (token === null) {
-        if (!window.location.href.endsWith("/school/login")) {
+        if (!window.location.href.endsWith("/de/school/login")) {
             localStorage.setItem('redirect-to', window.location.href);
-            window.location.href = "/school/login";
+            window.location.href = "/de/school/login";
         } else if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
-            localStorage.setItem('redirect-to', "/school/");
+            localStorage.setItem('redirect-to', "/de/school/");
         }
     } else {
-        if (window.location.href.endsWith("/school/login")) {
+        if (window.location.href.endsWith("/de/school/login")) {
             if ([null, "", undefined].includes(localStorage.getItem('redirect-to'))) {
-                window.location.href = "/school/";
+                window.location.href = "/de/school/";
             } else {
                 let redirectTo = localStorage.getItem('redirect-to');
                 localStorage.removeItem('redirect-to');

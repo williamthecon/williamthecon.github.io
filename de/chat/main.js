@@ -10,11 +10,11 @@ function getCookie(name) {
 }
 
 // Check if user has a session
-const isUsernamePage = ["https://williamthecon.github.io/chat/username", "https://williamthecon.github.io/chat/username.html"].includes(window.location.href);
+const isUsernamePage = ["https://williamthecon.github.io/de/chat/username", "https://williamthecon.github.io/de/chat/username.html"].includes(window.location.href);
 if (!getCookie("sessionId")) {
     if (!isUsernamePage) {
-        window.location.href = "/chat/username";
+        window.location.href = "/de/chat/username";
     }
 } else if (isUsernamePage) {
-    window.location.href = "/chat/";
+    window.location.href = "/de/chat/";
 }

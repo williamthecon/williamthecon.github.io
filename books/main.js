@@ -36,7 +36,7 @@ function popLocalStorage(key) {
 }
 
 function loadData(type, define) {
-    fetch("https://5c6117c1-6f25-4257-8bc9-4bf25c5e0783-00-ivltivoc0e3y.spock.replit.dev/load/" + type + "?timestamp=" + Date.now())
+    fetch("https://wtc248.pythonanywhere.com/load/" + type + "?timestamp=" + Date.now())
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -54,7 +54,7 @@ function loadData(type, define) {
 }
 
 function saveData(data, type, define = (_) => {}) {
-    fetch('https://5c6117c1-6f25-4257-8bc9-4bf25c5e0783-00-ivltivoc0e3y.spock.replit.dev/save/' + type, {
+    fetch('https://wtc248.pythonanywhere.com/save/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -73,7 +73,7 @@ function saveData(data, type, define = (_) => {}) {
 }
 
 function addItem(item, type, define = (_) => {}) {
-    fetch('https://5c6117c1-6f25-4257-8bc9-4bf25c5e0783-00-ivltivoc0e3y.spock.replit.dev/add/' + type, {
+    fetch('https://wtc248.pythonanywhere.com/add/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -92,7 +92,7 @@ function addItem(item, type, define = (_) => {}) {
 }
 
 function editItem(item, newItem, type, define = (_) => {}) {
-    fetch('https://5c6117c1-6f25-4257-8bc9-4bf25c5e0783-00-ivltivoc0e3y.spock.replit.dev/edit/' + type, {
+    fetch('https://wtc248.pythonanywhere.com/edit/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -111,7 +111,7 @@ function editItem(item, newItem, type, define = (_) => {}) {
 }
 
 function delItem(item, type, define = (_) => {}) {
-    fetch('https://5c6117c1-6f25-4257-8bc9-4bf25c5e0783-00-ivltivoc0e3y.spock.replit.dev/del/' + type, {
+    fetch('https://wtc248.pythonanywhere.com/del/' + type, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'

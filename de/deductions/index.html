@@ -6,13 +6,74 @@
         <meta name="description" content="-">
         <meta name="keywords" content="williamthecon.github.io williamthecon github deductions homepage logic hints">
         <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
-        <title>Deductions</title>
+        <title>Deduktionen</title>
         <link rel="stylesheet" type="text/css" href="./style.css">
     </head>
     <body>
         <script type="text/javascript" src="./main.js"></script>
-        <div id="header" class="container"></div>
-        <div id="content" class="container"></div>
-        <div id="footer" class="container"></div>
+        <div id="overlay" class="full-screen"></div>
+        <div id="popup-background" class="full-screen">
+            <div id="popup--reset" class="popup">
+                <div class="popup--element popup--header">
+                    <h2>Zurücksetzen</h2>
+                </div>
+                <div class="popup--element popup--content">
+                    <p>Wollen Sie alle Deduktionen wirklich zurücksetzen?</p>
+                </div>
+                <div class="popup--element popup--actions">
+                    <button type="button" onclick="resetDeductions()">Weiter</button>
+                    <button type="button" onclick="closePopup()">Abbrechen</button>
+                </div>
+            </div>
+            <div id="popup--load" class="popup">
+                <div class="popup--element popup--header">
+                    <h2>Laden</h2>
+                </div>
+                <div class="popup--element popup--content">
+                    <p>Wähle eine oder mehrer Dateien aus:</p>
+                    <input id="load--file-input" type="file" multiple>
+                </div>
+                <div class="popup--element popup--actions">
+                    <button type="button" onclick="loadDeductions(document.getElementById('load--file-input').files)">Laden</button>
+                    <button type="button" onclick="closePopup()">Abbrechen</button>
+                </div>
+            </div>
+            <div id="popup--save" class="popup"></div>
+        </div>
+        <div id="sidebar" class="full-width">
+            <div id="sidebar--deactivator" onclick="toggleSidebar()">&times;</div>
+            <div id="sidebar--actions">
+                <div class="sidebar-action"><a id="sidebar--reset" onclick="if (!this.classList.contains('inactive-link-button')) { toggleSidebar();openPopup('popup--reset') }">Zurücksetzen</a></div>
+                <div class="sidebar-action"><a id="sidebar--load" onclick="if (!this.classList.contains('inactive-link-button')) { toggleSidebar();openPopup('popup--load') }">Laden</a></div>
+                <div class="sidebar-action"><a id="sidebar--save" onclick="if (!this.classList.contains('inactive-link-button')) { toggleSidebar();openPopup('popup--save') }">Speichern</a></div>
+            </div>
+        </div>
+        <div id="header" class="container full-width flex-vertically">
+            <div id="title"><h1>Deduktionen</h1></div>
+            <div id="navbar">
+                <div class="navbar-action"><a id="navbar--reset" onclick="if (!this.classList.contains('inactive-link-button')) { openPopup('popup--reset') }">Zurücksetzen</a></div>
+                <div class="navbar-action"><a id="navbar--load" onclick="if (!this.classList.contains('inactive-link-button')) { openPopup('popup--load') }">Laden</a></div>
+                <div class="navbar-action"><a id="navbar--save" onclick="if (!this.classList.contains('inactive-link-button')) { openPopup('popup--save') }">Speichern</a></div>
+                <div id="navbar--activator" onclick="toggleSidebar()">&#x2630;</div>
+            </div>
+        </div>
+        <div id="page-start" class="container full-width flex-vertically content page-active">
+            <div>
+                <p>Fange an, indem Du eine der folgenden Optionen wählst:</p>
+            </div>
+            <div>
+                <button type="button" onclick="switchToPage('create')">Neues Projekt erstellen</button>
+                <button type="button" onclick="openPopup('popup--load')">Projekt hochladen</button>
+            </div>
+        </div>
+        <div id="page-deducting" class="container full-width flex-vertically content"></div>
+        <div id="page-loaded" class="container full-width flex-vertically content"></div>
+        <div id="page-create" class="container full-width flex-vertically content"></div>
+        <div id="footer" class="container full-width flex-vertically">
+            <p>&copy; 2024 <a href="https://github.com/williamthecon" target="_blank">williamthecon</a></p>
+        </div>
+        <script>
+            init();
+        </script>
     </body>
 </html>

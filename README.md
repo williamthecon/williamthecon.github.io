@@ -2,7 +2,7 @@
 
 Originally intended as a place to share information about some of my favourite hobbies, this site has become mostly private. There will be more content in the future, but it will take some time.
 
-**Most areas on this website are only accessable with an account, so basically `/books/*`, `/books2`, `/chat/*` and `/school/*` are for private use only. Everything else can hardly be called a website ...**
+**Most areas on this website are only accessable with an account, so basically `/books/*` and `/de/*` are for private use only. Everything else can hardly be called a website ...**
 
 ## Password (`/password`, `/password2`)
 

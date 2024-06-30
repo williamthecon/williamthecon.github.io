@@ -126,6 +126,10 @@ button:focus {
     padding: 20px;
 }
 
+.half-width {
+    width: 50%;
+}
+
 .navigator {
     cursor: pointer;
     padding: 8px 18px;

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Music - Homepage">
+        <meta name="keywords" content="music homepage">
+        <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
+        <title>Musik</title>
+        <link rel="stylesheet" type="text/css" href="../../general.css">
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body>
+        <script type="text/javascript" src="./main.js"></script>
+        <div id="overlay" class="fullscreen"></div>
+        <div id="popup-background" class="fullscreen"></div>
+        <div id="sidebar" class="full-height">
+            <div id="sidebar-deactivator" onclick="toggleSidebar()">&times;</div>
+            <div id="sidebar-actions">
+                <div class="sidebar-action nav-new">Neue Liste</div>
+            </div>
+        </div>
+        <div id="header" class="full-width padding-20 flex-space-between">
+            <div id="title">
+                <h1>Musik</h1>
+            </div>
+            <div id="navbar">
+                <div class="navigator nav-new">Neue Liste</div>
+                <div id="sidebar-activator" onclick="toggleSidebar()">&#x2630;</div>
+            </div>
+        </div>
+        <div id="page-start" class="full-width content flex-horizontal">
+            <div id="search" class="half-width full-height">
+                <input id="search-input" type="text" placeholder="Lieder suchen...">
+            </div>
+            <div id="list" class="half-width full-height">
+                <div id="list-container">
+                    <ul id="lists">
+                        <li class="list-header">Liste</li>
+                        <li class="list-header">Liste</li>
+                        <li class="list-header">Liste</li>
+                        <li class="list-header">Liste</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="footer" class="full-width padding-20">
+            <div>&copy; 2024 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></div>
+        </div>
+    </body>
+</html>

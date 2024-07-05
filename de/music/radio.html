@@ -303,6 +303,8 @@
                     startVideo();
                 }
 
+                document.title = currentSong[0] + " - " + currentSong[1];
+
                 await setNextSong();
                 done = false;
             }

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Music - Radio">
+        <meta name="keywords" content="music radio">
+        <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
+        <title>Musik - Radio</title>
+        <link rel="stylesheet" type="text/css" href="../../general.css">
+        <style>
+            body {
+                min-width: 100px;
+            }
+
+            #background {
+                display: none;
+            }
+
+            .bg-reset {
+                display: initial !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
+            #header {
+                height: 35px;
+            }
+
+            #header h1 {
+                font-size: 20px;
+            }
+
+            #page-start {
+                height: calc(100vh - 70px);
+                min-height: 20px;
+            }
+
+            #footer {
+                height: 35px;
+                font-size: 12px;
+                padding-top: 7px;
+            }
+
+            #player-bar {
+                display: flex;
+                flex-direction: space-between;
+                width: 100%;
+                height: 55px;
+                overflow: hidden;
+                border-bottom: 1px solid rgb(24, 132, 219);
+            }
+
+            #player-bar--info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 100%;
+                padding: 6px 7px;
+                max-width: 300px;
+            }
+
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+
+            .scrolling {
+                animation: scroll linear infinite;
+            }
+
+            #player-bar--title {
+                font-weight: bold;
+                font-size: 18px;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                white-space: nowrap;
+                scrollbar-width: none;
+                animation-duration: 10s;
+            }
+
+            #player-bar--title::-webkit-scrollbar {
+                display: none;
+            }
+
+            #player-bar--artists {
+                font-size: 15px;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                white-space: nowrap;
+                scrollbar-width: none;
+                animation-duration: 10s;
+            }
+
+            #player-bar--artists::-webkit-scrollbar {
+                display: none;
+            }
+
+            #player-bar--config {
+                display: flex;
+                flex-direction: space-between;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            #player-bar--tags, #player-bar--negs {
+                font-size: 15px;
+                padding: 0 5px;
+                text-wrap: stable;
+            }
+
+            #player-bar--reset {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 45px;
+                cursor: pointer;
+            }
+
+            #player-bar--reset:hover {
+                background-color: rgb(24, 132, 219);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            #controls {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: calc(100% - 55px);
+                /* flex: 1; */
+                box-sizing: border-box;
+            }
+
+            .control {
+                flex: 1;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .control:hover {
+                background-color: rgb(24, 132, 219);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            .control svg {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="background" class="fullscreen bg-reset">
+            <iframe id="player" width="560" height="315" src="https://www.youtube-nocookie.com/embed/ArUxhUQZaQs" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div id="header" class="full-width padding-20 flex-space-between">
+            <div id="title">
+                <h1>Musik - Radio</h1>
+            </div>
+        </div>
+        <div id="page-start" class="full-width content flex-vertical">
+            <div id="player-bar">
+                <div id="player-bar--info">
+                    <div id="player-bar--title">
+                        Diamonds and sd sdbf sbdjfh sjdhf sjhdbfj hsbjdhfjshdbfhbdjfh b
+                    </div>
+                    <div id="player-bar--artists">
+                        Rihanna
+                    </div>
+                </div>
+                <div id="player-bar--config">
+                    <div id="player-bar--tags">80s, pop, rock</div>
+                    <div id="player-bar--negs">90s, classic</div>
+                    <div id="player-bar--reset">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </div>
+                </div>
+            </div>
+            <div id="controls">
+                <!-- <div id="prev" class="control">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
+                </div> -->
+                <div id="play" class="control">
+                    <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M560-200v-560h160v560H560Zm-320 0v-560h160v560H240Z"/></svg>
+                </div>
+                <div id="next" class="control">
+                    <svg id="nextIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"/></svg>
+                </div>
+            </div>
+        </div>
+        <div id="footer" class="full-width padding-20">
+            <div>&copy; 2024 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></div>
+        </div>
+        <script>
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+
+            var playing = false;
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+
+            playIcon.addEventListener('click', () => {
+                if (!playing) {
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                    startVideo();
+                }
+            });
+
+            pauseIcon.addEventListener('click', () => {
+                if (playing) {
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                    pauseVideo();
+                }
+            });
+
+            const nextIcon = document.getElementById('nextIcon');
+            nextIcon.addEventListener('click', () => {
+                newSong();
+            });
+
+            const playerTitle = document.getElementById('player-bar--title');
+            playerTitle.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                playerTitle.scrollLeft += e.deltaY / 3;
+            });
+
+            const playerArtists = document.getElementById('player-bar--artists');
+            playerArtists.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                playerArtists.scrollLeft += e.deltaY;
+            });
+
+            function isOverflowing(element) {
+                return element.scrollWidth > element.clientWidth;
+            }
+
+            var currentSong = null;
+            async function getSongs(limit = 1) {
+                const response = await fetch('https://wtc248.pythonanywhere.com/59f/7e95192bc2a31c311e5cb7d7e0cb9696?limit=' + limit, {
+                    method: 'GET'
+                });
+                const responseJson = await (response.json());
+                return responseJson["data"]["results"];
+            }
+
+            var nextSong;
+            async function setNextSong() {
+                nextSong = (await getSongs(1))[0];
+                console.log("setNextSong", nextSong);
+            }
+
+            const background = document.getElementById('background');
+            async function newSong() {
+                currentSong = nextSong;
+                console.log("newSong", currentSong);
+                playerTitle.innerText = currentSong[0];
+                playerArtists.innerText = currentSong[1];
+
+                if (isOverflowing(playerTitle) && !playerTitle.classList.contains('scrolling')) {
+                    playerTitle.classList.add("scrolling");
+                } else if (playerTitle.classList.contains('scrolling')) {
+                    playerTitle.classList.remove("scrolling");
+                }
+
+                if (isOverflowing(playerArtists) && !playerArtists.classList.contains('scrolling')) {
+                    playerArtists.classList.add("scrolling");
+                } else if (playerArtists.classList.contains('scrolling')) {
+                    playerArtists.classList.remove("scrolling");
+                }
+
+                loadVideo(currentSong[2]);
+
+                if (playing) {
+                    startVideo();
+                }
+
+                await setNextSong();
+                done = false;
+            }
+
+            const player = document.getElementById('player');
+            var done = false;
+            player.addEventListener('onStateChange', function (event) {
+                if (event.data == 0 && !done) {
+                    done = true;
+                    newSong();
+                }
+            });
+            function loadVideo(id) {
+                player.src = 'https://www.youtube-nocookie.com/embed/' + id
+            }
+
+            function startVideo() {
+                console.log('startVideo');
+                // TODO
+                playing = true;
+            }
+            function pauseVideo() {
+                console.log('pauseVideo');
+                // TODO
+                playing = false;
+            }
+            function stopVideo() {
+                // TODO
+                playing = false;
+            }
+
+            setNextSong().then(() => newSong());
+        </script>
+    </body>
+</html>

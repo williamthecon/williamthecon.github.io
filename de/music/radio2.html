@@ -14,13 +14,7 @@
             }
 
             #background {
-                /* display: none; */
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
+                display: none;
             }
 
             #header {
@@ -80,7 +74,7 @@
                 overflow-y: hidden;
                 white-space: nowrap;
                 scrollbar-width: none;
-                animation-duration: 10s;
+                animation-duration: 600s;
             }
 
             #player-bar--title::-webkit-scrollbar {
@@ -93,7 +87,7 @@
                 overflow-y: hidden;
                 white-space: nowrap;
                 scrollbar-width: none;
-                animation-duration: 10s;
+                animation-duration: 600s;
             }
 
             #player-bar--artists::-webkit-scrollbar {
@@ -265,14 +259,25 @@
                 playerTitle.innerText = currentSong[0];
                 playerArtists.innerText = currentSong[1];
 
-                if (isOverflowing(playerTitle) && !playerTitle.classList.contains('scrolling')) {
-                    playerTitle.classList.add("scrolling");
+                if (isOverflowing(playerTitle)) {
+                    for (let i = 0; i < 200; i++) {
+                        playerTitle.innerText += currentSong[0]
+                    }
+
+                    if (!playerTitle.classList.contains('scrolling')) {
+                        playerTitle.classList.add("scrolling");
+                    }
                 } else if (playerTitle.classList.contains('scrolling')) {
                     playerTitle.classList.remove("scrolling");
                 }
 
-                if (isOverflowing(playerArtists) && !playerArtists.classList.contains('scrolling')) {
-                    playerArtists.classList.add("scrolling");
+                if (isOverflowing(playerArtists)) {
+                    for (let i = 0; i < 200; i++) {
+                        playerArtists.innerText += currentSong[1]
+                    }
+                    if (!playerArtists.classList.contains('scrolling')) {
+                        playerArtists.classList.add("scrolling");
+                    }
                 } else if (playerArtists.classList.contains('scrolling')) {
                     playerArtists.classList.remove("scrolling");
                 }

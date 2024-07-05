@@ -18,22 +18,24 @@
             }
 
             #header {
-                height: 35px;
+                height: 30px;
+                padding: 10px;
             }
 
             #header h1 {
-                font-size: 20px;
+                font-size: 16px;
+                margin: 0;
             }
 
             #page-start {
-                height: calc(100vh - 70px);
+                height: calc(100vh - 76px);
                 min-height: 20px;
             }
 
             #footer {
-                height: 35px;
-                font-size: 12px;
-                padding-top: 7px;
+                height: 35px !important;
+                font-size: 12px !important;
+                padding-top: 12px !important;
             }
 
             #player-bar {
@@ -268,6 +270,9 @@
                     const children = playerTitle.children;
                     for(let i = 0; i < children.length; i++) {
                         const child = children[i];
+                        if (i != 0) {
+                            child.innerText = "";
+                        }
                         child.classList.remove("scrolling");
                     }
                 }
@@ -285,6 +290,9 @@
                     const children = playerArtists.children;
                     for(let i = 0; i < children.length; i++) {
                         const child = children[i];
+                        if (i != 0) {
+                            child.innerText = "";
+                        }
                         child.classList.remove("scrolling");
                     }
                 }

@@ -17,16 +17,6 @@
                 display: none;
             }
 
-            .bg-reset {
-                display: initial !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
-            }
-
             #header {
                 height: 35px;
             }
@@ -53,6 +43,7 @@
                 height: 55px;
                 overflow: hidden;
                 border-bottom: 1px solid rgb(24, 132, 219);
+                background-color: rgb(43, 43, 43);
             }
 
             #player-bar--info {
@@ -61,7 +52,7 @@
                 justify-content: space-between;
                 width: 100%;
                 padding: 6px 7px;
-                max-width: 300px;
+                /* max-width: 300px; */
             }
 
             @keyframes scroll {
@@ -73,38 +64,35 @@
                 }
             }
 
-            .scrolling {
-                animation: scroll linear infinite;
+            .scrolling-container {
+                overflow: hidden;
+                white-space: nowrap;
             }
 
-            #player-bar--title {
+            .scrolling {
+                display: inline-block;
+                animation: scroll 10s linear infinite;
+                padding-right: 30px;
+            }
+
+            .scrolling:nth-child(2) {
+                animation-delay: -10s;
+            }
+
+            .scrolling:nth-child(3) {
+                animation-delay: -20s;
+            }
+
+            #player-bar--title div {
                 font-weight: bold;
                 font-size: 18px;
-                overflow-x: scroll;
-                overflow-y: hidden;
-                white-space: nowrap;
-                scrollbar-width: none;
-                animation-duration: 10s;
-            }
-
-            #player-bar--title::-webkit-scrollbar {
-                display: none;
             }
 
             #player-bar--artists {
                 font-size: 15px;
-                overflow-x: scroll;
-                overflow-y: hidden;
-                white-space: nowrap;
-                scrollbar-width: none;
-                animation-duration: 10s;
             }
 
-            #player-bar--artists::-webkit-scrollbar {
-                display: none;
-            }
-
-            #player-bar--config {
+            /* #player-bar--config {
                 display: flex;
                 flex-direction: space-between;
                 justify-content: space-between;
@@ -130,7 +118,7 @@
             #player-bar--reset:hover {
                 background-color: rgb(24, 132, 219);
                 transition: background-color 0.2s ease-in-out;
-            }
+            } */
 
             #controls {
                 display: flex;
@@ -159,8 +147,8 @@
         </style>
     </head>
     <body>
-        <div id="background" class="fullscreen bg-reset">
-            <iframe id="player" width="560" height="315" src="https://www.youtube-nocookie.com/embed/ArUxhUQZaQs" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div id="background" class="fullscreen">
+            <div id="player"></div>
         </div>
         <div id="header" class="full-width padding-20 flex-space-between">
             <div id="title">
@@ -170,24 +158,26 @@
         <div id="page-start" class="full-width content flex-vertical">
             <div id="player-bar">
                 <div id="player-bar--info">
-                    <div id="player-bar--title">
-                        Diamonds and sd sdbf sbdjfh sjdhf sjhdbfj hsbjdhfjshdbfhbdjfh b
+                    <div id="player-bar--title" class="scrolling-container">
+                        <div class="">...</div>
+                        <div class=""></div>
                     </div>
-                    <div id="player-bar--artists">
-                        Rihanna
+                    <div id="player-bar--artists" class="scrolling-container">
+                        <div class="">...</div>
+                        <div class=""></div>
                     </div>
                 </div>
-                <div id="player-bar--config">
+                <!-- <div id="player-bar--config">
                     <div id="player-bar--tags">80s, pop, rock</div>
                     <div id="player-bar--negs">90s, classic</div>
                     <div id="player-bar--reset">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div id="controls">
                 <!-- <div id="prev" class="control">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
+                    <svg id="prevIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
                 </div> -->
                 <div id="play" class="control">
                     <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
@@ -230,18 +220,6 @@
                 newSong();
             });
 
-            const playerTitle = document.getElementById('player-bar--title');
-            playerTitle.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                playerTitle.scrollLeft += e.deltaY / 3;
-            });
-
-            const playerArtists = document.getElementById('player-bar--artists');
-            playerArtists.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                playerArtists.scrollLeft += e.deltaY;
-            });
-
             function isOverflowing(element) {
                 return element.scrollWidth > element.clientWidth;
             }
@@ -257,30 +235,61 @@
 
             var nextSong;
             async function setNextSong() {
-                nextSong = (await getSongs(1))[0];
-                console.log("setNextSong", nextSong);
+                const songs = await getSongs(2);
+                if (songs[0] == currentSong) {
+                    nextSong = songs[1];
+                } else {
+                    nextSong = songs[0];
+                }
             }
+            setNextSong();
 
             const background = document.getElementById('background');
+            const playerTitle = document.getElementById('player-bar--title');
+            const playerTitleFirst = playerTitle.firstElementChild;
+            const playerArtists = document.getElementById('player-bar--artists');
+            const playerArtistsFirst = playerArtists.firstElementChild;
             async function newSong() {
                 currentSong = nextSong;
-                console.log("newSong", currentSong);
-                playerTitle.innerText = currentSong[0];
-                playerArtists.innerText = currentSong[1];
 
-                if (isOverflowing(playerTitle) && !playerTitle.classList.contains('scrolling')) {
-                    playerTitle.classList.add("scrolling");
-                } else if (playerTitle.classList.contains('scrolling')) {
-                    playerTitle.classList.remove("scrolling");
+                playerTitleFirst.innerText = currentSong[0];
+                playerArtistsFirst.innerText = currentSong[1];
+
+                if (isOverflowing(playerTitleFirst)) {
+                    const children = playerTitle.children;
+                    for(let i = 0; i < children.length; i++) {
+                        const child = children[i];
+                        child.innerText = currentSong[0];
+                        if (!child.classList.contains('scrolling')) {
+                            child.classList.add("scrolling");
+                        }
+                    }
+                } else if (playerTitleFirst.classList.contains('scrolling')) {
+                    const children = playerTitle.children;
+                    for(let i = 0; i < children.length; i++) {
+                        const child = children[i];
+                        child.classList.remove("scrolling");
+                    }
                 }
 
-                if (isOverflowing(playerArtists) && !playerArtists.classList.contains('scrolling')) {
-                    playerArtists.classList.add("scrolling");
-                } else if (playerArtists.classList.contains('scrolling')) {
-                    playerArtists.classList.remove("scrolling");
+                if (isOverflowing(playerArtistsFirst)) {
+                    const children = playerArtists.children;
+                    for(let i = 0; i < children.length; i++) {
+                        const child = children[i];
+                        child.innerText = currentSong[1];
+                        if (!child.classList.contains('scrolling')) {
+                            child.classList.add("scrolling");
+                        }
+                    }
+                } else if (playerArtistsFirst.classList.contains('scrolling')) {
+                    const children = playerArtists.children;
+                    for(let i = 0; i < children.length; i++) {
+                        const child = children[i];
+                        child.classList.remove("scrolling");
+                    }
                 }
 
-                loadVideo(currentSong[2]);
+                player.loadVideoById(currentSong[2]);
 
                 if (playing) {
                     startVideo();
@@ -290,34 +299,61 @@
                 done = false;
             }
 
-            const player = document.getElementById('player');
+            // This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // This function creates an <iframe> (and YouTube player)
+            // after the API code downloads.
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    height: '360',
+                    width: '640',
+                    videoId: 'M7lc1UVf-VE',
+                    playerVars: {
+                        'playsinline': 1,
+                        'enablejsapi': 1
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+
+            // The API will call this function when the video player is ready.
+            function onPlayerReady(event) {
+                newSong();
+            }
+
+            // The API calls this function when the player's state changes.
+            // The function indicates that when playing a video (state=1),
+            // the player should play for six seconds and then stop.
             var done = false;
-            player.addEventListener('onStateChange', function (event) {
-                if (event.data == 0 && !done) {
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.ENDED && !done) {
                     done = true;
                     newSong();
                 }
-            });
-            function loadVideo(id) {
-                player.src = 'https://www.youtube-nocookie.com/embed/' + id
             }
 
             function startVideo() {
                 console.log('startVideo');
-                // TODO
+                player.playVideo();
                 playing = true;
             }
             function pauseVideo() {
                 console.log('pauseVideo');
-                // TODO
+                player.pauseVideo();
                 playing = false;
             }
             function stopVideo() {
-                // TODO
+                player.stopVideo();
                 playing = false;
             }
-
-            setNextSong().then(() => newSong());
         </script>
     </body>
 </html>

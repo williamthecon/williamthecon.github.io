@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Music - Radio">
+        <meta name="keywords" content="music radio">
+        <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
+        <title>Musik - Radio</title>
+        <link rel="stylesheet" type="text/css" href="../../general.css">
+        <style>
+            body {
+                min-width: 100px;
+            }
+
+            #page-start {
+                min-height: 20px;
+            }
+
+            #controls {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 100%;
+            }
+
+            .control {
+                flex: 1;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .control:hover {
+                background-color: rgb(24, 132, 219);
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            .control svg {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay" class="fullscreen"></div>
+        <div id="popup-background" class="fullscreen"></div>
+        <div id="sidebar" class="full-height">
+            <div id="sidebar-deactivator" onclick="toggleSidebar()">&times;</div>
+            <div id="sidebar-actions">
+                <div class="sidebar-action nav-new">Neu</div>
+            </div>
+        </div>
+        <div id="header" class="full-width padding-20 flex-space-between">
+            <div id="title">
+                <h1>Musik</h1>
+            </div>
+            <div id="navbar">
+                <div class="navigator nav-new">Neu</div>
+                <div id="sidebar-activator" onclick="toggleSidebar()">&#x2630;</div>
+            </div>
+        </div>
+        <div id="page-start" class="full-width content flex-vertical">
+            <div id="controls">
+                <div id="prev" class="control">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
+                </div>
+                <div id="play" class="control">
+                    <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M560-200v-560h160v560H560Zm-320 0v-560h160v560H240Z"/></svg>
+                </div>
+                <div id="next" class="control">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"/></svg>
+                </div>
+            </div>
+        </div>
+        <div id="footer" class="full-width padding-20">
+            <div>&copy; 2024 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></div>
+        </div>
+        <script>
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+
+            playIcon.addEventListener('click', () => {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            });
+
+            pauseIcon.addEventListener('click', () => {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            });
+        </script>
+    </body>
+</html>

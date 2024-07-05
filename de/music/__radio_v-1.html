@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Music - Radio">
+        <meta name="keywords" content="music radio">
+        <meta name="author" content="williamthecon" url="https://github.com/williamthecon">
+        <title>Musik - Radio</title>
+        <link rel="stylesheet" type="text/css" href="../../general.css">
+        <style>
+            body {
+                min-width: 100px;
+            }
+
+            #controls {
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .control {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 1vw;
+            }
+
+            .control-button {
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                max-height: 30vw;
+                max-width: 30vh;
+                border-radius: 10000px;
+                border: 1px solid rgb(24, 132, 219);
+                background-color: rgb(21, 21, 21);
+                box-shadow: 0 0 5px rgb(24, 132, 219);
+                padding: 12%;
+            }
+
+            .control-button:hover {
+                background-color: rgb(24, 132, 219);
+                transition: background-color 0.2s ease-in-out;
+                transform: scale(1.05);
+            }
+
+            .control-button svg {
+                width: 100%;
+                height: 100%;
+            }
+
+            #pause-button {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay" class="fullscreen"></div>
+        <div id="popup-background" class="fullscreen"></div>
+        <div id="sidebar" class="full-height">
+            <div id="sidebar-deactivator" onclick="toggleSidebar()">&times;</div>
+            <div id="sidebar-actions">
+                <div class="sidebar-action nav-new">Neu</div>
+            </div>
+        </div>
+        <div id="header" class="full-width padding-20 flex-space-between">
+            <div id="title">
+                <h1>Musik</h1>
+            </div>
+            <div id="navbar">
+                <div class="navigator nav-new">Neu</div>
+                <div id="sidebar-activator" onclick="toggleSidebar()">&#x2630;</div>
+            </div>
+        </div>
+        <div id="page-start" class="full-width content flex-horizontal">
+            <div id="controls">
+                <div id="prev" class="control">
+                    <div class="control-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
+                    </div>
+                </div>
+                <div id="play" class="control">
+                    <div id="play-button" class="control-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                    </div>
+                    <div id="pause-button" class="control-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M560-200v-560h160v560H560Zm-320 0v-560h160v560H240Z"/></svg>
+                    </div>
+                </div>
+                <div id="next" class="control">
+                    <div class="control-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer" class="full-width padding-20">
+            <div>&copy; 2024 <a href="https://github.com/williamthecon" target="_blank">@williamthecon</a></div>
+        </div>
+        <script>
+            const playButton = document.getElementById('play-button');
+            const pauseButton = document.getElementById('pause-button');
+
+            playButton.style.display = 'none';
+            pauseButton.style.display = 'block';
+
+            playButton.addEventListener('click', () => {
+                playButton.style.display = 'none';
+                pauseButton.style.display = 'block';
+            });
+
+            pauseButton.addEventListener('click', () => {
+                playButton.style.display = 'block';
+                pauseButton.style.display = 'none';
+            });
+        </script>
+    </body>
+</html>

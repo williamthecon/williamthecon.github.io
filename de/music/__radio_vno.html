@@ -17,6 +17,16 @@
                 display: none;
             }
 
+            .bg-reset {
+                display: initial !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
             #header {
                 height: 35px;
             }
@@ -74,7 +84,7 @@
                 overflow-y: hidden;
                 white-space: nowrap;
                 scrollbar-width: none;
-                animation-duration: 600s;
+                animation-duration: 10s;
             }
 
             #player-bar--title::-webkit-scrollbar {
@@ -87,7 +97,7 @@
                 overflow-y: hidden;
                 white-space: nowrap;
                 scrollbar-width: none;
-                animation-duration: 600s;
+                animation-duration: 10s;
             }
 
             #player-bar--artists::-webkit-scrollbar {
@@ -149,8 +159,8 @@
         </style>
     </head>
     <body>
-        <div id="background" class="fullscreen">
-            <div id="player"></div>
+        <div id="background" class="fullscreen bg-reset">
+            <iframe id="player" width="560" height="315" src="https://www.youtube-nocookie.com/embed/ArUxhUQZaQs" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div id="header" class="full-width padding-20 flex-space-between">
             <div id="title">
@@ -177,7 +187,7 @@
             </div>
             <div id="controls">
                 <!-- <div id="prev" class="control">
-                    <svg id="prevIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"/></svg>
                 </div> -->
                 <div id="play" class="control">
                     <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
@@ -248,42 +258,29 @@
             var nextSong;
             async function setNextSong() {
                 nextSong = (await getSongs(1))[0];
-                console.log(nextSong);
+                console.log("setNextSong", nextSong);
             }
-            setNextSong();
 
             const background = document.getElementById('background');
             async function newSong() {
                 currentSong = nextSong;
-                console.log(currentSong);
+                console.log("newSong", currentSong);
                 playerTitle.innerText = currentSong[0];
                 playerArtists.innerText = currentSong[1];
 
-                if (isOverflowing(playerTitle)) {
-                    for (let i = 0; i < 200; i++) {
-                        playerTitle.innerText += currentSong[0]
-                    }
-
-                    if (!playerTitle.classList.contains('scrolling')) {
-                        playerTitle.classList.add("scrolling");
-                    }
+                if (isOverflowing(playerTitle) && !playerTitle.classList.contains('scrolling')) {
+                    playerTitle.classList.add("scrolling");
                 } else if (playerTitle.classList.contains('scrolling')) {
                     playerTitle.classList.remove("scrolling");
                 }
 
-                if (isOverflowing(playerArtists)) {
-                    for (let i = 0; i < 200; i++) {
-                        playerArtists.innerText += currentSong[1]
-                    }
-                    if (!playerArtists.classList.contains('scrolling')) {
-                        playerArtists.classList.add("scrolling");
-                    }
+                if (isOverflowing(playerArtists) && !playerArtists.classList.contains('scrolling')) {
+                    playerArtists.classList.add("scrolling");
                 } else if (playerArtists.classList.contains('scrolling')) {
                     playerArtists.classList.remove("scrolling");
                 }
 
-                player.loadVideoById(currentSong[2]);
-                console.log(currentSong[2]);
+                loadVideo(currentSong[2]);
 
                 if (playing) {
                     startVideo();
@@ -293,61 +290,34 @@
                 done = false;
             }
 
-            // This code loads the IFrame Player API code asynchronously.
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            // This function creates an <iframe> (and YouTube player)
-            // after the API code downloads.
-            var player;
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('player', {
-                    height: '360',
-                    width: '640',
-                    videoId: 'M7lc1UVf-VE',
-                    playerVars: {
-                        'playsinline': 1,
-                        'enablejsapi': 1
-                    },
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-            }
-
-            // The API will call this function when the video player is ready.
-            function onPlayerReady(event) {
-                newSong();
-            }
-
-            // The API calls this function when the player's state changes.
-            // The function indicates that when playing a video (state=1),
-            // the player should play for six seconds and then stop.
+            const player = document.getElementById('player');
             var done = false;
-            function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.ENDED && !done) {
+            player.addEventListener('onStateChange', function (event) {
+                if (event.data == 0 && !done) {
                     done = true;
                     newSong();
                 }
+            });
+            function loadVideo(id) {
+                player.src = 'https://www.youtube-nocookie.com/embed/' + id
             }
 
             function startVideo() {
                 console.log('startVideo');
-                player.playVideo();
+                // TODO
                 playing = true;
             }
             function pauseVideo() {
                 console.log('pauseVideo');
-                player.pauseVideo();
+                // TODO
                 playing = false;
             }
             function stopVideo() {
-                player.stopVideo();
+                // TODO
                 playing = false;
             }
+
+            setNextSong().then(() => newSong());
         </script>
     </body>
 </html>
